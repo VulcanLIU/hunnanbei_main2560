@@ -7,7 +7,7 @@
 #include "mPOS.h"
 #include "mMotor.h"
 #include "Timer1.h"
-#include "mPS2.h"
+#include "mPS2_REPLACE.h"
 #include "ComwithShot.h"
 #include "Kinematics.h"
 #include "ComwithMotor.h"
@@ -36,6 +36,8 @@ void setup() {
 	tc1.setMode("CTC",20);
 	tc1.attachInterrupt(blink);
 	PS2.begin();
+	
+
 }
 
 void loop() {
@@ -55,10 +57,15 @@ void loop() {
 	}
 	//解算转速
 	Kinematics::output pwm;
-	float linear_vel_x = (map(PS2.analog_RY,0,255,-500,500))/1000;
+	float linear_vel_x = float(map(PS2.analog_RY,0,255,-1000,1000))/1000;
 	float linear_vel_y = 0;
-	float angular_vel_z =(map(PS2.analog_LX,0,255,-3140,3140))/1000;
+	float angular_vel_z =float(map(PS2.analog_LX,-128,+128,-3140,+3140))/2000;
 	pwm = kinematics.getPWM(linear_vel_x, linear_vel_y, angular_vel_z);
+	
+	Serial.print("linear_vel_x:");
+	Serial.print(linear_vel_x);
+	Serial.print("angular_vel_z:");
+	Serial.println(angular_vel_z);
 	
 	cm.SendAtoALL(pwm.motor1,pwm.motor2,pwm.motor3,pwm.motor4);
 	
@@ -69,7 +76,7 @@ void loop() {
 	
 	//通过OLED显示器显示XYP
 	dp.refresh(pwm.motor1,pwm.motor2,pwm.motor3,pwm.motor4,pos.x,pos.y,pos.p,PS2.state);
-	delay(50);
+	PS2.state = "";
 }
 
 void blink()

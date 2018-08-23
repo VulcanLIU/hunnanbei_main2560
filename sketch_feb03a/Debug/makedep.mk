@@ -24,7 +24,7 @@ mMotor.cpp
 
 mPOS.cpp
 
-mPS2.cpp
+mPS2_REPLACE.cpp
 
 PS2X_lib.cpp
 

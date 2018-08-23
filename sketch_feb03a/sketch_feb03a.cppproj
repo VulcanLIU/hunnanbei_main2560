@@ -326,10 +326,10 @@
     <Compile Include="mPOS.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="mPS2.cpp">
+    <Compile Include="mPS2_REPLACE.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="mPS2.h">
+    <Compile Include="mPS2_REPLACE.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="PS2X_lib.cpp">

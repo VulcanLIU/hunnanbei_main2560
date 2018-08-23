@@ -62,7 +62,7 @@ C_SRCS +=  \
 ../Kinematics.cpp \
 ../mMotor.cpp \
 ../mPOS.cpp \
-../mPS2.cpp \
+../mPS2_REPLACE.cpp \
 ../PS2X_lib.cpp \
 ../Sketch.cpp \
 ../src/libraries/SPI/src/SPI.cpp \
@@ -89,7 +89,7 @@ glcdfont.o \
 Kinematics.o \
 mMotor.o \
 mPOS.o \
-mPS2.o \
+mPS2_REPLACE.o \
 PS2X_lib.o \
 Sketch.o \
 src/libraries/SPI/src/SPI.o \
@@ -109,7 +109,7 @@ glcdfont.o \
 Kinematics.o \
 mMotor.o \
 mPOS.o \
-mPS2.o \
+mPS2_REPLACE.o \
 PS2X_lib.o \
 Sketch.o \
 src/libraries/SPI/src/SPI.o \
@@ -129,7 +129,7 @@ glcdfont.d \
 Kinematics.d \
 mMotor.d \
 mPOS.d \
-mPS2.d \
+mPS2_REPLACE.d \
 PS2X_lib.d \
 Sketch.d \
 src/libraries/SPI/src/SPI.d \
@@ -149,7 +149,7 @@ glcdfont.d \
 Kinematics.d \
 mMotor.d \
 mPOS.d \
-mPS2.d \
+mPS2_REPLACE.d \
 PS2X_lib.d \
 Sketch.d \
 src/libraries/SPI/src/SPI.d \
