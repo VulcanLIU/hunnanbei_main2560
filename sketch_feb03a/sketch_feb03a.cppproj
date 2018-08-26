@@ -320,12 +320,6 @@
     <Compile Include="mMotor.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="mPOS.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="mPOS.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="mPS2_REPLACE.cpp">
       <SubType>compile</SubType>
     </Compile>

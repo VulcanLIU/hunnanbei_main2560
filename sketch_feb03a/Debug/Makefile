@@ -61,7 +61,6 @@ C_SRCS +=  \
 ../glcdfont.c \
 ../Kinematics.cpp \
 ../mMotor.cpp \
-../mPOS.cpp \
 ../mPS2_REPLACE.cpp \
 ../PS2X_lib.cpp \
 ../Sketch.cpp \
@@ -88,7 +87,6 @@ Display.o \
 glcdfont.o \
 Kinematics.o \
 mMotor.o \
-mPOS.o \
 mPS2_REPLACE.o \
 PS2X_lib.o \
 Sketch.o \
@@ -108,7 +106,6 @@ Display.o \
 glcdfont.o \
 Kinematics.o \
 mMotor.o \
-mPOS.o \
 mPS2_REPLACE.o \
 PS2X_lib.o \
 Sketch.o \
@@ -128,7 +125,6 @@ Display.d \
 glcdfont.d \
 Kinematics.d \
 mMotor.d \
-mPOS.d \
 mPS2_REPLACE.d \
 PS2X_lib.d \
 Sketch.d \
@@ -148,7 +144,6 @@ Display.d \
 glcdfont.d \
 Kinematics.d \
 mMotor.d \
-mPOS.d \
 mPS2_REPLACE.d \
 PS2X_lib.d \
 Sketch.d \
@@ -172,8 +167,6 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
-
-
 
 
 

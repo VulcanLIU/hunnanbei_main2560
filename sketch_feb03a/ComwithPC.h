@@ -9,7 +9,7 @@
 #ifndef __COMWITHPC_H__
 #define __COMWITHPC_H__
 
-/*Serial1Ω”¿∂—¿*/
+/*Serial3Ω”¿∂—¿*/
 #include "Arduino.h"
 class ComwithPC
 {
