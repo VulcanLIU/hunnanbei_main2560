@@ -6,7 +6,7 @@
 */
 
 
-#include "mPS2_REPLACE.h"
+#include "mPS2.h"
 #include "PS2X_lib.h" //for v1.6
 
 /******************************************************************
@@ -44,7 +44,7 @@ mPS2::mPS2()
 
 void mPS2::begin()
 {
-	Serial3.begin(250000);
+	Serial.begin(115200);
 	
 	delay(300);  //added delay to give wireless ps2 module some time to startup, before configuring it
 	
@@ -99,40 +99,79 @@ void mPS2::begin()
 
 void mPS2::refresh()
 {
-	while (Serial3.available() > 0)
-	{
-		char c = Serial3.read();
+	if(type == 2){ //Guitar Hero Controller
+	}
+	else { //DualShock Controller
+		ps2x.read_gamepad(false, vibrate); //read controller and set large motor to spin at 'vibrate' speed
 		
-		if (c == '\n')
+		if(ps2x.Button(PSB_START))
 		{
-
-			int pos_AD = this->buff.indexOf(',');
-			if(pos_AD == -1)
-			{
-				buff = "";
-				break;
-			}
-// 			Serial2.print("buff");
-// 			Serial2.print(buff);
-			
-			String str_analog_RY = buff.substring(0,pos_AD);
-			analog_RY = str_analog_RY.toInt();
-			
-			buff.remove(0,pos_AD+1);
-			
-			String str_analog_LX = this->buff;
-			analog_LX = str_analog_LX.toInt();
-			
-
-// 			Serial2.print("str_analog_RY:");
-// 			Serial2.print(str_analog_RY);
-// 			Serial2.print("str_analog_LX:");
-// 			Serial2.println(str_analog_LX
-			buff = "";
+			Serial.println("Start is being held");
+			state = "Start is being held";
 		}
-		else
-		{
-			buff += c;
+		//will be TRUE as long as button is pressed
+
+		
+		if(ps2x.Button(PSB_SELECT)){Serial.println("Select is being held");state="Select is being held";}
+			
+		if(ps2x.Button(PSB_PAD_UP)) {      //will be TRUE as long as button is pressed
+			Serial.print("Up held this hard: ");
+			Serial.println(ps2x.Analog(PSAB_PAD_UP), DEC);
+			up = true;
+			state = "up is being held";
+		}
+		if(ps2x.Button(PSB_PAD_RIGHT)){
+			Serial.print("Right held this hard: ");
+			Serial.println(ps2x.Analog(PSAB_PAD_RIGHT), DEC);
+			right = true;
+			state = "Right is being held";
+		}
+		if(ps2x.Button(PSB_PAD_LEFT)){
+			Serial.print("LEFT held this hard: ");
+			Serial.println(ps2x.Analog(PSAB_PAD_LEFT), DEC);
+			left = true;
+			state = "LEFT is being held";
+		}
+		if(ps2x.Button(PSB_PAD_DOWN)){
+			Serial.print("DOWN held this hard: ");
+			Serial.println(ps2x.Analog(PSAB_PAD_DOWN), DEC);
+			down = true;
+			state = "DOWN is being held";
+		}
+
+		vibrate = ps2x.Analog(PSAB_CROSS);  //this will set the large motor vibrate speed based on how hard you press the blue (X) button
+		if (ps2x.NewButtonState()) {        //will be TRUE if any button changes state (on to off, or off to on)
+			if(ps2x.Button(PSB_L3)){Serial.println("L3 pressed");state = "L3 is being held";}
+			
+			if(ps2x.Button(PSB_R3)){Serial.println("R3 pressed");state = "R3 is being held";}
+
+			if(ps2x.Button(PSB_L2)){Serial.println("L2 pressed");state = "L2 is being held";}
+			
+			if(ps2x.Button(PSB_R2)){Serial.println("R2 pressed");state = "R2 is being held";}
+
+			if(ps2x.Button(PSB_TRIANGLE)){Serial.println("Triangle pressed");state = "Triangle is being held";}
+
+		}
+
+		if(ps2x.ButtonPressed(PSB_CIRCLE)){Serial.println("Circle just pressed");shot_left = true;state = "Circle is being held";}
+		
+		if(ps2x.NewButtonState(PSB_CROSS)){Serial.println("X just changed");shot = true;state = "X is being held";}
+		
+		if(ps2x.ButtonReleased(PSB_SQUARE)){Serial.println("Square just released");shot_left = true;state = "Square is being held";}              //will be TRUE if button was JUST released
+		
+		if(1) { //print stick values if either is TRUE
+			Serial.print("Stick Values:");
+			Serial.print(ps2x.Analog(PSS_LY), DEC); //Left stick, Y axis. Other options: LX, RY, RX
+			analog_LY = ps2x.Analog(PSS_LY);
+			Serial.print(",");
+			Serial.print(ps2x.Analog(PSS_LX), DEC);
+			analog_LX = ps2x.Analog(PSS_LX);
+			Serial.print(",");
+			Serial.print(ps2x.Analog(PSS_RY), DEC);
+			analog_RY = ps2x.Analog(PSS_RY);
+			Serial.print(",");
+			Serial.println(ps2x.Analog(PSS_RX), DEC);
+			analog_RX = ps2x.Analog(PSS_RX);
 		}
 	}
 }

@@ -15,7 +15,7 @@ class ComwithPC
 {
 	public:
 	ComwithPC();
-	void begin(int baud);//设置波特率
+	void begin(unsigned long int baud);//设置波特率
 	
 	void tellMotors(int speed_L,int dir_L,int speed_R,int dir_R);//用来显示哪一个电机掉线了
 	

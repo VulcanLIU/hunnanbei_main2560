@@ -23,26 +23,16 @@ Kinematics kinematics(300,0.068, 0.5,8);
 ComwithMotor cm;
 String state = "begin";
 
-
 void setup() {
 	// put your setup code here, to run once:
-	Serial.begin(9600);
-	//toPC.begin(115200);
+	Serial.begin(115200);
+	toPC.begin(115200);
+	
 	dp.begin();
 	cm.begin();
 	POS_begin();
-		pinMode(INT0A, INPUT_PULLUP);
-		pinMode(INT1A, INPUT_PULLUP);
-		pinMode(INT2A, INPUT_PULLUP);
-		
-		pinMode(INT0B, INPUT);
-		pinMode(INT1B, INPUT);
-		pinMode(INT2B, INPUT);
-		
-		attachInterrupt(digitalPinToInterrupt(INT0A), blinkX, FALLING);
-		attachInterrupt(digitalPinToInterrupt(INT1A), blinkY, FALLING);
-		attachInterrupt(digitalPinToInterrupt(INT2A), blinkP, FALLING);
-	tc1.setMode("CTC",100);
+  
+	tc1.setMode("CTC",50);
 	tc1.attachInterrupt(POS_refresh);
 	PS2.begin();
 
@@ -50,7 +40,6 @@ void setup() {
 
 void loop() {
 	// put your main code here, to run repeatedly:
-	
 	//PS2手柄遥控底盘
 	PS2.refresh();
 	if (PS2.shot)
@@ -67,20 +56,20 @@ void loop() {
 	Kinematics::output pwm;
 	float linear_vel_x =   float(map(PS2.analog_RY,0,255,-1000,1000))/1000;
 	float linear_vel_y = 0;
-	float angular_vel_z =float(map(PS2.analog_LX,-128,+128,-3140,+3140))/2000;
+	float angular_vel_z =float(map(PS2.analog_LX,-128,+128,-3140,+3140))/4000;
 	pwm = kinematics.getPWM(linear_vel_x, linear_vel_y, angular_vel_z);
 	
-// 	Serial.print("linear_vel_x:");
-// 	Serial.print(linear_vel_x);
-// 	Serial.print("angular_vel_z:");
-// 	Serial.println(angular_vel_z);
+// 	Serial2.print("linear_vel_x:");
+// 	Serial2.print(linear_vel_x);
+// 	Serial2.print("angular_vel_z:");
+// 	Serial2.print(angular_vel_z);
 	
 	cm.SendAtoALL(pwm.motor1,pwm.motor2,pwm.motor3,pwm.motor4);
 	
 	//通过蓝牙发送给上位机数据
-	//toPC.tellMotors(motor.L_PWM,motor.L_DIR,motor.R_PWM,motor.R_DIR);
-	//toPC.tellXYP(x,y,p);
-	//toPC.tellState(state);
+// 	toPC.tellMotors(pwm.motor1,pwm.motor2,pwm.motor3,pwm.motor4);
+	toPC.tellXYP(x,y,p);
+// 	toPC.tellState(state);
 	
 	//通过OLED显示器显示XYP
 	dp.refresh(pwm.motor1,pwm.motor2,pwm.motor3,pwm.motor4,x,y,p,PS2.state);

@@ -6,13 +6,13 @@
 */
 #include "Arduino.h"
 #define SERIAL_DEBUG
-double x = 2400;//中点位置
+double x = 0;//中点位置
 double y = 0;
 double p = 0;
 
-double x_step = 0;
-double y_step = 0;
-double p_step = 0;
+long int x_step = 0;
+long int y_step = 0;
+long int p_step = 0;
 
 
 double x2_previous = 0;
@@ -28,11 +28,11 @@ static const int INT2A = 3;
 static const int INT2B = 6;
 
 //物理信息
-const double d = 160; //两轮间距160mm
+const double d = 77; //两轮间距160mm
 const double wheel_d = 38;//轮直径38mm
 const int x_line = 512;
 const int y_line = 512;
-const int p_line = 512;
+const int p_line = 256;
 
 void blinkX()
 {
@@ -63,52 +63,78 @@ void blinkP()
 
 void POS_begin()
 {
-// 	pinMode(INT0A, INPUT);
-// 	pinMode(INT1A, INPUT);
-// 	pinMode(INT2A, INPUT);
-// 	
-// 	pinMode(INT0B, INPUT);
-// 	pinMode(INT1B, INPUT);
-// 	pinMode(INT2B, INPUT);
-// 	
-// 	attachInterrupt(digitalPinToInterrupt(INT0A), blinkX, FALLING);
-// 	attachInterrupt(digitalPinToInterrupt(INT1A), blinkY, FALLING);
-// 	attachInterrupt(digitalPinToInterrupt(INT2A), blinkP, FALLING);
+	pinMode(INT0A, INPUT_PULLUP);
+	pinMode(INT1A, INPUT_PULLUP);
+	pinMode(INT2A, INPUT_PULLUP);
+	
+	pinMode(INT0B, INPUT_PULLUP);
+	pinMode(INT1B, INPUT_PULLUP);
+	pinMode(INT2B, INPUT_PULLUP);
+	
+	attachInterrupt(digitalPinToInterrupt(INT0A), blinkX, FALLING);
+	attachInterrupt(digitalPinToInterrupt(INT1A), blinkY, FALLING);
+	attachInterrupt(digitalPinToInterrupt(INT2A), blinkP, FALLING);
 }
 
 void POS_refresh()
 {
-	double x1 = (double)x_step/x_line*PI*wheel_d;//行走的距离 单位mm；
-	double y1 = (double)y_step/y_line*PI*wheel_d;//行走的距离 单位mm；
-	double p1 = (double)p_step/p_line*PI*wheel_d;//行走的距离 单位mm；
+	double x1 = (double)x_step/x_line*PI*wheel_d*1.166;//行走的距离 单位mm；
+	double y1 = (double)y_step/y_line*PI*wheel_d*1.166;//行走的距离 单位mm；
+	double p1 = (double)p_step/p_line*PI*wheel_d*1.166;//行走的距离 单位mm；
 	
-	double x2 = x1;
-	double y2 = (y1+p1)/2;
-	double p2 = (y1 - p1)/d;//弧度制rad
-	
-	double dx = x2 - x2_previous;
-	double dy = y2 - y2_previous;
+	double x2 = (x1-p1)/2;
+	double y2 = y1;
+	double p2 = -(x1 + p1)/d;//弧度制rad
+	Serial.print("P2:");
+	Serial.print(p2);
+	if (p2>=PI)
+	{
+		p2 = fmod((p2+PI),(2*PI))-PI;
+	}
+	if (p2<=(-PI))
+	{
+		p2 = fmod((p2-PI),(2*PI))+PI;
+	}
+	double dx = x2 - x2_previous;x2_previous = x2;
+	double dy = y2 - y2_previous;y2_previous = y2;
 	double p_rad =p2;
 	
 	x+= dx*cos(p_rad)+dy*sin(p_rad);
 	y+= dy*cos(p_rad)-dx*sin(p_rad);
+	
 	p = p_rad/PI*180;
 	
 	#ifdef SERIAL_DEBUG
-	Serial.print("X_step:");
-	Serial.print(x_step);
-	Serial.print(" Y_step:");
-	Serial.print(y_step);
-	Serial.print(" P_step:");
-	Serial.print(p_step);
+	// 	Serial.print("X_step:");
+	// 	Serial.print(x_step);
+	// 	Serial.print(" Y_step:");
+	// 	Serial.print(y_step);
+	// 	Serial.print(" P_step:");
+	// 	Serial.print(p_step);
 	
 	//原始数据——>原始长度信息
-	Serial.print("X_mm:");
-	Serial.print(x1);
-	Serial.print("Y_mm:");
-	Serial.print(y1);
-	Serial.print("P_mm:");
-	Serial.println(p1);  //串口显口
+	// 	Serial.print("X_mm:");
+	// 	Serial.print(x1);
+	// 	Serial.print("Y_mm:");
+	// 	Serial.print(y1);
+	// 	Serial.print("P_mm:");
+	// 	Serial.println(p1);  //串口显口
+	
+	//原始数据——>原始长度信息
+	Serial.print("X2_mm:");
+	Serial.print(dx);
+	Serial.print("Y2_mm:");
+	Serial.print(dy);
+	Serial.print("P2_mm:");
+	Serial.print(p2 );  //串口显口
+	
+	//最终数据
+	Serial.print("X_fina:");
+	Serial.print(x);
+	Serial.print("Y_fina:");
+	Serial.print(y);
+	Serial.print("P_fina:");
+	Serial.println(p);  //串口显口
 	#endif // SERIAL_DEBUG
 }
 

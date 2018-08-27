@@ -21,6 +21,28 @@ public:
 	void refresh(int L1_speed,int L2_speed,int R1_speed,int R2_speed,double pos_x,double pos_y,double pos_p,String state);
 protected:
 private:
+	const int time_x = 0;const int time_y = 0;
+	//line 8
+	//++++++++
+	//++++++++
+	//line10
+	const int PWML1_x = 0;const int PWML1_y = 10; const int PWMR1_x = 64;const int PWMR1_y = 10;
+	const int PWML2_x = 0;const int PWML2_y = 18; const int PWMR2_x = 64;const int PWMR2_y = 18;
+	//line 26
+	//++++++++
+	//++++++++
+	//line28
+	const int X_encode_x = 0;const int X_encode_y = 28;const int Y_encode_x = 64;const int Y_encode_y = 28;
+	const int P_encode_x = 0;const int P_encode_y = 36;
+	//line 44
+	//++++++++
+	//++++++++
+	//line 46
+	const int X_real_x = 0;const int X_real_y = 46;const int Y_real_x = 64;const int Y_real_y = 46;
+	const int P_real_x = 0;const int P_real_y = 54;
+	//line 62
+	//const PS2_state = 40;
+	
 }; //Display
 
 #endif //__DISPLAY_H__
