@@ -320,10 +320,16 @@
     <Compile Include="mMotor.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="mPS2_REPLACE.cpp">
+    <Compile Include="mPS2.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="mPS2_REPLACE.h">
+    <Compile Include="mPS2.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Path.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Path.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="PS2X_lib.cpp">

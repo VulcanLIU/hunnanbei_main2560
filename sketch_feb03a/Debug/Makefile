@@ -61,7 +61,8 @@ C_SRCS +=  \
 ../glcdfont.c \
 ../Kinematics.cpp \
 ../mMotor.cpp \
-../mPS2_REPLACE.cpp \
+../mPS2.cpp \
+../Path.cpp \
 ../PS2X_lib.cpp \
 ../Sketch.cpp \
 ../src/libraries/SPI/src/SPI.cpp \
@@ -87,7 +88,8 @@ Display.o \
 glcdfont.o \
 Kinematics.o \
 mMotor.o \
-mPS2_REPLACE.o \
+mPS2.o \
+Path.o \
 PS2X_lib.o \
 Sketch.o \
 src/libraries/SPI/src/SPI.o \
@@ -106,7 +108,8 @@ Display.o \
 glcdfont.o \
 Kinematics.o \
 mMotor.o \
-mPS2_REPLACE.o \
+mPS2.o \
+Path.o \
 PS2X_lib.o \
 Sketch.o \
 src/libraries/SPI/src/SPI.o \
@@ -125,7 +128,8 @@ Display.d \
 glcdfont.d \
 Kinematics.d \
 mMotor.d \
-mPS2_REPLACE.d \
+mPS2.d \
+Path.d \
 PS2X_lib.d \
 Sketch.d \
 src/libraries/SPI/src/SPI.d \
@@ -144,7 +148,8 @@ Display.d \
 glcdfont.d \
 Kinematics.d \
 mMotor.d \
-mPS2_REPLACE.d \
+mPS2.d \
+Path.d \
 PS2X_lib.d \
 Sketch.d \
 src/libraries/SPI/src/SPI.d \
@@ -167,6 +172,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

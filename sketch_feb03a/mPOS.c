@@ -5,7 +5,7 @@
 * Author: Vulcan
 */
 #include "Arduino.h"
-#define SERIAL_DEBUG
+//#define POS_DEBUG
 double x = 0;//中点位置
 double y = 0;
 double p = 0;
@@ -28,19 +28,20 @@ static const int INT2A = 3;
 static const int INT2B = 6;
 
 //物理信息
-const double d = 77; //两轮间距160mm
+const double d = 320; //两轮间距160mm
+const double d2 = 60;
 const double wheel_d = 38;//轮直径38mm
-const int x_line = 512;
-const int y_line = 512;
-const int p_line = 256;
+const int x_line = 20;
+const int y_line = 20;
+const int p_line = 20;
 
 void blinkX()
 {
 	int xstate = digitalRead(INT0B);
 	if (xstate == HIGH)
-	x_step--;
-	else
 	x_step++;
+	else
+	x_step--;
 }
 
 void blinkY()
@@ -78,15 +79,14 @@ void POS_begin()
 
 void POS_refresh()
 {
-	double x1 = (double)x_step/x_line*PI*wheel_d*1.166;//行走的距离 单位mm；
-	double y1 = (double)y_step/y_line*PI*wheel_d*1.166;//行走的距离 单位mm；
-	double p1 = (double)p_step/p_line*PI*wheel_d*1.166;//行走的距离 单位mm；
+	double x1 = (double)x_step/x_line*PI*wheel_d;//行走的距离 单位mm；
+	double y1 = (double)y_step/y_line*PI*wheel_d;//行走的距离 单位mm；
+	double p1 = (double)p_step/p_line*PI*wheel_d;//行走的距离 单位mm；
 	
-	double x2 = (x1-p1)/2;
-	double y2 = y1;
-	double p2 = -(x1 + p1)/d;//弧度制rad
-	Serial.print("P2:");
-	Serial.print(p2);
+	double y2 = (y1-p1)/2;
+	double p2 = (y1+p1)/d;//弧度制rad
+	double x2 = p2*d2+x1;//
+
 	if (p2>=PI)
 	{
 		p2 = fmod((p2+PI),(2*PI))-PI;
@@ -95,30 +95,31 @@ void POS_refresh()
 	{
 		p2 = fmod((p2-PI),(2*PI))+PI;
 	}
+	
 	double dx = x2 - x2_previous;x2_previous = x2;
 	double dy = y2 - y2_previous;y2_previous = y2;
 	double p_rad =p2;
 	
-	x+= dx*cos(p_rad)+dy*sin(p_rad);
+	x-= dx*cos(p_rad)+dy*sin(p_rad);
 	y+= dy*cos(p_rad)-dx*sin(p_rad);
 	
 	p = p_rad/PI*180;
 	
-	#ifdef SERIAL_DEBUG
-	// 	Serial.print("X_step:");
-	// 	Serial.print(x_step);
-	// 	Serial.print(" Y_step:");
-	// 	Serial.print(y_step);
-	// 	Serial.print(" P_step:");
-	// 	Serial.print(p_step);
+	#ifdef POS_DEBUG
+	 	Serial.print("X_step:");
+	 	Serial.print(x_step);
+	 	Serial.print(" Y_step:");
+	 	Serial.print(y_step);
+	 	Serial.print(" P_step:");
+	 	Serial.print(p_step);
 	
 	//原始数据——>原始长度信息
-	// 	Serial.print("X_mm:");
-	// 	Serial.print(x1);
-	// 	Serial.print("Y_mm:");
-	// 	Serial.print(y1);
-	// 	Serial.print("P_mm:");
-	// 	Serial.println(p1);  //串口显口
+	 	Serial.print("X_mm:");
+	 	Serial.print(x1);
+	 	Serial.print("Y_mm:");
+	 	Serial.print(y1);
+	 	Serial.print("P_mm:");
+	 	Serial.print(p1);  //串口显口
 	
 	//原始数据——>原始长度信息
 	Serial.print("X2_mm:");

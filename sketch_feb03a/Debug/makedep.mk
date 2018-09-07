@@ -22,7 +22,9 @@ Kinematics.cpp
 
 mMotor.cpp
 
-mPS2_REPLACE.cpp
+mPS2.cpp
+
+Path.cpp
 
 PS2X_lib.cpp
 

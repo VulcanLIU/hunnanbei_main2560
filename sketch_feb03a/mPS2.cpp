@@ -113,7 +113,7 @@ void mPS2::refresh()
 
 		
 		if(ps2x.Button(PSB_SELECT)){Serial.println("Select is being held");state="Select is being held";}
-			
+		
 		if(ps2x.Button(PSB_PAD_UP)) {      //will be TRUE as long as button is pressed
 			Serial.print("Up held this hard: ");
 			Serial.println(ps2x.Analog(PSAB_PAD_UP), DEC);
@@ -160,18 +160,26 @@ void mPS2::refresh()
 		if(ps2x.ButtonReleased(PSB_SQUARE)){Serial.println("Square just released");shot_left = true;state = "Square is being held";}              //will be TRUE if button was JUST released
 		
 		if(1) { //print stick values if either is TRUE
+			analog_LY = ps2x.Analog(PSS_LY);
+			analog_LX = ps2x.Analog(PSS_LX);
+			analog_RY = ps2x.Analog(PSS_RY);
+			analog_RX = ps2x.Analog(PSS_RX);
+			
+			#ifdef PS2_DEBUG
 			Serial.print("Stick Values:");
 			Serial.print(ps2x.Analog(PSS_LY), DEC); //Left stick, Y axis. Other options: LX, RY, RX
-			analog_LY = ps2x.Analog(PSS_LY);
+			
 			Serial.print(",");
 			Serial.print(ps2x.Analog(PSS_LX), DEC);
-			analog_LX = ps2x.Analog(PSS_LX);
+			
 			Serial.print(",");
 			Serial.print(ps2x.Analog(PSS_RY), DEC);
-			analog_RY = ps2x.Analog(PSS_RY);
+			
 			Serial.print(",");
 			Serial.println(ps2x.Analog(PSS_RX), DEC);
-			analog_RX = ps2x.Analog(PSS_RX);
+			
+			#endif
+
 		}
 	}
 }

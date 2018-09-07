@@ -84,5 +84,10 @@ void Display::refresh(int L1_speed,int L2_speed,int R1_speed,int R2_speed,double
 	display.print("P_mm:");
 	display.print(pos_p);
 	
+	//ÏÔÊ¾Ò£¿ØÆ÷×´Ì¬
+	display.setCursor(X_real_x,X_encode_y);
+	display.print("PS2:");
+	display.print(state);
+	
 	display.display();
 }
