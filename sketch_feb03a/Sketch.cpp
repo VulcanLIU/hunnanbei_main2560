@@ -60,7 +60,7 @@ void loop() {
 	Kinematics::output pwm;
 	float linear_vel_x =   float(map(PS2.analog_RY,0,255,1000,-1000))/1000;
 	float linear_vel_y = 0;
-	float angular_vel_z =float(map(PS2.analog_LX,0,255,-3140,+3140))/1500;
+	float angular_vel_z =float(map(PS2.analog_LX,0,255,3140,-3140))/1500;
 	pwm = kinematics.getPWM(linear_vel_x, linear_vel_y, angular_vel_z);
 	
 	// 	Serial2.print("linear_vel_x:");

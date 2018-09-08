@@ -28,12 +28,12 @@ static const int INT2A = 3;
 static const int INT2B = 6;
 
 //物理信息
-const double d = 320; //两轮间距160mm
+const double d = 115; //两轮间距160mm
 const double d2 = 60;
 const double wheel_d = 38;//轮直径38mm
-const int x_line = 20;
-const int y_line = 20;
-const int p_line = 20;
+const int x_line = 256;
+const int y_line = 512;
+const int p_line = 512;
 
 void blinkX()
 {
@@ -48,9 +48,9 @@ void blinkY()
 {
 	int ystate = digitalRead(INT1B);
 	if (ystate == HIGH)
-	y_step++;
-	else
 	y_step--;
+	else
+	y_step++;
 }
 
 void blinkP()
@@ -98,10 +98,14 @@ void POS_refresh()
 	
 	double dx = x2 - x2_previous;x2_previous = x2;
 	double dy = y2 - y2_previous;y2_previous = y2;
-	double p_rad =p2;
+	double dp_rad =p2 - p2_previous;p2_previous = p2;
+	double p_rad = p2;
 	
-	x-= dx*cos(p_rad)+dy*sin(p_rad);
-	y+= dy*cos(p_rad)-dx*sin(p_rad);
+	double dax = dy*(cos(PI/2-dp_rad/2));
+	double day = dy*(sin(PI/2-dp_rad/2));
+	
+	x-= dax*cos(p_rad)+day*sin(p_rad);
+	y+= day*cos(p_rad)-dax*sin(p_rad);
 	
 	p = p_rad/PI*180;
 	
