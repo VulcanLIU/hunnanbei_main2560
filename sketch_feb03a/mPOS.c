@@ -28,10 +28,10 @@ static const int INT2A = 3;
 static const int INT2B = 6;
 
 //物理信息
-const double d = 115; //两轮间距160mm
+const double d = 200; //两轮间距160mm
 const double d2 = 60;
 const double wheel_d = 38;//轮直径38mm
-const int x_line = 256;
+const int x_line = 512;
 const int y_line = 512;
 const int p_line = 512;
 
@@ -79,9 +79,9 @@ void POS_begin()
 
 void POS_refresh()
 {
-	double x1 = (double)x_step/x_line*PI*wheel_d;//行走的距离 单位mm；
-	double y1 = (double)y_step/y_line*PI*wheel_d;//行走的距离 单位mm；
-	double p1 = (double)p_step/p_line*PI*wheel_d;//行走的距离 单位mm；
+	double x1 = (double)x_step/x_line*PI*wheel_d*600/534*1.0795;//行走的距离 单位mm；
+	double y1 = (double)y_step/y_line*PI*wheel_d*600/534*1.0795;//行走的距离 单位mm；
+	double p1 = (double)p_step/p_line*PI*wheel_d*600/534*1.0795;//行走的距离 单位mm；
 	
 	double y2 = (y1-p1)/2;
 	double p2 = (y1+p1)/d;//弧度制rad

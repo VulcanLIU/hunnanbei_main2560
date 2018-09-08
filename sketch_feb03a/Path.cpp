@@ -67,7 +67,7 @@ bool Path::gotoPoint(double presentX,double presentY,double presentP,double targ
 		
 		//计算相对车的偏角
 		double angletoCar = angletoWorld - presentP;
-		 angletoCar = CcltAngleSub(angletoWorld , presentP);
+		angletoCar = CcltAngleSub(angletoWorld , presentP);
 		
 		angular_vel_z = k*angletoCar;
 		return false;
@@ -79,7 +79,7 @@ void Path::setK(float k)
 	this->k = k;
 }
 
-double CcltAngleSub(double minuend, double subtrahend)
+double Path::CcltAngleSub(double minuend, double subtrahend)
 {
 	double result = 0.0f;
 	result = minuend - subtrahend;

@@ -153,11 +153,11 @@ void mPS2::refresh()
 
 		}
 
-		if(ps2x.ButtonPressed(PSB_CIRCLE)){Serial.println("Circle just pressed");shot_left = true;state = "Circle is being held";}
+		if(ps2x.ButtonPressed(PSB_CIRCLE)){Serial.println("Circle just pressed");shot_left = true;state = "Circle is being held";isRC = true;}//增加自动
 		
 		if(ps2x.NewButtonState(PSB_CROSS)){Serial.println("X just changed");shot = true;state = "X is being held";}
 		
-		if(ps2x.ButtonReleased(PSB_SQUARE)){Serial.println("Square just released");shot_left = true;state = "Square is being held";}              //will be TRUE if button was JUST released
+		if(ps2x.ButtonReleased(PSB_SQUARE)){Serial.println("Square just released");shot_left = true;state = "Square is being held";isRC = false;}              //will be TRUE if button was JUST released
 		
 		if(1) { //print stick values if either is TRUE
 			analog_LY = ps2x.Analog(PSS_LY);

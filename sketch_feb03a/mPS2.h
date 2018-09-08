@@ -36,6 +36,7 @@ class mPS2
 	int analog_RX = 127;
 	
 	String state = "";
+	bool isRC = true;
 }; //mPS2
 
 #endif //__MPS2_H__

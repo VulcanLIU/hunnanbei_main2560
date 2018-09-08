@@ -10,11 +10,12 @@
 
 #include "Timer1.h"
 #include "mPS2.h"
-
+//#define  PS2_DEBUG
 #include "ComwithShot.h"
 #include "Kinematics.h"
 //#define Kinematics_DEBUG
 #include "ComwithMotor.h"
+#include "Path.h"
 //Beginning of Auto generated function prototypes by Atmel Studio
 //End of Auto generated function prototypes by Atmel Studio
 Display dp;
@@ -25,6 +26,7 @@ Timer1 tc1;
 ComwithShot CS;
 Kinematics kinematics(300,0.068, 0.5,8);
 ComwithMotor cm;
+Path path;
 String state = "begin";
 
 void setup() {
@@ -40,6 +42,8 @@ void setup() {
 	tc1.attachInterrupt(POS_refresh);
 	PS2.begin();
 
+	PS2.refresh();
+	PS2.isRC = true;
 }
 
 void loop() {
@@ -56,11 +60,27 @@ void loop() {
 	{
 		state = "Running!!!!";
 	}
+	
 	//解算转速
 	Kinematics::output pwm;
-	float linear_vel_x =   float(map(PS2.analog_RY,0,255,1000,-1000))/1000;
+	float linear_vel_x =  0;
 	float linear_vel_y = 0;
-	float angular_vel_z =float(map(PS2.analog_LX,0,255,3140,-3140))/1500;
+	float angular_vel_z = 0;
+	
+	if (PS2.isRC == false)
+	{
+		path.gotoPoint(x,y,p,500,500);
+		linear_vel_x = path.linear_vel_x;
+		linear_vel_y = 0;
+		angular_vel_z = path.angular_vel_z;
+	}
+	else
+	{
+		linear_vel_x =   float(map(PS2.analog_RY,0,255,1000,-1000))/1000;
+		linear_vel_y = 0;
+		angular_vel_z =float(map(PS2.analog_LX,0,255,3140,-3140))/1500;
+	}
+
 	pwm = kinematics.getPWM(linear_vel_x, linear_vel_y, angular_vel_z);
 	
 	// 	Serial2.print("linear_vel_x:");
@@ -69,14 +89,14 @@ void loop() {
 	// 	Serial2.print(angular_vel_z);
 	
 	#ifdef Kinematics_DEBUG
-		Serial.print("pwm_motor1:");
-		Serial.print(pwm.motor1);
-		Serial.print("pwm_motor2:");
-		Serial.print(pwm.motor2);
-		Serial.print("pwm_motor3:");
-		Serial.print(pwm.motor3);
-		Serial.print("pwm_motor4:");
-		Serial.println(pwm.motor4);
+	Serial.print("pwm_motor1:");
+	Serial.print(pwm.motor1);
+	Serial.print("pwm_motor2:");
+	Serial.print(pwm.motor2);
+	Serial.print("pwm_motor3:");
+	Serial.print(pwm.motor3);
+	Serial.print("pwm_motor4:");
+	Serial.println(pwm.motor4);
 	#endif
 	
 	cm.SendAtoALL(pwm.motor1,pwm.motor2,pwm.motor3,pwm.motor4);
