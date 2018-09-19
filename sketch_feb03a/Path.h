@@ -18,19 +18,20 @@ public:
 					{2300,0},{2300,1150},{2300,2300},{2300,3450},
 					{2300,4600},{1150,4600},{0,4600},{-1150,4600},{-2300,4600},
 					{-2300,3450},{-2300,2300},{-2300,1150},{-2300,0},{-1150,0}};
-						
-	bool arrivedPoint(double x,double y,double p);
-	
+					
 	//
 	bool gotoPoint(double presentX,double presentY,double presentP,double targetX,double targetY);
+	
+	bool gotoP(double presentX,double presentY,double presentP,double targetX,double targetY);
 	void setK(float k);
-	float k = 0;
+	float k = -0.1;
 	
 	//
 	double CcltAngleSub(double minuend, double subtrahend);
 	double angletoWorld = 0;
+	double angletoCar = 0;
 	float angular_vel_z = 0;
-	float linear_vel_x = 0.8;
+	float linear_vel_x = 0.2;
 	int next_index = 1;
 }; //Path
 

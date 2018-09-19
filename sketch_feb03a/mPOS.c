@@ -79,9 +79,9 @@ void POS_begin()
 
 void POS_refresh()
 {
-	double x1 = (double)x_step/x_line*PI*wheel_d*600/534*1.0795;//行走的距离 单位mm；
-	double y1 = (double)y_step/y_line*PI*wheel_d*600/534*1.0795;//行走的距离 单位mm；
-	double p1 = (double)p_step/p_line*PI*wheel_d*600/534*1.0795;//行走的距离 单位mm；
+	double x1 = (double)x_step/x_line*PI*wheel_d*1.74466;//行走的距离 单位mm；
+	double y1 = (double)y_step/y_line*PI*wheel_d*1.74466;//行走的距离 单位mm；
+	double p1 = (double)p_step/p_line*PI*wheel_d*1.74466;//行走的距离 单位mm；
 	
 	double y2 = (y1-p1)/2;
 	double p2 = (y1+p1)/d;//弧度制rad
@@ -127,9 +127,9 @@ void POS_refresh()
 	
 	//原始数据——>原始长度信息
 	Serial.print("X2_mm:");
-	Serial.print(dx);
+	Serial.print(x2);
 	Serial.print("Y2_mm:");
-	Serial.print(dy);
+	Serial.print(y2);
 	Serial.print("P2_mm:");
 	Serial.print(p2 );  //串口显口
 	
