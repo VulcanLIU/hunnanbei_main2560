@@ -5,7 +5,7 @@
 #include "Display.h"
 #include "ComwithPC.h"
 #include "mMotor.h"
-//#define POS_DEBUG
+#define POS_DEBUG
 #include "mPOS.c"
 
 #include "Timer1.h"
@@ -15,7 +15,6 @@
 #include "Kinematics.h"
 //#define Kinematics_DEBUG
 #include "ComwithMotor.h"
-#define Path_DEBUG
 #include "Path.h"
 
 //Beginning of Auto generated function prototypes by Atmel Studio
@@ -82,6 +81,12 @@ void loop() {
 		linear_vel_x =   float(map(PS2.analog_RY,0,255,1000,-1000))/1000;
 		linear_vel_y = 0;
 		angular_vel_z =float(map(PS2.analog_LX,0,255,3140,-3140))/1500;
+// 		Serial.print("X:");
+// 		Serial.print(x);
+// 		Serial.print("Y:");
+// 		Serial.print(y);
+// 		Serial.print("P:");
+// 		Serial.println(p);
 	}
 	pwm = kinematics.getPWM(linear_vel_x, linear_vel_y, angular_vel_z);
 	

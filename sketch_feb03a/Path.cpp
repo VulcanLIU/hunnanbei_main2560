@@ -9,38 +9,12 @@
 #include "Path.h"
 #include <math.h>
 #include "Arduino.h"
-#define Path_DEBUG
+//#define Path_DEBUG
 // default constructor
 Path::Path()
 {
 } //Path
 
-// bool Path::arrivedPoint(double x,double y,double p)
-// {
-// 	//是否到达
-// 	double distance = sqrt((x-pos[next_index][0])*(x-pos[next_index][0]) + (y-pos[next_index][1])*(y-pos[next_index][1]));
-// 	//到达
-// 	if (distance<=50)
-// 	{
-// 		next_index ++;
-// 		if (next_index>=16)
-// 		{
-// 			next_index = 0;
-// 		}
-// 		return true;
-// 	}
-// 	//没有到达
-// 	else
-// 	{
-// 		//计算两点偏角
-// 		double dx = pos[next_index][0] - x;
-// 		double dy = pos[next_index][1] - y;
-//
-// 		double da = - tanh(dy/dx);
-// 		angular_vel_z = 0.1*da;
-//
-// 	}
-// }
 /**
 * @name 	gotoPoint
 * @brief
@@ -60,6 +34,8 @@ bool Path::gotoPoint(double presentX,double presentY,double presentP,double targ
 	if (distance < 20)
 	{
 		Serial.println("Arrived");
+		linear_vel_x = 0;
+		angular_vel_z = 0;
 		return true;
 	}
 	else
@@ -74,9 +50,18 @@ bool Path::gotoPoint(double presentX,double presentY,double presentP,double targ
 		angletoCar = CcltAngleSub(angletoWorld , presentP);
 		
 		angular_vel_z = k*angletoCar;
+		linear_vel_x = 0.2;
 		
 		#ifdef Path_DEBUG
 		//显示距离差
+		Serial.print("X:");
+		Serial.print(presentX);
+		Serial.print("Y:");
+		Serial.print(presentY);
+		Serial.print("P:");
+		Serial.print(presentP);
+		Serial.print("distance:");
+		Serial.print(distance);
 		Serial.print("dx:");
 		Serial.print(dx);
 		Serial.print("dy:");

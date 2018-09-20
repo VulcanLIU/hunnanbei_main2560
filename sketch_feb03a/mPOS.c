@@ -79,9 +79,9 @@ void POS_begin()
 
 void POS_refresh()
 {
-	double x1 = (double)x_step/x_line*PI*wheel_d*1.74466;//行走的距离 单位mm；
-	double y1 = (double)y_step/y_line*PI*wheel_d*1.74466;//行走的距离 单位mm；
-	double p1 = (double)p_step/p_line*PI*wheel_d*1.74466;//行走的距离 单位mm；
+	double x1 = (double)x_step/x_line*PI*wheel_d;//*1.74466;//行走的距离 单位mm；
+	double y1 = (double)y_step/y_line*PI*wheel_d;//*1.74466;//行走的距离 单位mm；
+	double p1 = (double)p_step/p_line*PI*wheel_d;//*1.74466;//行走的距离 单位mm；
 	
 	double y2 = (y1-p1)/2;
 	double p2 = (y1+p1)/d;//弧度制rad
@@ -104,7 +104,7 @@ void POS_refresh()
 	double dax = dy*(cos(PI/2-dp_rad/2));
 	double day = dy*(sin(PI/2-dp_rad/2));
 	
-	x-= dax*cos(p_rad)+day*sin(p_rad);
+	x+= dax*cos(p_rad)+day*sin(p_rad);
 	y+= day*cos(p_rad)-dax*sin(p_rad);
 	
 	p = p_rad/PI*180;

@@ -89,19 +89,23 @@ Kinematics::output Kinematics::getPWM(float linear_x, float linear_y, float angu
 
 	if (abs(pwm.motor1)>255||abs(pwm.motor2)>255||abs(pwm.motor3)>255||abs(pwm.motor4)>255)
 	{
-		linear_x /=4;
+		if (abs(pwm.motor1)>255||abs(pwm.motor2)>255)
+		{
+			float n = 255.0/abs(pwm.motor1); //计算缩小比例
+			pwm.motor3 *= n;
+			pwm.motor4 *= n;
+			pwm.motor1 *= n;
+			pwm.motor2 *= n;
+		}
+		if (abs(pwm.motor3)>255||abs(pwm.motor4)>255)
+		{
+			float n = 255.0/abs(pwm.motor3); //计算缩小比例
+			pwm.motor3 *= n;
+			pwm.motor4 *= n;
+			pwm.motor1 *= n;
+			pwm.motor2 *= n;
+		}
 	}
-	rpm = getRPM(linear_x, linear_y, angular_z);
-	//convert from RPM to PWM
-	//front-left motor
-	pwm.motor1 = rpmToPWM(rpm.motor1);
-	//rear-left motor
-	pwm.motor2 = rpmToPWM(rpm.motor2);
-
-	//front-right motor
-	pwm.motor3 = rpmToPWM(rpm.motor3);
-	//rear-right motor
-	pwm.motor4 = rpmToPWM(rpm.motor4);
 	return pwm;
 }
 
