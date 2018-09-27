@@ -9,7 +9,7 @@
 #include "Path.h"
 #include <math.h>
 #include "Arduino.h"
-//#define Path_DEBUG
+#define Path_DEBUG
 // default constructor
 Path::Path()
 {
@@ -31,7 +31,7 @@ bool Path::gotoPoint(double presentX,double presentY,double presentP,double targ
 	double dx = targetX - presentX;
 	double dy = targetY - presentY;
 	double distance = sqrt((dx)*(dx)+(dy)*(dy));
-	if (distance < 20)
+	if (distance < 50)
 	{
 		Serial.println("Arrived");
 		linear_vel_x = 0;
@@ -41,18 +41,30 @@ bool Path::gotoPoint(double presentX,double presentY,double presentP,double targ
 	else
 	{
 		//计算相对世界偏角
-		angletoWorld =atan2(dy,dx);
+		angletoWorld =atan2(dx,dy);
 		
 		angletoWorld = angletoWorld/PI*180;
 		
 		//计算相对车的偏角
-		//angletoCar = angletoWorld - presentP;
 		angletoCar = CcltAngleSub(angletoWorld , presentP);
+			//计算两次误差差值
+			
 		
-		angular_vel_z = k*angletoCar;
-		linear_vel_x = 0.2;
+		//角度误差大用P
+		if (fabs(angletoCar)>10.00)
+		{
+			angular_vel_z = k*angletoCar;
+		}
+		else//角度误差小用PD
+		{
+			angletoCarErr = angletoCar - pre_angletoCar;//计算两次偏角的差值
+			angular_vel_z = kp2*angletoCar - kd2*angletoCarErr;
+		}
 		
-		#ifdef Path_DEBUG
+		pre_angletoCar = angletoCar; //保存偏角
+		linear_vel_x = 0.8;
+		
+		#ifndef Path_DEBUG
 		//显示距离差
 		Serial.print("X:");
 		Serial.print(presentX);
@@ -74,44 +86,13 @@ bool Path::gotoPoint(double presentX,double presentY,double presentP,double targ
 		Serial.print(angular_vel_z);
 		Serial.println();
 		#endif // Path_DEBUG
-
+		Serial.print(angletoCar);
+		Serial.print(" ");
+		Serial.println(angular_vel_z);
 		return false;
 	}
 	
 
-}
-
-bool Path::gotoP(double presentX,double presentY,double presentP,double targetX,double targetY)
-{
-	//计算位置差
-	double dx = targetX - presentX;
-	double dy = targetY - presentY;
-	
-	double distance = sqrt((dx)*(dx)+(dy)*(dy));
-
-	//计算相对世界偏角
-	angletoWorld =atan2(dy,dx);
-	
-	angletoWorld = angletoWorld/PI*180;
-	
-	//计算相对车的偏角
-	//angletoCar = angletoWorld - presentP;
-	angletoCar = CcltAngleSub(angletoWorld , presentP);
-	if (abs(angletoCar)<0.2)
-	{
-		return true;
-	}
-	else
-	{
-		angular_vel_z = k*angletoCar;
-		return false;
-	}
-	
-}
-
-void Path::setK(float k)
-{
-	this->k = k;
 }
 
 double Path::CcltAngleSub(double minuend, double subtrahend)

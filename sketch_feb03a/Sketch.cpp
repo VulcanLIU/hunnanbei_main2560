@@ -5,7 +5,7 @@
 #include "Display.h"
 #include "ComwithPC.h"
 #include "mMotor.h"
-#define POS_DEBUG
+//#define POS_DEBUG
 #include "mPOS.c"
 
 #include "Timer1.h"
@@ -29,7 +29,9 @@ Kinematics kinematics(300,0.068, 0.5,8);
 ComwithMotor cm;
 Path path;
 String state = "begin";
-
+int point[34][2]={{0,0},{0,200},{0,400},{0,600},{0,800},{0,1000},{0,1200},{0,1400},{0,1610},{200,1610},{400,1610},{600,1610},{600,1810},{600,2010},{600,2210},{600,2410},{600,2610},{600,2810},{400,2810},{200,2810},{0,2810},{-200,2810},{-400,2810},{-600,2810},{-600,2610},{-600,2410},{-600,2210},{-600,2010},{-600,1810},{-600,1610},{-400,1610},{-200,1610},{0,1610},{0,1985}};
+int i,j;
+static int index=0;
 int step = 0;
 
 void setup() {
@@ -41,7 +43,7 @@ void setup() {
 	cm.begin();
 	POS_begin();
 	
-	tc1.setMode("CTC",20);
+	tc1.setMode("CTC",50);
 	tc1.attachInterrupt(POS_refresh);
 	PS2.begin();
 
@@ -53,27 +55,43 @@ void loop() {
 	// put your main code here, to run repeatedly:
 	//PS2手柄遥控底盘
 	PS2.refresh();
-	if (PS2.shot)
-	{
-		CS.SendXYPandSHOT(x,y,p);
-		state = "Shot!!!!!";
-		PS2.shot = false;
-	}
-	else
-	{
-		state = "Running!!!!";
-	}
+// 	if (PS2.shot)
+// 	{
+// 		CS.SendXYPandSHOT(x,y,p);
+// 		state = "Shot!!!!!";
+// 		PS2.shot = false;
+// 	}
+// 	else
+// 	{
+// 		state = "Running!!!!";
+// 	}
 	
 	//解算转速
 	Kinematics::output pwm;
-	float linear_vel_x =  0;
+	float linear_vel_x = 0;
 	float linear_vel_y = 0;
 	float angular_vel_z = 0;
 	
 	if (!PS2.isRC)
 	{
-		path.gotoPoint(x,y,p,500,500);
-		linear_vel_x = path.linear_vel_x;
+		if(path.gotoPoint(x,y,p,point[index][0],point[index][1]))
+		{
+			
+			index++;
+		}
+		if(index<=34)
+		{
+			if(index==9)
+			{
+				//右转90度
+			}
+			if(index == 12||index == 18||index == 24||index == 30||index == 33)
+			{
+				//左转90度
+			}
+		}
+		else index = 0;//一圈走完，回到起点，等待下次路径规划
+        linear_vel_x = path.linear_vel_x;
 		angular_vel_z = path.angular_vel_z;
 	}
 	else
@@ -81,19 +99,8 @@ void loop() {
 		linear_vel_x =   float(map(PS2.analog_RY,0,255,1000,-1000))/1000;
 		linear_vel_y = 0;
 		angular_vel_z =float(map(PS2.analog_LX,0,255,3140,-3140))/1500;
-// 		Serial.print("X:");
-// 		Serial.print(x);
-// 		Serial.print("Y:");
-// 		Serial.print(y);
-// 		Serial.print("P:");
-// 		Serial.println(p);
 	}
 	pwm = kinematics.getPWM(linear_vel_x, linear_vel_y, angular_vel_z);
-	
-	// 	Serial2.print("linear_vel_x:");
-	// 	Serial2.print(linear_vel_x);
-	// 	Serial2.print("angular_vel_z:");
-	// 	Serial2.print(angular_vel_z);
 	
 	#ifdef Kinematics_DEBUG
 	Serial.print("pwm_motor1:");
@@ -116,4 +123,37 @@ void loop() {
 	//通过OLED显示器显示XYP
 	dp.refresh(pwm.motor1,pwm.motor2,pwm.motor3,pwm.motor4,x,y,p,PS2.state);
 	PS2.state = "";
+	
+	#ifdef POS_DEBUG
+	Serial.print("X_step:");
+	Serial.print(x_step);
+	Serial.print(" Y_step:");
+	Serial.print(y_step);
+	Serial.print(" P_step:");
+	Serial.print(p_step);
+	
+	//原始数据——>原始长度信息
+	Serial.print("X_mm:");
+	Serial.print(x1);
+	Serial.print("Y_mm:");
+	Serial.print(y1);
+	Serial.print("P_mm:");
+	Serial.print(p1);  //串口显口
+	
+	//原始数据——>原始长度信息
+	Serial.print("X2_mm:");
+	Serial.print(x2);
+	Serial.print("Y2_mm:");
+	Serial.print(y2);
+	Serial.print("P2_mm:");
+	Serial.print(p2);  //串口显口
+	
+	//最终数据
+	Serial.print("X_fina:");
+	Serial.print(x);
+	Serial.print("Y_fina:");
+	Serial.print(y);
+	Serial.print("P_fina:");
+	Serial.println(p);  //串口显口
+	#endif // SERIAL_DEBUG
 }
