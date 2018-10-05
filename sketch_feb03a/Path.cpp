@@ -61,14 +61,13 @@ bool Path::gotoPoint(double presentX,double presentY,double presentP,double targ
  		angletoWorld = angletoWorld/PI*180;
  		
  		//计算相对车的偏角
-	angletoCar = CcltAngleSub(angletoWorld , presentP);
+		angletoCar = CcltAngleSub(angletoWorld , presentP);
  			//计算两次误差差值
  		double _angletoCar = angletoCar/180*PI;
  		
  		//#角度误差大用P
  		if (fabs(angletoCar)>10.00)
  		{
- 			
  			angular_vel_z = k*_angletoCar;
  		}
  		else//角度误差小用PD
@@ -79,33 +78,6 @@ bool Path::gotoPoint(double presentX,double presentY,double presentP,double targ
  		
  		pre_angletoCar = _angletoCar; //保存偏角
  		linear_vel_x = 0.8;
-        angle.p = 0.01;
-        angle.d = 0.1;
-		
-		d_ang.p = 0;
-		d_ang.d = 0;
-		
-		counter++;
-        angle.last_erro = angle.erro;
-		angle.erro = angletoCar;
-		d_ang.last_erro = d_ang.erro;	
-		d_ang.erro = angle.out-(angle.erro - angle.last_erro);
-        
-		d_ang.out = d_ang.p*d_ang.erro + (d_ang.erro - d_ang.last_erro);
-		
-	    if(counter%5==0)
-	    {
-			if (fabs(angle.erro)>15)
-			{
-				angle.out = angle.p*angle.erro;
-			}
-			else{
-				angle.out = angle.p*angle.erro + d_ang.erro*angle.d;
-			}
-	    }
-		
-		angular_vel_z = angle.out;
-		linear_vel_x = 0.8; 
 		
 		#ifndef Path_DEBUG
 		//显示距离差
