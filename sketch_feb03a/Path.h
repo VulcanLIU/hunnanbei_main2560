@@ -23,11 +23,12 @@ public:
 					
 	//运动到目标点的函数
 	bool gotoPoint(double presentX,double presentY,double presentP,double targetX,double targetY);
+	bool rotatetoP(double presentP,double targetP);
 	
 	//P&PD 环节的K值
-	float k = -0.1;
-	float kp2 = -0.1;
-	float kd2 = 0.001;
+	float k = -4;
+	float kp2 = -4;
+	float kd2 = 0;
 	
 	//
 	double CcltAngleSub(double minuend, double subtrahend);	//计算偏角专用函数

@@ -115,7 +115,7 @@ void mPS2::refresh()
 		if(ps2x.Button(PSB_SELECT)){Serial.println("Select is being held");state="Select is being held";}
 		
 		if(ps2x.Button(PSB_PAD_UP)) {      //will be TRUE as long as button is pressed
-			Serial.print("Up held this hard: ");
+			Serial.print("Up held this hard:");
 			Serial.println(ps2x.Analog(PSAB_PAD_UP), DEC);
 			up = true;
 			state = "up is being held";

@@ -2,7 +2,10 @@
 #include <Arduino.h>
 
 /*End of auto generated code by Atmel studio */
+
 #include "Display.h"
+//#include "SecondDisplay.h"
+
 #include "ComwithPC.h"
 #include "mMotor.h"
 //#define POS_DEBUG
@@ -15,24 +18,49 @@
 #include "Kinematics.h"
 //#define Kinematics_DEBUG
 #include "ComwithMotor.h"
+//路径
 #include "Path.h"
+//任务
+#include "tasks.cpp"
+//传感器板
+#include "SensorBoard.h"
+
+#define GO_DEBUG
 
 //Beginning of Auto generated function prototypes by Atmel Studio
 //End of Auto generated function prototypes by Atmel Studio
 Display dp;
+//SecondDisplay dp2;
 ComwithPC toPC;
 mMotor motor;
 mPS2 PS2;
-Timer1 tc1;
+Timer1 tc1;  
 ComwithShot CS;
 Kinematics kinematics(300,0.068, 0.5,8);
 ComwithMotor cm;
 Path path;
+//传感器板
+SensorBoard Sensors;
+
 String state = "begin";
 int point[34][2]={{0,0},{0,200},{0,400},{0,600},{0,800},{0,1000},{0,1200},{0,1400},{0,1610},{200,1610},{400,1610},{600,1610},{600,1810},{600,2010},{600,2210},{600,2410},{600,2610},{600,2810},{400,2810},{200,2810},{0,2810},{-200,2810},{-400,2810},{-600,2810},{-600,2610},{-600,2410},{-600,2210},{-600,2010},{-600,1810},{-600,1610},{-400,1610},{-200,1610},{0,1610},{0,1985}};
 int i,j;
 static int index=0;
 int step = 0;
+
+//time_out功能
+int previous_time = 0;
+bool has_time_out = false;
+
+//PID time
+int PID_pre_time = 0;
+
+//任务列表
+task task_list[3] = {SMALL_CIRCLE_WAKING,FIX_POSITION,DO_SHOT};
+int present_task_index = 0;
+task present_task = task_list[present_task_index];
+
+void receiveEvent(int howMany);
 
 void setup() {
 	// put your setup code here, to run once:
@@ -49,22 +77,25 @@ void setup() {
 
 	PS2.refresh();
 	PS2.isRC = true;
+	
+	//申明自身的地址
+	Wire.begin(8);
+	Wire.onReceive(receiveEvent);
+	
+	//告诉分球部分分黑球还是白球
+	Wire.beginTransmission(5);
+	Wire.write(1);
+	Wire.endTransmission();
 }
 
 void loop() {
 	// put your main code here, to run repeatedly:
 	//PS2手柄遥控底盘
+	
 	PS2.refresh();
-// 	if (PS2.shot)
-// 	{
-// 		CS.SendXYPandSHOT(x,y,p);
-// 		state = "Shot!!!!!";
-// 		PS2.shot = false;
-// 	}
-// 	else
-// 	{
-// 		state = "Running!!!!";
-// 	}
+	Sensors.refresh();
+	
+	//询问收球模块收了几个
 	
 	//解算转速
 	Kinematics::output pwm;
@@ -74,9 +105,75 @@ void loop() {
 	
 	if (!PS2.isRC)
 	{
+		//四个串联任务
+		//#小圆行走
+		if (present_task == SMALL_CIRCLE_WAKING)
+		{
+			#ifdef GO_DEBUG
+			Serial.println("SMALL_CIRCLE_WAKING");
+			#endif
+			/*这里写任务具体内容	*/
+			//
+			double target_X = point[index][0];
+			double target_Y = point[index][1];
+			
+			bool arrived;
+			if (millis()-PID_pre_time >=10)
+			{
+				PID_pre_time = millis();
+				arrived = path.gotoPoint(x,y,p,target_X,target_Y);
+			}
+			
+			if (arrived == true){index++;previous_time = millis();}
+			else
+			{
+				if (millis()-previous_time >= 10000)
+				{
+					has_time_out = true;
+					Serial.println("Waring!I am in SMALL_CIRCLE_WAKING");
+				}
+			}
+			
+			/*这里负责正常任务跳转*/			
+			if (index>=34){present_task = SMALL_CIRCLE_FIX_POSITION;index = 0;Serial.println("go to  SMALL_CIRCLE_FIX_POSITION!");}//此任务完成 开始走向
+			
+			/*这里负责异常任务跳转*/
+				
+		}
+		
+		//#小圆定位程序
+		if (present_task == SMALL_CIRCLE_FIX_POSITION)
+		{	
+			//后退动作
+			if (fix_pos_list == MOVE_BACK)
+			{
+				linear_vel_y = -1;
+				angular_vel_z = 0;
+				if (Sensors.back_hit_wall == true){
+					delay(1000);
+					if (Sensors.back_hit_wall == true){
+						linear_vel_y = 0;
+						angular_vel_z = 0;
+						fix_pos_list = USE_LASER_DATA;
+					}
+				}
+			}
+			//使用激光数据_更新坐标
+			if (fix_pos_list == USE_LASER_DATA){
+				//POS_clear();		
+				x = Sensors.laser_X -2200;
+				y = 2000;
+				p = 180;	
+			}
+		}
+		if (present_task == DO_SHOT)
+		{
+		}
+		if (present_task == LARGE__CIRCLE_WAKING)
+		{
+		}
 		if(path.gotoPoint(x,y,p,point[index][0],point[index][1]))
 		{
-			
 			index++;
 		}
 		if(index<=34)
@@ -95,10 +192,14 @@ void loop() {
 		angular_vel_z = path.angular_vel_z;
 	}
 	else
-	{
-		linear_vel_x =   float(map(PS2.analog_RY,0,255,1000,-1000))/1000;
+	{	
+		linear_vel_x = float(map(PS2.analog_RY,0,255,1000,-1000))/1000;
 		linear_vel_y = 0;
 		angular_vel_z =float(map(PS2.analog_LX,0,255,3140,-3140))/1500;
+		if (PS2.left == true){angular_vel_z =float(map(68,0,255,3140,-3140))/1500;PS2.left = false;}
+		if (PS2.right == true){angular_vel_z =float(map(188,0,255,3140,-3140))/1500;PS2.right = false;}
+		if (PS2.up == true){linear_vel_x =float(map(68,0,255,1000,-1000))/1000;PS2.up = false;}
+		if (PS2.down == true){linear_vel_x =float(map(188,0,255,1000,-1000))/1000;PS2.down = false;}
 	}
 	pwm = kinematics.getPWM(linear_vel_x, linear_vel_y, angular_vel_z);
 	
@@ -116,9 +217,9 @@ void loop() {
 	cm.SendAtoALL(pwm.motor1,pwm.motor2,pwm.motor3,pwm.motor4);
 	
 	//通过蓝牙发送给上位机数据
-	toPC.tellMotors(pwm.motor1,pwm.motor2,pwm.motor3,pwm.motor4);
+	//toPC.tellMotors(pwm.motor1,pwm.motor2,pwm.motor3,pwm.motor4);
 	toPC.tellXYP(x,y,p);
-	toPC.tellState(state);
+	//toPC.tellState(state);
 	
 	//通过OLED显示器显示XYP
 	dp.refresh(pwm.motor1,pwm.motor2,pwm.motor3,pwm.motor4,x,y,p,PS2.state);
@@ -156,4 +257,10 @@ void loop() {
 	Serial.print("P_fina:");
 	Serial.println(p);  //串口显口
 	#endif // SERIAL_DEBUG
+}
+
+void receiveEvent(int howMany) {
+	while (1 < Wire.available()) { // loop through all but the last
+		int c = Wire.read(); // receive byte as a character
+	}
 }

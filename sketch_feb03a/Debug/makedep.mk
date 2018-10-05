@@ -28,6 +28,10 @@ Path.cpp
 
 PS2X_lib.cpp
 
+SecondDisplay.cpp
+
+SensorBoard.cpp
+
 Sketch.cpp
 
 src\libraries\SPI\src\SPI.cpp

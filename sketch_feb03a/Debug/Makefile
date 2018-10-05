@@ -64,6 +64,8 @@ C_SRCS +=  \
 ../mPS2.cpp \
 ../Path.cpp \
 ../PS2X_lib.cpp \
+../SecondDisplay.cpp \
+../SensorBoard.cpp \
 ../Sketch.cpp \
 ../src/libraries/SPI/src/SPI.cpp \
 ../src/libraries/Wire/src/utility/twi.c \
@@ -91,6 +93,8 @@ mMotor.o \
 mPS2.o \
 Path.o \
 PS2X_lib.o \
+SecondDisplay.o \
+SensorBoard.o \
 Sketch.o \
 src/libraries/SPI/src/SPI.o \
 src/libraries/Wire/src/utility/twi.o \
@@ -111,6 +115,8 @@ mMotor.o \
 mPS2.o \
 Path.o \
 PS2X_lib.o \
+SecondDisplay.o \
+SensorBoard.o \
 Sketch.o \
 src/libraries/SPI/src/SPI.o \
 src/libraries/Wire/src/utility/twi.o \
@@ -131,6 +137,8 @@ mMotor.d \
 mPS2.d \
 Path.d \
 PS2X_lib.d \
+SecondDisplay.d \
+SensorBoard.d \
 Sketch.d \
 src/libraries/SPI/src/SPI.d \
 src/libraries/Wire/src/utility/twi.d \
@@ -151,6 +159,8 @@ mMotor.d \
 mPS2.d \
 Path.d \
 PS2X_lib.d \
+SecondDisplay.d \
+SensorBoard.d \
 Sketch.d \
 src/libraries/SPI/src/SPI.d \
 src/libraries/Wire/src/utility/twi.d \
@@ -172,6 +182,10 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
+
+
 
 
 

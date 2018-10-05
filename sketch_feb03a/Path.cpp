@@ -10,6 +10,20 @@
 #include <math.h>
 #include "Arduino.h"
 #define Path_DEBUG
+
+struct PID{
+	
+	float erro;
+	float last_erro;
+	float p;
+	float i;
+	float d;
+	float out;
+	};
+PID angle;
+PID d_ang;
+
+
 // default constructor
 Path::Path()
 {
@@ -31,6 +45,7 @@ bool Path::gotoPoint(double presentX,double presentY,double presentP,double targ
 	double dx = targetX - presentX;
 	double dy = targetY - presentY;
 	double distance = sqrt((dx)*(dx)+(dy)*(dy));
+	static unsigned char counter;
 	if (distance < 50)
 	{
 		Serial.println("Arrived");
@@ -42,27 +57,55 @@ bool Path::gotoPoint(double presentX,double presentY,double presentP,double targ
 	{
 		//计算相对世界偏角
 		angletoWorld =atan2(dx,dy);
+ 		
+ 		angletoWorld = angletoWorld/PI*180;
+ 		
+ 		//计算相对车的偏角
+	angletoCar = CcltAngleSub(angletoWorld , presentP);
+ 			//计算两次误差差值
+ 		double _angletoCar = angletoCar/180*PI;
+ 		
+ 		//#角度误差大用P
+ 		if (fabs(angletoCar)>10.00)
+ 		{
+ 			
+ 			angular_vel_z = k*_angletoCar;
+ 		}
+ 		else//角度误差小用PD
+ 		{
+ 			angletoCarErr = _angletoCar - pre_angletoCar;//计算两次偏角的差值
+ 			angular_vel_z = kp2*_angletoCar - kd2*angletoCarErr;
+ 		}
+ 		
+ 		pre_angletoCar = _angletoCar; //保存偏角
+ 		linear_vel_x = 0.8;
+        angle.p = 0.01;
+        angle.d = 0.1;
 		
-		angletoWorld = angletoWorld/PI*180;
+		d_ang.p = 0;
+		d_ang.d = 0;
 		
-		//计算相对车的偏角
-		angletoCar = CcltAngleSub(angletoWorld , presentP);
-			//计算两次误差差值
-			
+		counter++;
+        angle.last_erro = angle.erro;
+		angle.erro = angletoCar;
+		d_ang.last_erro = d_ang.erro;	
+		d_ang.erro = angle.out-(angle.erro - angle.last_erro);
+        
+		d_ang.out = d_ang.p*d_ang.erro + (d_ang.erro - d_ang.last_erro);
 		
-		//角度误差大用P
-		if (fabs(angletoCar)>10.00)
-		{
-			angular_vel_z = k*angletoCar;
-		}
-		else//角度误差小用PD
-		{
-			angletoCarErr = angletoCar - pre_angletoCar;//计算两次偏角的差值
-			angular_vel_z = kp2*angletoCar - kd2*angletoCarErr;
-		}
+	    if(counter%5==0)
+	    {
+			if (fabs(angle.erro)>15)
+			{
+				angle.out = angle.p*angle.erro;
+			}
+			else{
+				angle.out = angle.p*angle.erro + d_ang.erro*angle.d;
+			}
+	    }
 		
-		pre_angletoCar = angletoCar; //保存偏角
-		linear_vel_x = 0.8;
+		angular_vel_z = angle.out;
+		linear_vel_x = 0.8; 
 		
 		#ifndef Path_DEBUG
 		//显示距离差
@@ -86,9 +129,6 @@ bool Path::gotoPoint(double presentX,double presentY,double presentP,double targ
 		Serial.print(angular_vel_z);
 		Serial.println();
 		#endif // Path_DEBUG
-		Serial.print(angletoCar);
-		Serial.print(" ");
-		Serial.println(angular_vel_z);
 		return false;
 	}
 	
