@@ -46,47 +46,72 @@ bool Path::gotoPoint(double presentX,double presentY,double presentP,double targ
 	double dy = targetY - presentY;
 	double distance = sqrt((dx)*(dx)+(dy)*(dy));
 	static unsigned char counter;
-	if (distance < 50)
+	
+	//计算相对世界偏角
+	angletoWorld =atan2(dx,dy);
+			
+	angletoWorld = angletoWorld/PI*180;
+			
+	//计算相对车的偏角
+	angletoCar = CcltAngleSub(angletoWorld , presentP);
+	
+	if (distance < 5)
 	{
 		Serial.println("Arrived");
 		linear_vel_x = 0;
 		angular_vel_z = 0;
 		return true;
 	}
-	else
+	else if (distance < 100)
 	{
-		//计算相对世界偏角
-		angletoWorld =atan2(dx,dy);
- 		
- 		angletoWorld = angletoWorld/PI*180;
- 		
- 		//计算相对车的偏角
-		angletoCar = CcltAngleSub(angletoWorld , presentP);
- 			//计算两次误差差值
- 		double _angletoCar = angletoCar/180*PI;
- 		
+		//#角度误差大用P
+		if (fabs(angletoCar)>20.00)
+		{
+			angular_vel_z = k*angletoCar;
+		}
+		else//角度误差小用PD
+		{
+			angletoCarErr = angletoCar - pre_angletoCar;//计算两次偏角的差值
+			if (angletoCar > 0){angular_vel_z = kp2*angletoCar - kd2*angletoCarErr;}
+			if (angletoCar < 0){angular_vel_z = kp2*angletoCar + kd2*angletoCarErr;}
+		}
+		pre_angletoCar = angletoCar; //保存偏角
+		
+		linear_vel_x = 0.2;
+	}
+	else
+	{ 		
  		//#角度误差大用P
- 		if (fabs(angletoCar)>10.00)
+ 		if (fabs(angletoCar)>20.00)
  		{
- 			angular_vel_z = k*_angletoCar;
+ 			angular_vel_z = k*angletoCar;
  		}
  		else//角度误差小用PD
  		{
- 			angletoCarErr = _angletoCar - pre_angletoCar;//计算两次偏角的差值
- 			angular_vel_z = kp2*_angletoCar - kd2*angletoCarErr;
+ 			angletoCarErr = angletoCar - pre_angletoCar;//计算两次偏角的差值
+			if (angletoCar > 0){angular_vel_z = kp2*angletoCar - kd2*angletoCarErr;}
+ 			if (angletoCar < 0){angular_vel_z = kp2*angletoCar + kd2*angletoCarErr;}
  		}
- 		
- 		pre_angletoCar = _angletoCar; //保存偏角
- 		linear_vel_x = 0.8;
+		pre_angletoCar = angletoCar; //保存偏角
 		
-		#ifndef Path_DEBUG
+ 		linear_vel_x = 1;
+		
+		#ifdef Path_DEBUG
 		//显示距离差
-		Serial.print("X:");
+		Serial.print("XYP:");
 		Serial.print(presentX);
-		Serial.print("Y:");
+		Serial.print("	");
 		Serial.print(presentY);
-		Serial.print("P:");
+		Serial.print("	");
 		Serial.print(presentP);
+		Serial.print("	");
+		
+		Serial.print("TXYP:");
+		Serial.print(targetX);
+		Serial.print("	");
+		Serial.print(targetY);
+		Serial.print("	");
+
 		Serial.print("distance:");
 		Serial.print(distance);
 		Serial.print("dx:");
@@ -103,8 +128,75 @@ bool Path::gotoPoint(double presentX,double presentY,double presentP,double targ
 		#endif // Path_DEBUG
 		return false;
 	}
-	
+}
 
+//角度制
+bool Path::rotatetoP(double presentP,double targetP)
+{
+	//计算相对车的偏角
+	angletoCar = CcltAngleSub(targetP, presentP);
+	
+	if (fabs(angletoCar)<5.00)
+	{
+		return true;
+	}
+	//#角度误差大用P
+	if (fabs(angletoCar)>15.00)
+	{
+		angular_vel_z = k*angletoCar;
+	}
+	else//角度误差小用PD
+	{
+		angletoCarErr = angletoCar - pre_angletoCar;//计算两次偏角的差值
+		if (angletoCar > 0){angular_vel_z = kp2*angletoCar - kd2*angletoCarErr;}
+		if (angletoCar < 0){angular_vel_z = kp2*angletoCar + kd2*angletoCarErr;}
+	}
+	pre_angletoCar = angletoCar; //保存偏角
+	
+	linear_vel_x = 0;
+	
+	#ifdef Path_DEBUG
+	//显示距离差
+	Serial.print(presentP);
+	Serial.print("	");
+			
+	Serial.print("TP:");
+	Serial.print(targetP);
+	Serial.print("	");
+
+	Serial.print("angletoWorld:");
+	Serial.print(angletoWorld);
+	Serial.print("angletoCar:");
+	Serial.print(angletoCar);
+	Serial.print("angular_vel_z:");
+	Serial.print(angular_vel_z);
+	Serial.println();
+	#endif // Path_DEBUG
+	
+	return false;
+}
+
+bool Path::rotatetoP(double presentX,double presentY,double presentP,double targetX,double targetY)
+{
+	//计算位置差
+	double dx = targetX - presentX;
+	double dy = targetY - presentY;
+	
+	//计算相对世界偏角
+	angletoWorld =atan2(dx,dy);
+	
+	angletoWorld = angletoWorld/PI*180;
+	
+	#ifdef Path_DEBUG
+	Serial.print("XYP:");
+	Serial.print(presentX);
+	Serial.print("	");
+	Serial.print(presentY);
+	Serial.print("	");	
+	#endif
+
+	
+	return rotatetoP(presentP,angletoWorld);
 }
 
 double Path::CcltAngleSub(double minuend, double subtrahend)

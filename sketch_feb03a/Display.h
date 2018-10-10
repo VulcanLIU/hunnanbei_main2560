@@ -18,7 +18,7 @@ public:
 	void begin();
 	void displayTime(int);
 	void displayStr(String str);
-	void refresh(int L1_speed,int L2_speed,int R1_speed,int R2_speed,double pos_x,double pos_y,double pos_p,String state);
+	void refresh(int L1_speed,int L2_speed,int R1_speed,int R2_speed,double pos_x,double pos_y,double pos_p,String state,double Yaw,double Pitch,double Row);
 protected:
 private:
 	const int time_x = 0;const int time_y = 0;
@@ -41,7 +41,11 @@ private:
 	const int X_real_x = 0;const int X_real_y = 46;const int Y_real_x = 64;const int Y_real_y = 46;
 	const int P_real_x = 0;const int P_real_y = 54;
 	//line 62
-	//const PS2_state = 40;
+	//+++++++++
+	//+++++++++
+	//line 64
+	const int Yaw_x = 0;const int Yaw_y = 46;const int Pitch_x = 64,Pitch_y = 46;
+	const int Row_x = 0,Row_y = 54;
 	
 }; //Display
 

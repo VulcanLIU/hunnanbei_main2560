@@ -48,7 +48,7 @@ void Display::displayStr(String str)
 	display.display();
 }
 
-void Display::refresh(int L1_speed,int L2_speed,int R1_speed,int R2_speed,double pos_x,double pos_y,double pos_p,String state)
+void Display::refresh(int L1_speed,int L2_speed,int R1_speed,int R2_speed,double pos_x,double pos_y,double pos_p,String state,double Yaw,double Pitch,double Row)
 {
 	display.setTextSize(1);
 	display.setTextColor(WHITE);
@@ -84,10 +84,22 @@ void Display::refresh(int L1_speed,int L2_speed,int R1_speed,int R2_speed,double
 	display.print("P_mm:");
 	display.print(pos_p);
 	
-	//ÏÔÊ¾Ò£¿ØÆ÷×´Ì¬
-	display.setCursor(X_real_x,X_encode_y);
-	display.print("PS2:");
-	display.print(state);
+// 	//ÏÔÊ¾Ò£¿ØÆ÷×´Ì¬
+// 	display.setCursor(X_real_x,X_encode_y);
+// 	display.print("PS2:");
+// 	display.print(state);
+	//ÏÔÊ¾¸÷¸ö½Ç¶È
+	display.setCursor(Yaw_x,Yaw_y);
+	display.print("Yaw:");
+	display.print(Yaw);
+	
+	display.setCursor(Pitch_x,Pitch_y);
+	display.print("Pitch:");
+	display.print(Pitch);
+	
+	display.setCursor(Row_x,Row_y);
+	display.print("Row:");
+	display.print(Row);
 	
 	display.display();
 }

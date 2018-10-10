@@ -47,7 +47,8 @@
       <ToolOptions>
         <InterfaceProperties>
         </InterfaceProperties>
-        <InterfaceName>ISP</InterfaceName>
+        <InterfaceName>
+        </InterfaceName>
       </ToolOptions>
       <ToolType>com.atmel.avrdbg.tool.simulator</ToolType>
       <ToolNumber>
@@ -58,7 +59,7 @@
     <com_atmel_avrdbg_tool_atmelice>
       <ToolOptions>
         <InterfaceProperties>
-          <IspClock>125000</IspClock>
+          <IspClock>2000000</IspClock>
         </InterfaceProperties>
         <InterfaceName>ISP</InterfaceName>
       </ToolOptions>
@@ -66,7 +67,7 @@
       <ToolNumber>J41800099777</ToolNumber>
       <ToolName>Atmel-ICE</ToolName>
     </com_atmel_avrdbg_tool_atmelice>
-    <avrtoolinterfaceclock>125000</avrtoolinterfaceclock>
+    <avrtoolinterfaceclock>2000000</avrtoolinterfaceclock>
     <custom>
       <ToolOptions xmlns="">
         <InterfaceProperties>
@@ -279,6 +280,12 @@
     <Compile Include="Adafruit_SSD1306.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="ComwithGY25.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ComwithGY25.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="ComwithMotor.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -328,6 +335,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="mMotor.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Timer3.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Timer3.h">
       <SubType>compile</SubType>
     </Compile>
     <None Include="mPOS.c">
