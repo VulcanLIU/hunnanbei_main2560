@@ -69,3 +69,5 @@ void ComwithShot::SendXYPandSHOT(double x,double y,double p)
 	Wire.println("SHOT");
 	Wire.endTransmission();
 }
+
+ComwithShot CS =  ComwithShot();

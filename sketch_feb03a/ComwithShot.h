@@ -15,6 +15,8 @@ class ComwithShot
 public:
 	const int address = 5;//ÉäÇòÄ£¿éµÄµØÖ·
 	
+	int StartMillis = 0;
+	
 	bool connected = false;
 	
 	ComwithShot();
@@ -22,5 +24,5 @@ public:
 	void check();
 	void SendXYPandSHOT(double,double,double);
 }; //ComwithShot
-
+extern ComwithShot CS; 
 #endif //__COMWITHSHOT_H__

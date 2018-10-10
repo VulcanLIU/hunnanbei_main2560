@@ -207,7 +207,7 @@ size_t TwoWire::write(uint8_t data)
   // in slave send mode
     // reply to master
     twi_transmit(&data, 1);
-  }
+  } 
   return 1;
 }
 

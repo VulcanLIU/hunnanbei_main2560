@@ -34,7 +34,7 @@ public:
 	uint8_t value1 = 0;
 	uint8_t value2 = 0;
 	
-	//存放五个激光数据和由激光解算出来的角度和坐标
+	//存放三个激光数据
 	double R1_laser = 0;
 	double L1_laser = 0;
 	double B_laser = 0;

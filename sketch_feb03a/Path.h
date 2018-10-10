@@ -9,6 +9,7 @@
 #ifndef __PATH_H__
 #define __PATH_H__
 
+#define Path_DEBUG
 
 class Path
 {

@@ -3,59 +3,43 @@
 
 /*End of auto generated code by Atmel studio */
 
-#include "Display.h"
-//#include "SecondDisplay.h"
+//#debug开关
+//#define POS_DEBUG
+//#define  PS2_DEBUG
+//#define Kinematics_DEBUG
+//#define GY25_DEBUG
+#define GO_DEBUG
+//#define Sensorboard_DEBUG
 
+#include "Display.h"
 #include "ComwithPC.h"
 #include "mMotor.h"
-//#define POS_DEBUG
 #include "mPOS.c"
-
 #include "Timer1.h"
 #include "Timer3.h"
-
 #include "mPS2.h"
-#define  PS2_DEBUG
 #include "ComwithShot.h"
 #include "Kinematics.h"
-//#define Kinematics_DEBUG
 #include "ComwithMotor.h"
-//路径
 #include "Path.h"
-//任务
 #include "tasks.cpp"
-//传感器板
 #include "SensorBoard.h"
-//GY25
 #include "ComwithGY25.h"
-//#define GY25_DEBUG
-//#define GO_DEBUG
 
 //Beginning of Auto generated function prototypes by Atmel Studio
 //End of Auto generated function prototypes by Atmel Studio
 Display dp;
-//SecondDisplay dp2;
 ComwithPC toPC;
 mMotor motor;
 mPS2 PS2;
-
 Timer1 tc1;
 Timer3 tc3;
-
-ComwithShot CS;
 Kinematics kinematics(300,0.068, 0.5,8);
 ComwithMotor cm;
 Path path;
-//传感器板
 SensorBoard Sensors;
-//GY25
-//ComwithGY25 GY25;
 
 String state = "begin";
-// int point[41][2]={{0,0},{0,200},{0,400},{0,600},{0,800},{0,1000},{0,1210},{40,1360},{150,1470},{300,1510},{465,1510},
-// {583,1550},{669,1627},{700,1745},{700,1945},{700,2145},{700,2345},{700,2545},{700,2675},
-// {669,2825},{583,2879},{465,2910},{265,2910},{65,2910},{-265,2910},{-465,2910},{-583,2879},{-669,2825},{-700,2675},
-// {-700,2475},{-700,2275},{-700,2075},{-700,1875},{-700,1745},{-669,1627},{-583,1550},{-465,1510},{-265,1510},{-124,1569},{0,1710},{0,1745}};
 int point[34][2]={{0,0},{0,200},{0,400},{0,600},{0,800},{0,1000},
 	{0,1200},{0,1400},{0,1610},{200,1610},{400,1610},{600,1610},
 		{600,1810},{600,2010},{600,2210},{600,2410},{600,2610},
@@ -107,23 +91,41 @@ void setup() {
 	
 	//申明自身的地址
 	Wire.begin(8);
+	Wire.setClock(400000);
 	Wire.onReceive(receiveEvent);
 }
 
 void loop() {
 	// put your main code here, to run repeatedly:
-	//PS2手柄遥控底盘
 	
+	//#PS2手柄遥控底盘
 	PS2.refresh();
-	Sensors.refresh();
 	
-	//陀螺仪刷新
+	//#传感器板更新
+	//Sensors.refresh();
+	Sensors.getInfo();
+	#ifdef Sensorboard_DEBUG
+	Serial.print("R_cm:");
+	Serial.print(Sensors.R1_laser);
+	Serial.print("	L_cm:");
+	Serial.print(Sensors.L1_laser);
+	Serial.print("	B_cm:");
+	Serial.print(Sensors.B_laser);
+	Serial.print("	value1:");
+	Serial.print(Sensors.value1);
+	Serial.print("	value2:");
+	Serial.println(Sensors.value2);
+	#endif
+	
+	//#陀螺仪刷新
 	GY25.singleMode();
 	
+	//#沟通分球
 	toFenQiu();
 	//询问收球模块收了几个
 	askforFenQiu();
-	//解算转速
+	
+	//#解算转速
 	Kinematics::output pwm;
 	float linear_vel_x = 0;
 	float linear_vel_y = 0;
@@ -135,75 +137,39 @@ void loop() {
 		//#小圆行走
 		if (present_task == SMALL_CIRCLE_WAKING)
 		{
-			if (index == 0){if (path.gotoPoint(x,y,p,0,1400)){index++;}}
-			if (index == 1){if (path.rotatetoP(p,90)){index++;}}
-			if (index == 2){if (path.gotoPoint(x,y,p,600,1400)){index++;}}
-			if (index == 3){if (path.rotatetoP(p,0)){index++;}}
-			if (index == 4){if (path.gotoPoint(x,y,p,600,2400)){index++;}}
-			if (index == 5){if (path.rotatetoP(p,-90)){index++;}}
-			if (index == 6){if (path.gotoPoint(x,y,p,-600,2400)){index++;}}
-			if (index == 7){if (path.rotatetoP(p,-180)){index++;}}
-			if (index == 8){if (path.gotoPoint(x,y,p,-600,1400)){index++;}}
-			if (index == 9){if (path.rotatetoP(p,-180)){index++;}}
-			if (index == 10){Serial.print("OjbK");}
 			/*这里写任务具体内容	*/
-			//  
-			double target_X = point[index][0];
-			double target_Y = point[index][1];
-			
-// 			bool arrived;
-// 			
-// 			if (path.rotatetoP(x,y,p,target_X,target_Y))
-// 			{
-// 				arrived = path.gotoPoint(x,y,p,target_X,target_Y);
-// 			}
-// 			else
-// 			{
-// 				arrived = false;
-// 			}
-			
-			//path.rotatetoP(x,y,p,1000,0);
+			if (index == 0){if (path.gotoPoint(x,y,p,0,1560)){index++;}}
+			if (index == 1){if (path.rotatetoP(p,90)){index++;}}
+			if (index == 2){if (path.gotoPoint(x,y,p,600,1560)){index++;}}
+			if (index == 3){if (path.rotatetoP(p,0)){index++;}}
+			if (index == 4){if (path.gotoPoint(x,y,p,600,2740)){index++;}}
+			if (index == 5){if (path.rotatetoP(p,-90)){index++;}}
+			if (index == 6){if (path.gotoPoint(x,y,p,-600,2740)){index++;}}
+			if (index == 7){if (path.rotatetoP(p,-179)){index++;}}
+			if (index == 8){if (path.gotoPoint(x,y,p,-600,1560)){index++;}}
+			if (index == 9){if (path.rotatetoP(p,90)){index++;}}
+			if (index == 10){if (path.gotoPoint(x,y,p,0,1560)){index++;}}
+			if (index == 11){if (path.rotatetoP(p,179)){index++;}}
 			
 			#ifdef GO_DEBUG
 			Serial.print("SMALL_CIRCLE_WAKING");
 			Serial.print("	");
-			Serial.print("TargetXY:");
-			Serial.print(target_X);
-			Serial.print(",");
-			Serial.print(target_Y);
-			Serial.print("	");
-			Serial.print("NowXY:");
-			Serial.print(x);
-			Serial.print(",");
-			Serial.println(y);	
 			#endif
-					
-// 			if (arrived == true){index++;previous_time = millis();}
-// 			else
-// 			{
-// 				if (millis()-previous_time >= 10000)
-// 				{
-// 					has_time_out = true;
-// 					
-// 					#ifdef GO_DEBUG
-// 					Serial.println("Waring!I am in SMALL_CIRCLE_WAKING");
-// 					#endif
-// 				}
-// 			}
 			
 			/*这里负责正常任务跳转*/
-			if (index>=34){present_task = SMALL_CIRCLE_FIX_POSITION;index = 0;Serial.println("go to  SMALL_CIRCLE_FIX_POSITION!");}//此任务完成 开始走向
+			if (index>=12){present_task = SMALL_CIRCLE_FIX_POSITION;index = 0;Serial.println("go to  SMALL_CIRCLE_FIX_POSITION!");}//此任务完成 开始走向
 			
-			/*这里负责异常任务跳转*/
-			
+			/*这里负责异常任务跳转*/		
 		}
 		
 		//#小圆定位程序
-		if (present_task == SMALL_CIRCLE_FIX_POSITION)
-		{
+		if (present_task == SMALL_CIRCLE_FIX_POSITION){
 			//后退动作
-			if (fix_pos_list == MOVE_BACK)
-			{
+			#ifdef GO_DEBUG
+			Serial.println("SMALL_CIRCLE_FIX_POSITION");
+			Serial.print("	");
+			#endif
+			if (fix_pos_list == MOVE_BACK){
 				linear_vel_x = -1;
 				angular_vel_z = 0;
 				if (Sensors.back_hit_wall == true){
@@ -215,6 +181,56 @@ void loop() {
 					}
 				}
 			}
+			if (fix_pos_list == USE_LASER_DATA){
+					x2 = Sensors.L1_laser;
+					y2 = 2000;
+					present_task = DO_SHOT;
+			}
+		}
+		
+		//#小圆射球程序
+		if (present_task == DO_SHOT)
+		{
+			#ifdef GO_DEBUG
+			Serial.print("DO_SHOT");
+			Serial.print("	");
+			#endif
+			CS.begin();
+			CS.SendXYPandSHOT(x,y,p);
+			CS.StartMillis = millis();
+			present_task = STAY;
+		}
+		//#小圆等待
+		if (present_task == STAY)
+		{
+			#ifdef GO_DEBUG
+			Serial.print("STAY");
+			Serial.print("	");
+			#endif
+			if (millis() - CS.StartMillis>30000){present_task = LARGE_CIRCLE_WAKING;}
+			else{}
+		}
+		//#大圆行走
+		if (present_task == LARGE_CIRCLE_WAKING)
+		{
+			#ifdef GO_DEBUG
+			Serial.print(" LARGE_CIRCLE_WAKING");
+			Serial.print("	");
+			#endif
+			if (index == 0){if (path.rotatetoP(p,90)){index++;}}
+			if (index == 1){if (path.gotoPoint(x,y,p,1000,1160)){index++;}}
+			if (index == 2){if (path.rotatetoP(p,0)){index++;}}
+			if (index == 3){if (path.gotoPoint(x,y,p,1000,3140)){index++;}}
+			if (index == 4){if (path.rotatetoP(p,-90)){index++;}}
+			if (index == 5){if (path.gotoPoint(x,y,p,-1000,3140)){index++;}}
+			if (index == 6){if (path.rotatetoP(p,-179)){index++;}}
+			if (index == 7){if (path.gotoPoint(x,y,p,-1000,1160)){index++;}}
+			if (index == 8){if (path.rotatetoP(p,90)){index++;}};
+				//待改
+			if (index == 9){if (path.gotoPoint(x,y,p,0,1160)){index++;}}
+			if (index == 10){if (path.rotatetoP(p,90)){index++;}};
+			
+			
 		}
 		linear_vel_x = path.linear_vel_x;
 		angular_vel_z = path.angular_vel_z;
@@ -255,7 +271,7 @@ void loop() {
 	PS2.state = "";
 	
 	#ifdef POS_DEBUG
-	Serial.print("X_step:");
+	Serial.print("X_step:");   
 	Serial.print(x_step);
 	Serial.print(" Y_step:");
 	Serial.print(y_step);

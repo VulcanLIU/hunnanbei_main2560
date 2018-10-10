@@ -9,7 +9,7 @@
 #include "Path.h"
 #include <math.h>
 #include "Arduino.h"
-#define Path_DEBUG
+
 
 struct PID{
 	
