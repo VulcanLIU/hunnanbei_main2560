@@ -15,19 +15,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   5 .debug_aranges 00001098  00000000  00000000  00008c6c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   0002ce09  00000000  00000000  00009d04  2**0
+  6 .debug_info   0002ce01  00000000  00000000  00009d04  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00006331  00000000  00000000  00036b0d  2**0
+  7 .debug_abbrev 00006311  00000000  00000000  00036b05  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   0000a002  00000000  00000000  0003ce3e  2**0
+  8 .debug_line   0000a00b  00000000  00000000  0003ce16  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000042c8  00000000  00000000  00046e40  2**2
+  9 .debug_frame  000042c8  00000000  00000000  00046e24  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000056f0  00000000  00000000  0004b108  2**0
+ 10 .debug_str    000056f0  00000000  00000000  0004b0ec  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00019e7a  00000000  00000000  000507f8  2**0
+ 11 .debug_loc    00019e7a  00000000  00000000  000507dc  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00001390  00000000  00000000  0006a672  2**0
+ 12 .debug_ranges 00001390  00000000  00000000  0006a656  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -9745,10 +9745,10 @@ void SensorBoard::refresh()
     46be:	7a 83       	std	Y+2, r23	; 0x02
     46c0:	8b 83       	std	Y+3, r24	; 0x03
     46c2:	9c 83       	std	Y+4, r25	; 0x04
-    46c4:	20 91 dc 0c 	lds	r18, 0x0CDC	; 0x800cdc <_p2>
-    46c8:	30 91 dd 0c 	lds	r19, 0x0CDD	; 0x800cdd <_p2+0x1>
-    46cc:	40 91 de 0c 	lds	r20, 0x0CDE	; 0x800cde <_p2+0x2>
-    46d0:	50 91 df 0c 	lds	r21, 0x0CDF	; 0x800cdf <_p2+0x3>
+    46c4:	20 91 5a 0e 	lds	r18, 0x0E5A	; 0x800e5a <_p2>
+    46c8:	30 91 5b 0e 	lds	r19, 0x0E5B	; 0x800e5b <_p2+0x1>
+    46cc:	40 91 5c 0e 	lds	r20, 0x0E5C	; 0x800e5c <_p2+0x2>
+    46d0:	50 91 5d 0e 	lds	r21, 0x0E5D	; 0x800e5d <_p2+0x3>
     46d4:	c3 01       	movw	r24, r6
     46d6:	b2 01       	movw	r22, r4
     46d8:	0e 94 01 2f 	call	0x5e02	; 0x5e02 <__subsf3>
@@ -9803,10 +9803,10 @@ void SensorBoard::refresh()
     4748:	7a 87       	std	Y+10, r23	; 0x0a
     474a:	8b 87       	std	Y+11, r24	; 0x0b
     474c:	9c 87       	std	Y+12, r25	; 0x0c
-    474e:	40 92 dc 0c 	sts	0x0CDC, r4	; 0x800cdc <_p2>
-    4752:	50 92 dd 0c 	sts	0x0CDD, r5	; 0x800cdd <_p2+0x1>
-    4756:	60 92 de 0c 	sts	0x0CDE, r6	; 0x800cde <_p2+0x2>
-    475a:	70 92 df 0c 	sts	0x0CDF, r7	; 0x800cdf <_p2+0x3>
+    474e:	40 92 5a 0e 	sts	0x0E5A, r4	; 0x800e5a <_p2>
+    4752:	50 92 5b 0e 	sts	0x0E5B, r5	; 0x800e5b <_p2+0x1>
+    4756:	60 92 5c 0e 	sts	0x0E5C, r6	; 0x800e5c <_p2+0x2>
+    475a:	70 92 5d 0e 	sts	0x0E5D, r7	; 0x800e5d <_p2+0x3>
     475e:	c3 01       	movw	r24, r6
     4760:	b2 01       	movw	r22, r4
     4762:	0e 94 cc 2f 	call	0x5f98	; 0x5f98 <cos>
@@ -10086,16 +10086,16 @@ void setup() {
     49f0:	52 ec       	ldi	r21, 0xC2	; 194
     49f2:	61 e0       	ldi	r22, 0x01	; 1
     49f4:	70 e0       	ldi	r23, 0x00	; 0
-    49f6:	85 e2       	ldi	r24, 0x25	; 37
+    49f6:	81 e2       	ldi	r24, 0x21	; 33
     49f8:	9e e0       	ldi	r25, 0x0E	; 14
     49fa:	0e 94 22 12 	call	0x2444	; 0x2444 <_ZN9ComwithPC5beginEm>
 	
 	dp.begin();
-    49fe:	86 e2       	ldi	r24, 0x26	; 38
+    49fe:	82 e2       	ldi	r24, 0x22	; 34
     4a00:	9e e0       	ldi	r25, 0x0E	; 14
     4a02:	0e 94 e2 12 	call	0x25c4	; 0x25c4 <_ZN7Display5beginEv>
 	cm.begin();
-    4a06:	85 e9       	ldi	r24, 0x95	; 149
+    4a06:	81 e9       	ldi	r24, 0x91	; 145
     4a08:	9d e0       	ldi	r25, 0x0D	; 13
     4a0a:	0e 94 a9 11 	call	0x2352	; 0x2352 <_ZN12ComwithMotor5beginEv>
 	POS_begin();
@@ -10112,7 +10112,7 @@ void setup() {
     4a20:	be 01       	movw	r22, r28
     4a22:	6f 5f       	subi	r22, 0xFF	; 255
     4a24:	7f 4f       	sbci	r23, 0xFF	; 255
-    4a26:	83 ef       	ldi	r24, 0xF3	; 243
+    4a26:	8f ee       	ldi	r24, 0xEF	; 239
     4a28:	9d e0       	ldi	r25, 0x0D	; 13
     4a2a:	0e 94 60 2e 	call	0x5cc0	; 0x5cc0 <_ZN6Timer17setModeE6Stringi>
     4a2e:	ce 01       	movw	r24, r28
@@ -10121,7 +10121,7 @@ void setup() {
 	tc1.attachInterrupt(POS_refresh);
     4a36:	6e e7       	ldi	r22, 0x7E	; 126
     4a38:	72 e2       	ldi	r23, 0x22	; 34
-    4a3a:	83 ef       	ldi	r24, 0xF3	; 243
+    4a3a:	8f ee       	ldi	r24, 0xEF	; 239
     4a3c:	9d e0       	ldi	r25, 0x0D	; 13
     4a3e:	0e 94 cf 2e 	call	0x5d9e	; 0x5d9e <_ZN6Timer115attachInterruptEPFvvE>
 
@@ -10141,16 +10141,16 @@ void setup() {
 	
 	//PS2手柄
 	PS2.begin();
-    4a5a:	8f ef       	ldi	r24, 0xFF	; 255
+    4a5a:	8b ef       	ldi	r24, 0xFB	; 251
     4a5c:	9d e0       	ldi	r25, 0x0D	; 13
     4a5e:	0e 94 89 17 	call	0x2f12	; 0x2f12 <_ZN4mPS25beginEv>
 	PS2.refresh();
-    4a62:	8f ef       	ldi	r24, 0xFF	; 255
+    4a62:	8b ef       	ldi	r24, 0xFB	; 251
     4a64:	9d e0       	ldi	r25, 0x0D	; 13
     4a66:	0e 94 16 18 	call	0x302c	; 0x302c <_ZN4mPS27refreshEv>
 	PS2.isRC = true;
     4a6a:	81 e0       	ldi	r24, 0x01	; 1
-    4a6c:	80 93 18 0e 	sts	0x0E18, r24	; 0x800e18 <PS2+0x19>
+    4a6c:	80 93 14 0e 	sts	0x0E14, r24	; 0x800e14 <PS2+0x19>
 	
 	//申明自身的地址
 	Wire.begin(8);
@@ -10188,11 +10188,7 @@ void serialEvent3() {
     4a9e:	0c 94 f3 0f 	jmp	0x1fe6	; 0x1fe6 <_ZN11ComwithGY257refreshEv>
 
 00004aa2 <_GLOBAL__sub_I_x>:
-	y2+= dy2*cos(p2)-dx2*sin(p2);
-	
-	x = x2;
-	y = y2;
-	p = p2/PI*180;
+}
     4aa2:	cf 92       	push	r12
     4aa4:	df 92       	push	r13
     4aa6:	ef 92       	push	r14
@@ -10205,34 +10201,34 @@ void serialEvent3() {
 //Beginning of Auto generated function prototypes by Atmel Studio
 //End of Auto generated function prototypes by Atmel Studio
 Display dp;
-    4aae:	86 e2       	ldi	r24, 0x26	; 38
+    4aae:	82 e2       	ldi	r24, 0x22	; 34
     4ab0:	9e e0       	ldi	r25, 0x0E	; 14
     4ab2:	0e 94 9a 12 	call	0x2534	; 0x2534 <_ZN7DisplayC1Ev>
 //SecondDisplay dp2;
 ComwithPC toPC;
-    4ab6:	85 e2       	ldi	r24, 0x25	; 37
+    4ab6:	81 e2       	ldi	r24, 0x21	; 33
     4ab8:	9e e0       	ldi	r25, 0x0E	; 14
     4aba:	0e 94 21 12 	call	0x2442	; 0x2442 <_ZN9ComwithPCC1Ev>
 mMotor motor;
-    4abe:	89 e1       	ldi	r24, 0x19	; 25
+    4abe:	85 e1       	ldi	r24, 0x15	; 21
     4ac0:	9e e0       	ldi	r25, 0x0E	; 14
     4ac2:	0e 94 0f 17 	call	0x2e1e	; 0x2e1e <_ZN6mMotorC1Ev>
 mPS2 PS2;
-    4ac6:	8f ef       	ldi	r24, 0xFF	; 255
+    4ac6:	8b ef       	ldi	r24, 0xFB	; 251
     4ac8:	9d e0       	ldi	r25, 0x0D	; 13
     4aca:	0e 94 66 17 	call	0x2ecc	; 0x2ecc <_ZN4mPS2C1Ev>
 
 Timer1 tc1;
-    4ace:	83 ef       	ldi	r24, 0xF3	; 243
+    4ace:	8f ee       	ldi	r24, 0xEF	; 239
     4ad0:	9d e0       	ldi	r25, 0x0D	; 13
     4ad2:	0e 94 4b 2e 	call	0x5c96	; 0x5c96 <_ZN6Timer1C1Ev>
 Timer3 tc3;
-    4ad6:	87 ee       	ldi	r24, 0xE7	; 231
+    4ad6:	83 ee       	ldi	r24, 0xE3	; 227
     4ad8:	9d e0       	ldi	r25, 0x0D	; 13
     4ada:	0e 94 24 17 	call	0x2e48	; 0x2e48 <_ZN6Timer3C1Ev>
 
 ComwithShot CS;
-    4ade:	84 ee       	ldi	r24, 0xE4	; 228
+    4ade:	80 ee       	ldi	r24, 0xE0	; 224
     4ae0:	9d e0       	ldi	r25, 0x0D	; 13
     4ae2:	0e 94 93 12 	call	0x2526	; 0x2526 <_ZN11ComwithShotC1Ev>
 Kinematics kinematics(300,0.068, 0.5,8);
@@ -10249,20 +10245,20 @@ Kinematics kinematics(300,0.068, 0.5,8);
     4afa:	5d e3       	ldi	r21, 0x3D	; 61
     4afc:	6c e2       	ldi	r22, 0x2C	; 44
     4afe:	71 e0       	ldi	r23, 0x01	; 1
-    4b00:	86 eb       	ldi	r24, 0xB6	; 182
+    4b00:	82 eb       	ldi	r24, 0xB2	; 178
     4b02:	9d e0       	ldi	r25, 0x0D	; 13
     4b04:	0e 94 75 14 	call	0x28ea	; 0x28ea <_ZN10KinematicsC1Eiffi>
 ComwithMotor cm;
-    4b08:	85 e9       	ldi	r24, 0x95	; 149
+    4b08:	81 e9       	ldi	r24, 0x91	; 145
     4b0a:	9d e0       	ldi	r25, 0x0D	; 13
     4b0c:	0e 94 6e 10 	call	0x20dc	; 0x20dc <_ZN12ComwithMotorC1Ev>
 Path path;
-    4b10:	8f e1       	ldi	r24, 0x1F	; 31
+    4b10:	8b e1       	ldi	r24, 0x1B	; 27
     4b12:	9d e0       	ldi	r25, 0x0D	; 13
     4b14:	0e 94 95 19 	call	0x332a	; 0x332a <_ZN4PathC1Ev>
 //传感器板
 SensorBoard Sensors;
-    4b18:	8b ee       	ldi	r24, 0xEB	; 235
+    4b18:	87 ee       	ldi	r24, 0xE7	; 231
     4b1a:	9c e0       	ldi	r25, 0x0C	; 12
     4b1c:	a7 dc       	rcall	.-1714   	; 0x446c <_ZN11SensorBoardC1Ev>
 //GY25
@@ -10271,7 +10267,7 @@ SensorBoard Sensors;
 String state = "begin";
     4b1e:	61 e0       	ldi	r22, 0x01	; 1
     4b20:	7c e0       	ldi	r23, 0x0C	; 12
-    4b22:	85 ee       	ldi	r24, 0xE5	; 229
+    4b22:	81 ee       	ldi	r24, 0xE1	; 225
     4b24:	9c e0       	ldi	r25, 0x0C	; 12
     4b26:	0e 94 49 3d 	call	0x7a92	; 0x7a92 <_ZN6StringC1EPKc>
 int PID_pre_time = 0;
@@ -10280,17 +10276,18 @@ int PID_pre_time = 0;
 task task_list[3] = {SMALL_CIRCLE_WAKING,FIX_POSITION,DO_SHOT};
 int present_task_index = 0;
 task present_task = task_list[present_task_index];
-    4b2a:	e0 91 e1 0c 	lds	r30, 0x0CE1	; 0x800ce1 <present_task_index>
-    4b2e:	f0 91 e2 0c 	lds	r31, 0x0CE2	; 0x800ce2 <present_task_index+0x1>
+    4b2a:	e0 91 dd 0c 	lds	r30, 0x0CDD	; 0x800cdd <present_task_index>
+    4b2e:	f0 91 de 0c 	lds	r31, 0x0CDE	; 0x800cde <present_task_index+0x1>
     4b32:	e3 5c       	subi	r30, 0xC3	; 195
     4b34:	f9 4f       	sbci	r31, 0xF9	; 249
     4b36:	80 81       	ld	r24, Z
-    4b38:	80 93 e0 0c 	sts	0x0CE0, r24	; 0x800ce0 <present_task>
-	y2+= dy2*cos(p2)-dx2*sin(p2);
-	
-	x = x2;
-	y = y2;
-	p = p2/PI*180;
+    4b38:	80 93 dc 0c 	sts	0x0CDC, r24	; 0x800cdc <present_task>
+	}
+}
+
+void serialEvent3() {
+	GY25.refresh();
+}
     4b3c:	1f 91       	pop	r17
     4b3e:	0f 91       	pop	r16
     4b40:	ff 90       	pop	r15
@@ -10306,7 +10303,7 @@ SensorBoard Sensors;
 //ComwithGY25 GY25;
 
 String state = "begin";
-    4b4a:	85 ee       	ldi	r24, 0xE5	; 229
+    4b4a:	81 ee       	ldi	r24, 0xE1	; 225
     4b4c:	9c e0       	ldi	r25, 0x0C	; 12
     4b4e:	0e 94 e2 3c 	call	0x79c4	; 0x79c4 <_ZN6StringD1Ev>
 ComwithPC toPC;
@@ -10315,7 +10312,7 @@ mPS2 PS2;
 
 Timer1 tc1;
 Timer3 tc3;
-    4b52:	87 ee       	ldi	r24, 0xE7	; 231
+    4b52:	83 ee       	ldi	r24, 0xE3	; 227
     4b54:	9d e0       	ldi	r25, 0x0D	; 13
     4b56:	0e 94 39 17 	call	0x2e72	; 0x2e72 <_ZN6Timer3D1Ev>
 //SecondDisplay dp2;
@@ -10324,7 +10321,7 @@ mMotor motor;
 mPS2 PS2;
 
 Timer1 tc1;
-    4b5a:	83 ef       	ldi	r24, 0xF3	; 243
+    4b5a:	8f ee       	ldi	r24, 0xEF	; 239
     4b5c:	9d e0       	ldi	r25, 0x0D	; 13
     4b5e:	0e 94 d4 2e 	call	0x5da8	; 0x5da8 <_ZN6Timer1D1Ev>
 #ifndef __MPS2_H__
@@ -10333,7 +10330,7 @@ Timer1 tc1;
 #include "Arduino.h"
 
 class mPS2
-    4b62:	82 e1       	ldi	r24, 0x12	; 18
+    4b62:	8e e0       	ldi	r24, 0x0E	; 14
     4b64:	9e e0       	ldi	r25, 0x0E	; 14
     4b66:	0c 94 e2 3c 	jmp	0x79c4	; 0x79c4 <_ZN6StringD1Ev>
 
@@ -10469,11 +10466,11 @@ void loop() {
 	//PS2手柄遥控底盘
 	
 	PS2.refresh();
-    4c16:	8f ef       	ldi	r24, 0xFF	; 255
+    4c16:	8b ef       	ldi	r24, 0xFB	; 251
     4c18:	9d e0       	ldi	r25, 0x0D	; 13
     4c1a:	0e 94 16 18 	call	0x302c	; 0x302c <_ZN4mPS27refreshEv>
 	Sensors.refresh();
-    4c1e:	8b ee       	ldi	r24, 0xEB	; 235
+    4c1e:	87 ee       	ldi	r24, 0xE7	; 231
     4c20:	9c e0       	ldi	r25, 0x0C	; 12
     4c22:	5d dc       	rcall	.-1862   	; 0x44de <_ZN11SensorBoard7refreshEv>
 	
@@ -10494,20 +10491,20 @@ void loop() {
 	float angular_vel_z = 0;
 	
 	if (!PS2.isRC)
-    4c30:	80 91 18 0e 	lds	r24, 0x0E18	; 0x800e18 <PS2+0x19>
+    4c30:	80 91 14 0e 	lds	r24, 0x0E14	; 0x800e14 <PS2+0x19>
     4c34:	81 11       	cpse	r24, r1
     4c36:	1f c2       	rjmp	.+1086   	; 0x5076 <loop+0x494>
 	{
 		//四个串联任务
 		//#小圆行走
 		if (present_task == SMALL_CIRCLE_WAKING)
-    4c38:	80 91 e0 0c 	lds	r24, 0x0CE0	; 0x800ce0 <present_task>
+    4c38:	80 91 dc 0c 	lds	r24, 0x0CDC	; 0x800cdc <present_task>
     4c3c:	81 11       	cpse	r24, r1
     4c3e:	f1 c1       	rjmp	.+994    	; 0x5022 <loop+0x440>
 		{
 			if (index == 0){if (path.gotoPoint(x,y,p,0,1400)){index++;}}
-    4c40:	80 91 e3 0c 	lds	r24, 0x0CE3	; 0x800ce3 <_ZL5index>
-    4c44:	90 91 e4 0c 	lds	r25, 0x0CE4	; 0x800ce4 <_ZL5index+0x1>
+    4c40:	80 91 df 0c 	lds	r24, 0x0CDF	; 0x800cdf <_ZL5index>
+    4c44:	90 91 e0 0c 	lds	r25, 0x0CE0	; 0x800ce0 <_ZL5index+0x1>
     4c48:	89 2b       	or	r24, r25
     4c4a:	a1 f5       	brne	.+104    	; 0x4cb4 <loop+0xd2>
     4c4c:	c0 90 82 0e 	lds	r12, 0x0E82	; 0x800e82 <p>
@@ -10531,7 +10528,7 @@ void loop() {
     4c88:	81 2c       	mov	r8, r1
     4c8a:	91 2c       	mov	r9, r1
     4c8c:	54 01       	movw	r10, r8
-    4c8e:	8f e1       	ldi	r24, 0x1F	; 31
+    4c8e:	8b e1       	ldi	r24, 0x1B	; 27
     4c90:	9d e0       	ldi	r25, 0x0D	; 13
     4c92:	0e 94 69 1a 	call	0x34d2	; 0x34d2 <_ZN4Path9gotoPointEddddd>
     4c96:	0f 90       	pop	r0
@@ -10540,14 +10537,14 @@ void loop() {
     4c9c:	0f 90       	pop	r0
     4c9e:	88 23       	and	r24, r24
     4ca0:	49 f0       	breq	.+18     	; 0x4cb4 <loop+0xd2>
-    4ca2:	80 91 e3 0c 	lds	r24, 0x0CE3	; 0x800ce3 <_ZL5index>
-    4ca6:	90 91 e4 0c 	lds	r25, 0x0CE4	; 0x800ce4 <_ZL5index+0x1>
+    4ca2:	80 91 df 0c 	lds	r24, 0x0CDF	; 0x800cdf <_ZL5index>
+    4ca6:	90 91 e0 0c 	lds	r25, 0x0CE0	; 0x800ce0 <_ZL5index+0x1>
     4caa:	01 96       	adiw	r24, 0x01	; 1
-    4cac:	90 93 e4 0c 	sts	0x0CE4, r25	; 0x800ce4 <_ZL5index+0x1>
-    4cb0:	80 93 e3 0c 	sts	0x0CE3, r24	; 0x800ce3 <_ZL5index>
+    4cac:	90 93 e0 0c 	sts	0x0CE0, r25	; 0x800ce0 <_ZL5index+0x1>
+    4cb0:	80 93 df 0c 	sts	0x0CDF, r24	; 0x800cdf <_ZL5index>
 			if (index == 1){if (path.rotatetoP(p,90)){index++;}}
-    4cb4:	80 91 e3 0c 	lds	r24, 0x0CE3	; 0x800ce3 <_ZL5index>
-    4cb8:	90 91 e4 0c 	lds	r25, 0x0CE4	; 0x800ce4 <_ZL5index+0x1>
+    4cb4:	80 91 df 0c 	lds	r24, 0x0CDF	; 0x800cdf <_ZL5index>
+    4cb8:	90 91 e0 0c 	lds	r25, 0x0CE0	; 0x800ce0 <_ZL5index+0x1>
     4cbc:	01 97       	sbiw	r24, 0x01	; 1
     4cbe:	d9 f4       	brne	.+54     	; 0x4cf6 <loop+0x114>
     4cc0:	40 91 82 0e 	lds	r20, 0x0E82	; 0x800e82 <p>
@@ -10558,19 +10555,19 @@ void loop() {
     4cd2:	10 e0       	ldi	r17, 0x00	; 0
     4cd4:	24 eb       	ldi	r18, 0xB4	; 180
     4cd6:	32 e4       	ldi	r19, 0x42	; 66
-    4cd8:	8f e1       	ldi	r24, 0x1F	; 31
+    4cd8:	8b e1       	ldi	r24, 0x1B	; 27
     4cda:	9d e0       	ldi	r25, 0x0D	; 13
     4cdc:	0e 94 54 1d 	call	0x3aa8	; 0x3aa8 <_ZN4Path9rotatetoPEdd>
     4ce0:	88 23       	and	r24, r24
     4ce2:	49 f0       	breq	.+18     	; 0x4cf6 <loop+0x114>
-    4ce4:	80 91 e3 0c 	lds	r24, 0x0CE3	; 0x800ce3 <_ZL5index>
-    4ce8:	90 91 e4 0c 	lds	r25, 0x0CE4	; 0x800ce4 <_ZL5index+0x1>
+    4ce4:	80 91 df 0c 	lds	r24, 0x0CDF	; 0x800cdf <_ZL5index>
+    4ce8:	90 91 e0 0c 	lds	r25, 0x0CE0	; 0x800ce0 <_ZL5index+0x1>
     4cec:	01 96       	adiw	r24, 0x01	; 1
-    4cee:	90 93 e4 0c 	sts	0x0CE4, r25	; 0x800ce4 <_ZL5index+0x1>
-    4cf2:	80 93 e3 0c 	sts	0x0CE3, r24	; 0x800ce3 <_ZL5index>
+    4cee:	90 93 e0 0c 	sts	0x0CE0, r25	; 0x800ce0 <_ZL5index+0x1>
+    4cf2:	80 93 df 0c 	sts	0x0CDF, r24	; 0x800cdf <_ZL5index>
 			if (index == 2){if (path.gotoPoint(x,y,p,600,1400)){index++;}}
-    4cf6:	80 91 e3 0c 	lds	r24, 0x0CE3	; 0x800ce3 <_ZL5index>
-    4cfa:	90 91 e4 0c 	lds	r25, 0x0CE4	; 0x800ce4 <_ZL5index+0x1>
+    4cf6:	80 91 df 0c 	lds	r24, 0x0CDF	; 0x800cdf <_ZL5index>
+    4cfa:	90 91 e0 0c 	lds	r25, 0x0CE0	; 0x800ce0 <_ZL5index+0x1>
     4cfe:	02 97       	sbiw	r24, 0x02	; 2
     4d00:	b9 f5       	brne	.+110    	; 0x4d70 <loop+0x18e>
     4d02:	c0 90 82 0e 	lds	r12, 0x0E82	; 0x800e82 <p>
@@ -10597,7 +10594,7 @@ void loop() {
     4d44:	ab 2e       	mov	r10, r27
     4d46:	b4 e4       	ldi	r27, 0x44	; 68
     4d48:	bb 2e       	mov	r11, r27
-    4d4a:	8f e1       	ldi	r24, 0x1F	; 31
+    4d4a:	8b e1       	ldi	r24, 0x1B	; 27
     4d4c:	9d e0       	ldi	r25, 0x0D	; 13
     4d4e:	0e 94 69 1a 	call	0x34d2	; 0x34d2 <_ZN4Path9gotoPointEddddd>
     4d52:	0f 90       	pop	r0
@@ -10606,14 +10603,14 @@ void loop() {
     4d58:	0f 90       	pop	r0
     4d5a:	88 23       	and	r24, r24
     4d5c:	49 f0       	breq	.+18     	; 0x4d70 <loop+0x18e>
-    4d5e:	80 91 e3 0c 	lds	r24, 0x0CE3	; 0x800ce3 <_ZL5index>
-    4d62:	90 91 e4 0c 	lds	r25, 0x0CE4	; 0x800ce4 <_ZL5index+0x1>
+    4d5e:	80 91 df 0c 	lds	r24, 0x0CDF	; 0x800cdf <_ZL5index>
+    4d62:	90 91 e0 0c 	lds	r25, 0x0CE0	; 0x800ce0 <_ZL5index+0x1>
     4d66:	01 96       	adiw	r24, 0x01	; 1
-    4d68:	90 93 e4 0c 	sts	0x0CE4, r25	; 0x800ce4 <_ZL5index+0x1>
-    4d6c:	80 93 e3 0c 	sts	0x0CE3, r24	; 0x800ce3 <_ZL5index>
+    4d68:	90 93 e0 0c 	sts	0x0CE0, r25	; 0x800ce0 <_ZL5index+0x1>
+    4d6c:	80 93 df 0c 	sts	0x0CDF, r24	; 0x800cdf <_ZL5index>
 			if (index == 3){if (path.rotatetoP(p,0)){index++;}}
-    4d70:	80 91 e3 0c 	lds	r24, 0x0CE3	; 0x800ce3 <_ZL5index>
-    4d74:	90 91 e4 0c 	lds	r25, 0x0CE4	; 0x800ce4 <_ZL5index+0x1>
+    4d70:	80 91 df 0c 	lds	r24, 0x0CDF	; 0x800cdf <_ZL5index>
+    4d74:	90 91 e0 0c 	lds	r25, 0x0CE0	; 0x800ce0 <_ZL5index+0x1>
     4d78:	03 97       	sbiw	r24, 0x03	; 3
     4d7a:	d1 f4       	brne	.+52     	; 0x4db0 <loop+0x1ce>
     4d7c:	40 91 82 0e 	lds	r20, 0x0E82	; 0x800e82 <p>
@@ -10623,19 +10620,19 @@ void loop() {
     4d8c:	00 e0       	ldi	r16, 0x00	; 0
     4d8e:	10 e0       	ldi	r17, 0x00	; 0
     4d90:	98 01       	movw	r18, r16
-    4d92:	8f e1       	ldi	r24, 0x1F	; 31
+    4d92:	8b e1       	ldi	r24, 0x1B	; 27
     4d94:	9d e0       	ldi	r25, 0x0D	; 13
     4d96:	0e 94 54 1d 	call	0x3aa8	; 0x3aa8 <_ZN4Path9rotatetoPEdd>
     4d9a:	88 23       	and	r24, r24
     4d9c:	49 f0       	breq	.+18     	; 0x4db0 <loop+0x1ce>
-    4d9e:	80 91 e3 0c 	lds	r24, 0x0CE3	; 0x800ce3 <_ZL5index>
-    4da2:	90 91 e4 0c 	lds	r25, 0x0CE4	; 0x800ce4 <_ZL5index+0x1>
+    4d9e:	80 91 df 0c 	lds	r24, 0x0CDF	; 0x800cdf <_ZL5index>
+    4da2:	90 91 e0 0c 	lds	r25, 0x0CE0	; 0x800ce0 <_ZL5index+0x1>
     4da6:	01 96       	adiw	r24, 0x01	; 1
-    4da8:	90 93 e4 0c 	sts	0x0CE4, r25	; 0x800ce4 <_ZL5index+0x1>
-    4dac:	80 93 e3 0c 	sts	0x0CE3, r24	; 0x800ce3 <_ZL5index>
+    4da8:	90 93 e0 0c 	sts	0x0CE0, r25	; 0x800ce0 <_ZL5index+0x1>
+    4dac:	80 93 df 0c 	sts	0x0CDF, r24	; 0x800cdf <_ZL5index>
 			if (index == 4){if (path.gotoPoint(x,y,p,600,2400)){index++;}}
-    4db0:	80 91 e3 0c 	lds	r24, 0x0CE3	; 0x800ce3 <_ZL5index>
-    4db4:	90 91 e4 0c 	lds	r25, 0x0CE4	; 0x800ce4 <_ZL5index+0x1>
+    4db0:	80 91 df 0c 	lds	r24, 0x0CDF	; 0x800cdf <_ZL5index>
+    4db4:	90 91 e0 0c 	lds	r25, 0x0CE0	; 0x800ce0 <_ZL5index+0x1>
     4db8:	04 97       	sbiw	r24, 0x04	; 4
     4dba:	b9 f5       	brne	.+110    	; 0x4e2a <loop+0x248>
     4dbc:	c0 90 82 0e 	lds	r12, 0x0E82	; 0x800e82 <p>
@@ -10662,7 +10659,7 @@ void loop() {
     4dfe:	aa 2e       	mov	r10, r26
     4e00:	a4 e4       	ldi	r26, 0x44	; 68
     4e02:	ba 2e       	mov	r11, r26
-    4e04:	8f e1       	ldi	r24, 0x1F	; 31
+    4e04:	8b e1       	ldi	r24, 0x1B	; 27
     4e06:	9d e0       	ldi	r25, 0x0D	; 13
     4e08:	0e 94 69 1a 	call	0x34d2	; 0x34d2 <_ZN4Path9gotoPointEddddd>
     4e0c:	0f 90       	pop	r0
@@ -10671,14 +10668,14 @@ void loop() {
     4e12:	0f 90       	pop	r0
     4e14:	88 23       	and	r24, r24
     4e16:	49 f0       	breq	.+18     	; 0x4e2a <loop+0x248>
-    4e18:	80 91 e3 0c 	lds	r24, 0x0CE3	; 0x800ce3 <_ZL5index>
-    4e1c:	90 91 e4 0c 	lds	r25, 0x0CE4	; 0x800ce4 <_ZL5index+0x1>
+    4e18:	80 91 df 0c 	lds	r24, 0x0CDF	; 0x800cdf <_ZL5index>
+    4e1c:	90 91 e0 0c 	lds	r25, 0x0CE0	; 0x800ce0 <_ZL5index+0x1>
     4e20:	01 96       	adiw	r24, 0x01	; 1
-    4e22:	90 93 e4 0c 	sts	0x0CE4, r25	; 0x800ce4 <_ZL5index+0x1>
-    4e26:	80 93 e3 0c 	sts	0x0CE3, r24	; 0x800ce3 <_ZL5index>
+    4e22:	90 93 e0 0c 	sts	0x0CE0, r25	; 0x800ce0 <_ZL5index+0x1>
+    4e26:	80 93 df 0c 	sts	0x0CDF, r24	; 0x800cdf <_ZL5index>
 			if (index == 5){if (path.rotatetoP(p,-90)){index++;}}
-    4e2a:	80 91 e3 0c 	lds	r24, 0x0CE3	; 0x800ce3 <_ZL5index>
-    4e2e:	90 91 e4 0c 	lds	r25, 0x0CE4	; 0x800ce4 <_ZL5index+0x1>
+    4e2a:	80 91 df 0c 	lds	r24, 0x0CDF	; 0x800cdf <_ZL5index>
+    4e2e:	90 91 e0 0c 	lds	r25, 0x0CE0	; 0x800ce0 <_ZL5index+0x1>
     4e32:	05 97       	sbiw	r24, 0x05	; 5
     4e34:	d9 f4       	brne	.+54     	; 0x4e6c <loop+0x28a>
     4e36:	40 91 82 0e 	lds	r20, 0x0E82	; 0x800e82 <p>
@@ -10689,19 +10686,19 @@ void loop() {
     4e48:	10 e0       	ldi	r17, 0x00	; 0
     4e4a:	24 eb       	ldi	r18, 0xB4	; 180
     4e4c:	32 ec       	ldi	r19, 0xC2	; 194
-    4e4e:	8f e1       	ldi	r24, 0x1F	; 31
+    4e4e:	8b e1       	ldi	r24, 0x1B	; 27
     4e50:	9d e0       	ldi	r25, 0x0D	; 13
     4e52:	0e 94 54 1d 	call	0x3aa8	; 0x3aa8 <_ZN4Path9rotatetoPEdd>
     4e56:	88 23       	and	r24, r24
     4e58:	49 f0       	breq	.+18     	; 0x4e6c <loop+0x28a>
-    4e5a:	80 91 e3 0c 	lds	r24, 0x0CE3	; 0x800ce3 <_ZL5index>
-    4e5e:	90 91 e4 0c 	lds	r25, 0x0CE4	; 0x800ce4 <_ZL5index+0x1>
+    4e5a:	80 91 df 0c 	lds	r24, 0x0CDF	; 0x800cdf <_ZL5index>
+    4e5e:	90 91 e0 0c 	lds	r25, 0x0CE0	; 0x800ce0 <_ZL5index+0x1>
     4e62:	01 96       	adiw	r24, 0x01	; 1
-    4e64:	90 93 e4 0c 	sts	0x0CE4, r25	; 0x800ce4 <_ZL5index+0x1>
-    4e68:	80 93 e3 0c 	sts	0x0CE3, r24	; 0x800ce3 <_ZL5index>
+    4e64:	90 93 e0 0c 	sts	0x0CE0, r25	; 0x800ce0 <_ZL5index+0x1>
+    4e68:	80 93 df 0c 	sts	0x0CDF, r24	; 0x800cdf <_ZL5index>
 			if (index == 6){if (path.gotoPoint(x,y,p,-600,2400)){index++;}}
-    4e6c:	80 91 e3 0c 	lds	r24, 0x0CE3	; 0x800ce3 <_ZL5index>
-    4e70:	90 91 e4 0c 	lds	r25, 0x0CE4	; 0x800ce4 <_ZL5index+0x1>
+    4e6c:	80 91 df 0c 	lds	r24, 0x0CDF	; 0x800cdf <_ZL5index>
+    4e70:	90 91 e0 0c 	lds	r25, 0x0CE0	; 0x800ce0 <_ZL5index+0x1>
     4e74:	06 97       	sbiw	r24, 0x06	; 6
     4e76:	b9 f5       	brne	.+110    	; 0x4ee6 <loop+0x304>
     4e78:	c0 90 82 0e 	lds	r12, 0x0E82	; 0x800e82 <p>
@@ -10728,7 +10725,7 @@ void loop() {
     4eba:	af 2e       	mov	r10, r31
     4ebc:	f4 ec       	ldi	r31, 0xC4	; 196
     4ebe:	bf 2e       	mov	r11, r31
-    4ec0:	8f e1       	ldi	r24, 0x1F	; 31
+    4ec0:	8b e1       	ldi	r24, 0x1B	; 27
     4ec2:	9d e0       	ldi	r25, 0x0D	; 13
     4ec4:	0e 94 69 1a 	call	0x34d2	; 0x34d2 <_ZN4Path9gotoPointEddddd>
     4ec8:	0f 90       	pop	r0
@@ -10737,14 +10734,14 @@ void loop() {
     4ece:	0f 90       	pop	r0
     4ed0:	88 23       	and	r24, r24
     4ed2:	49 f0       	breq	.+18     	; 0x4ee6 <loop+0x304>
-    4ed4:	80 91 e3 0c 	lds	r24, 0x0CE3	; 0x800ce3 <_ZL5index>
-    4ed8:	90 91 e4 0c 	lds	r25, 0x0CE4	; 0x800ce4 <_ZL5index+0x1>
+    4ed4:	80 91 df 0c 	lds	r24, 0x0CDF	; 0x800cdf <_ZL5index>
+    4ed8:	90 91 e0 0c 	lds	r25, 0x0CE0	; 0x800ce0 <_ZL5index+0x1>
     4edc:	01 96       	adiw	r24, 0x01	; 1
-    4ede:	90 93 e4 0c 	sts	0x0CE4, r25	; 0x800ce4 <_ZL5index+0x1>
-    4ee2:	80 93 e3 0c 	sts	0x0CE3, r24	; 0x800ce3 <_ZL5index>
+    4ede:	90 93 e0 0c 	sts	0x0CE0, r25	; 0x800ce0 <_ZL5index+0x1>
+    4ee2:	80 93 df 0c 	sts	0x0CDF, r24	; 0x800cdf <_ZL5index>
 			if (index == 7){if (path.rotatetoP(p,-180)){index++;}}
-    4ee6:	80 91 e3 0c 	lds	r24, 0x0CE3	; 0x800ce3 <_ZL5index>
-    4eea:	90 91 e4 0c 	lds	r25, 0x0CE4	; 0x800ce4 <_ZL5index+0x1>
+    4ee6:	80 91 df 0c 	lds	r24, 0x0CDF	; 0x800cdf <_ZL5index>
+    4eea:	90 91 e0 0c 	lds	r25, 0x0CE0	; 0x800ce0 <_ZL5index+0x1>
     4eee:	07 97       	sbiw	r24, 0x07	; 7
     4ef0:	d9 f4       	brne	.+54     	; 0x4f28 <loop+0x346>
     4ef2:	40 91 82 0e 	lds	r20, 0x0E82	; 0x800e82 <p>
@@ -10755,19 +10752,19 @@ void loop() {
     4f04:	10 e0       	ldi	r17, 0x00	; 0
     4f06:	24 e3       	ldi	r18, 0x34	; 52
     4f08:	33 ec       	ldi	r19, 0xC3	; 195
-    4f0a:	8f e1       	ldi	r24, 0x1F	; 31
+    4f0a:	8b e1       	ldi	r24, 0x1B	; 27
     4f0c:	9d e0       	ldi	r25, 0x0D	; 13
     4f0e:	0e 94 54 1d 	call	0x3aa8	; 0x3aa8 <_ZN4Path9rotatetoPEdd>
     4f12:	88 23       	and	r24, r24
     4f14:	49 f0       	breq	.+18     	; 0x4f28 <loop+0x346>
-    4f16:	80 91 e3 0c 	lds	r24, 0x0CE3	; 0x800ce3 <_ZL5index>
-    4f1a:	90 91 e4 0c 	lds	r25, 0x0CE4	; 0x800ce4 <_ZL5index+0x1>
+    4f16:	80 91 df 0c 	lds	r24, 0x0CDF	; 0x800cdf <_ZL5index>
+    4f1a:	90 91 e0 0c 	lds	r25, 0x0CE0	; 0x800ce0 <_ZL5index+0x1>
     4f1e:	01 96       	adiw	r24, 0x01	; 1
-    4f20:	90 93 e4 0c 	sts	0x0CE4, r25	; 0x800ce4 <_ZL5index+0x1>
-    4f24:	80 93 e3 0c 	sts	0x0CE3, r24	; 0x800ce3 <_ZL5index>
+    4f20:	90 93 e0 0c 	sts	0x0CE0, r25	; 0x800ce0 <_ZL5index+0x1>
+    4f24:	80 93 df 0c 	sts	0x0CDF, r24	; 0x800cdf <_ZL5index>
 			if (index == 8){if (path.gotoPoint(x,y,p,-600,1400)){index++;}}
-    4f28:	80 91 e3 0c 	lds	r24, 0x0CE3	; 0x800ce3 <_ZL5index>
-    4f2c:	90 91 e4 0c 	lds	r25, 0x0CE4	; 0x800ce4 <_ZL5index+0x1>
+    4f28:	80 91 df 0c 	lds	r24, 0x0CDF	; 0x800cdf <_ZL5index>
+    4f2c:	90 91 e0 0c 	lds	r25, 0x0CE0	; 0x800ce0 <_ZL5index+0x1>
     4f30:	08 97       	sbiw	r24, 0x08	; 8
     4f32:	b9 f5       	brne	.+110    	; 0x4fa2 <loop+0x3c0>
     4f34:	c0 90 82 0e 	lds	r12, 0x0E82	; 0x800e82 <p>
@@ -10794,7 +10791,7 @@ void loop() {
     4f76:	ae 2e       	mov	r10, r30
     4f78:	e4 ec       	ldi	r30, 0xC4	; 196
     4f7a:	be 2e       	mov	r11, r30
-    4f7c:	8f e1       	ldi	r24, 0x1F	; 31
+    4f7c:	8b e1       	ldi	r24, 0x1B	; 27
     4f7e:	9d e0       	ldi	r25, 0x0D	; 13
     4f80:	0e 94 69 1a 	call	0x34d2	; 0x34d2 <_ZN4Path9gotoPointEddddd>
     4f84:	0f 90       	pop	r0
@@ -10803,14 +10800,14 @@ void loop() {
     4f8a:	0f 90       	pop	r0
     4f8c:	88 23       	and	r24, r24
     4f8e:	49 f0       	breq	.+18     	; 0x4fa2 <loop+0x3c0>
-    4f90:	80 91 e3 0c 	lds	r24, 0x0CE3	; 0x800ce3 <_ZL5index>
-    4f94:	90 91 e4 0c 	lds	r25, 0x0CE4	; 0x800ce4 <_ZL5index+0x1>
+    4f90:	80 91 df 0c 	lds	r24, 0x0CDF	; 0x800cdf <_ZL5index>
+    4f94:	90 91 e0 0c 	lds	r25, 0x0CE0	; 0x800ce0 <_ZL5index+0x1>
     4f98:	01 96       	adiw	r24, 0x01	; 1
-    4f9a:	90 93 e4 0c 	sts	0x0CE4, r25	; 0x800ce4 <_ZL5index+0x1>
-    4f9e:	80 93 e3 0c 	sts	0x0CE3, r24	; 0x800ce3 <_ZL5index>
+    4f9a:	90 93 e0 0c 	sts	0x0CE0, r25	; 0x800ce0 <_ZL5index+0x1>
+    4f9e:	80 93 df 0c 	sts	0x0CDF, r24	; 0x800cdf <_ZL5index>
 			if (index == 9){if (path.rotatetoP(p,-180)){index++;}}
-    4fa2:	80 91 e3 0c 	lds	r24, 0x0CE3	; 0x800ce3 <_ZL5index>
-    4fa6:	90 91 e4 0c 	lds	r25, 0x0CE4	; 0x800ce4 <_ZL5index+0x1>
+    4fa2:	80 91 df 0c 	lds	r24, 0x0CDF	; 0x800cdf <_ZL5index>
+    4fa6:	90 91 e0 0c 	lds	r25, 0x0CE0	; 0x800ce0 <_ZL5index+0x1>
     4faa:	09 97       	sbiw	r24, 0x09	; 9
     4fac:	d9 f4       	brne	.+54     	; 0x4fe4 <loop+0x402>
     4fae:	40 91 82 0e 	lds	r20, 0x0E82	; 0x800e82 <p>
@@ -10821,19 +10818,19 @@ void loop() {
     4fc0:	10 e0       	ldi	r17, 0x00	; 0
     4fc2:	24 e3       	ldi	r18, 0x34	; 52
     4fc4:	33 ec       	ldi	r19, 0xC3	; 195
-    4fc6:	8f e1       	ldi	r24, 0x1F	; 31
+    4fc6:	8b e1       	ldi	r24, 0x1B	; 27
     4fc8:	9d e0       	ldi	r25, 0x0D	; 13
     4fca:	0e 94 54 1d 	call	0x3aa8	; 0x3aa8 <_ZN4Path9rotatetoPEdd>
     4fce:	88 23       	and	r24, r24
     4fd0:	49 f0       	breq	.+18     	; 0x4fe4 <loop+0x402>
-    4fd2:	80 91 e3 0c 	lds	r24, 0x0CE3	; 0x800ce3 <_ZL5index>
-    4fd6:	90 91 e4 0c 	lds	r25, 0x0CE4	; 0x800ce4 <_ZL5index+0x1>
+    4fd2:	80 91 df 0c 	lds	r24, 0x0CDF	; 0x800cdf <_ZL5index>
+    4fd6:	90 91 e0 0c 	lds	r25, 0x0CE0	; 0x800ce0 <_ZL5index+0x1>
     4fda:	01 96       	adiw	r24, 0x01	; 1
-    4fdc:	90 93 e4 0c 	sts	0x0CE4, r25	; 0x800ce4 <_ZL5index+0x1>
-    4fe0:	80 93 e3 0c 	sts	0x0CE3, r24	; 0x800ce3 <_ZL5index>
+    4fdc:	90 93 e0 0c 	sts	0x0CE0, r25	; 0x800ce0 <_ZL5index+0x1>
+    4fe0:	80 93 df 0c 	sts	0x0CDF, r24	; 0x800cdf <_ZL5index>
 			if (index == 10){Serial.print("OjbK");}
-    4fe4:	80 91 e3 0c 	lds	r24, 0x0CE3	; 0x800ce3 <_ZL5index>
-    4fe8:	90 91 e4 0c 	lds	r25, 0x0CE4	; 0x800ce4 <_ZL5index+0x1>
+    4fe4:	80 91 df 0c 	lds	r24, 0x0CDF	; 0x800cdf <_ZL5index>
+    4fe8:	90 91 e0 0c 	lds	r25, 0x0CE0	; 0x800ce0 <_ZL5index+0x1>
     4fec:	0a 97       	sbiw	r24, 0x0a	; 10
     4fee:	31 f4       	brne	.+12     	; 0x4ffc <loop+0x41a>
     4ff0:	6f e0       	ldi	r22, 0x0F	; 15
@@ -10847,14 +10844,14 @@ void loop() {
 			
 			/*这里负责正常任务跳转*/
 			if (index>=34){present_task = SMALL_CIRCLE_FIX_POSITION;index = 0;Serial.println("go to  SMALL_CIRCLE_FIX_POSITION!");}//此任务完成 开始走向
-    4ffc:	80 91 e3 0c 	lds	r24, 0x0CE3	; 0x800ce3 <_ZL5index>
-    5000:	90 91 e4 0c 	lds	r25, 0x0CE4	; 0x800ce4 <_ZL5index+0x1>
+    4ffc:	80 91 df 0c 	lds	r24, 0x0CDF	; 0x800cdf <_ZL5index>
+    5000:	90 91 e0 0c 	lds	r25, 0x0CE0	; 0x800ce0 <_ZL5index+0x1>
     5004:	82 97       	sbiw	r24, 0x22	; 34
     5006:	6c f0       	brlt	.+26     	; 0x5022 <loop+0x440>
     5008:	81 e0       	ldi	r24, 0x01	; 1
-    500a:	80 93 e0 0c 	sts	0x0CE0, r24	; 0x800ce0 <present_task>
-    500e:	10 92 e4 0c 	sts	0x0CE4, r1	; 0x800ce4 <_ZL5index+0x1>
-    5012:	10 92 e3 0c 	sts	0x0CE3, r1	; 0x800ce3 <_ZL5index>
+    500a:	80 93 dc 0c 	sts	0x0CDC, r24	; 0x800cdc <present_task>
+    500e:	10 92 e0 0c 	sts	0x0CE0, r1	; 0x800ce0 <_ZL5index+0x1>
+    5012:	10 92 df 0c 	sts	0x0CDF, r1	; 0x800cdf <_ZL5index>
     5016:	64 e1       	ldi	r22, 0x14	; 20
     5018:	7c e0       	ldi	r23, 0x0C	; 12
     501a:	86 e5       	ldi	r24, 0x56	; 86
@@ -10866,7 +10863,7 @@ void loop() {
 		
 		//#小圆定位程序
 		if (present_task == SMALL_CIRCLE_FIX_POSITION)
-    5022:	80 91 e0 0c 	lds	r24, 0x0CE0	; 0x800ce0 <present_task>
+    5022:	80 91 dc 0c 	lds	r24, 0x0CDC	; 0x800cdc <present_task>
     5026:	81 30       	cpi	r24, 0x01	; 1
     5028:	a9 f4       	brne	.+42     	; 0x5054 <loop+0x472>
 		{
@@ -10879,7 +10876,7 @@ void loop() {
 				linear_vel_x = -1;
 				angular_vel_z = 0;
 				if (Sensors.back_hit_wall == true){
-    5032:	80 91 eb 0c 	lds	r24, 0x0CEB	; 0x800ceb <Sensors>
+    5032:	80 91 e7 0c 	lds	r24, 0x0CE7	; 0x800ce7 <Sensors>
     5036:	88 23       	and	r24, r24
     5038:	69 f0       	breq	.+26     	; 0x5054 <loop+0x472>
 					delay(1000);
@@ -10889,7 +10886,7 @@ void loop() {
     5040:	90 e0       	ldi	r25, 0x00	; 0
     5042:	0e 94 15 3b 	call	0x762a	; 0x762a <delay>
 					if (Sensors.back_hit_wall == true){
-    5046:	80 91 eb 0c 	lds	r24, 0x0CEB	; 0x800ceb <Sensors>
+    5046:	80 91 e7 0c 	lds	r24, 0x0CE7	; 0x800ce7 <Sensors>
     504a:	88 23       	and	r24, r24
     504c:	19 f0       	breq	.+6      	; 0x5054 <loop+0x472>
 						linear_vel_y = 0;
@@ -10902,22 +10899,22 @@ void loop() {
 			}
 		}
 		linear_vel_x = path.linear_vel_x;
-    5054:	60 91 8f 0d 	lds	r22, 0x0D8F	; 0x800d8f <path+0x70>
-    5058:	70 91 90 0d 	lds	r23, 0x0D90	; 0x800d90 <path+0x71>
-    505c:	80 91 91 0d 	lds	r24, 0x0D91	; 0x800d91 <path+0x72>
-    5060:	90 91 92 0d 	lds	r25, 0x0D92	; 0x800d92 <path+0x73>
+    5054:	60 91 8b 0d 	lds	r22, 0x0D8B	; 0x800d8b <path+0x70>
+    5058:	70 91 8c 0d 	lds	r23, 0x0D8C	; 0x800d8c <path+0x71>
+    505c:	80 91 8d 0d 	lds	r24, 0x0D8D	; 0x800d8d <path+0x72>
+    5060:	90 91 8e 0d 	lds	r25, 0x0D8E	; 0x800d8e <path+0x73>
 		angular_vel_z = path.angular_vel_z;
-    5064:	40 90 8b 0d 	lds	r4, 0x0D8B	; 0x800d8b <path+0x6c>
-    5068:	50 90 8c 0d 	lds	r5, 0x0D8C	; 0x800d8c <path+0x6d>
-    506c:	60 90 8d 0d 	lds	r6, 0x0D8D	; 0x800d8d <path+0x6e>
-    5070:	70 90 8e 0d 	lds	r7, 0x0D8E	; 0x800d8e <path+0x6f>
+    5064:	40 90 87 0d 	lds	r4, 0x0D87	; 0x800d87 <path+0x6c>
+    5068:	50 90 88 0d 	lds	r5, 0x0D88	; 0x800d88 <path+0x6d>
+    506c:	60 90 89 0d 	lds	r6, 0x0D89	; 0x800d89 <path+0x6e>
+    5070:	70 90 8a 0d 	lds	r7, 0x0D8A	; 0x800d8a <path+0x6f>
     5074:	01 c1       	rjmp	.+514    	; 0x5278 <loop+0x696>
 	}
 	else
 	{
 		linear_vel_x = float(map(PS2.analog_RY,0,255,+1000,-1000))/1000;
-    5076:	60 91 0e 0e 	lds	r22, 0x0E0E	; 0x800e0e <PS2+0xf>
-    507a:	70 91 0f 0e 	lds	r23, 0x0E0F	; 0x800e0f <PS2+0x10>
+    5076:	60 91 0a 0e 	lds	r22, 0x0E0A	; 0x800e0a <PS2+0xf>
+    507a:	70 91 0b 0e 	lds	r23, 0x0E0B	; 0x800e0b <PS2+0x10>
     507e:	07 2e       	mov	r0, r23
     5080:	00 0c       	add	r0, r0
     5082:	88 0b       	sbc	r24, r24
@@ -10949,8 +10946,8 @@ void loop() {
     50b8:	9a 8b       	std	Y+18, r25	; 0x12
 		linear_vel_y = 0;
 		angular_vel_z =float(map(PS2.analog_LX,0,255,-3140,+3140))/1500;
-    50ba:	60 91 0c 0e 	lds	r22, 0x0E0C	; 0x800e0c <PS2+0xd>
-    50be:	70 91 0d 0e 	lds	r23, 0x0E0D	; 0x800e0d <PS2+0xe>
+    50ba:	60 91 08 0e 	lds	r22, 0x0E08	; 0x800e08 <PS2+0xd>
+    50be:	70 91 09 0e 	lds	r23, 0x0E09	; 0x800e09 <PS2+0xe>
     50c2:	07 2e       	mov	r0, r23
     50c4:	00 0c       	add	r0, r0
     50c6:	88 0b       	sbc	r24, r24
@@ -10980,7 +10977,7 @@ void loop() {
     50f6:	de bf       	out	0x3e, r29	; 62
     50f8:	0f be       	out	0x3f, r0	; 63
     50fa:	cd bf       	out	0x3d, r28	; 61
-    50fc:	20 91 05 0e 	lds	r18, 0x0E05	; 0x800e05 <PS2+0x6>
+    50fc:	20 91 01 0e 	lds	r18, 0x0E01	; 0x800e01 <PS2+0x6>
     5100:	21 11       	cpse	r18, r1
     5102:	09 c0       	rjmp	.+18     	; 0x5116 <loop+0x534>
 	}
@@ -11030,13 +11027,13 @@ void loop() {
     5150:	26 d7       	rcall	.+3660   	; 0x5f9e <__divsf3>
     5152:	2b 01       	movw	r4, r22
     5154:	3c 01       	movw	r6, r24
-    5156:	10 92 05 0e 	sts	0x0E05, r1	; 0x800e05 <PS2+0x6>
+    5156:	10 92 01 0e 	sts	0x0E01, r1	; 0x800e01 <PS2+0x6>
     515a:	0f 90       	pop	r0
     515c:	0f 90       	pop	r0
     515e:	0f 90       	pop	r0
     5160:	0f 90       	pop	r0
 		if (PS2.right == true){angular_vel_z =float(map(188,0,255,-3140,+3140))/1500;PS2.right = false;}
-    5162:	80 91 06 0e 	lds	r24, 0x0E06	; 0x800e06 <PS2+0x7>
+    5162:	80 91 02 0e 	lds	r24, 0x0E02	; 0x800e02 <PS2+0x7>
     5166:	88 23       	and	r24, r24
     5168:	41 f1       	breq	.+80     	; 0x51ba <loop+0x5d8>
     516a:	1f 92       	push	r1
@@ -11072,13 +11069,13 @@ void loop() {
     51a8:	fa d6       	rcall	.+3572   	; 0x5f9e <__divsf3>
     51aa:	2b 01       	movw	r4, r22
     51ac:	3c 01       	movw	r6, r24
-    51ae:	10 92 06 0e 	sts	0x0E06, r1	; 0x800e06 <PS2+0x7>
+    51ae:	10 92 02 0e 	sts	0x0E02, r1	; 0x800e02 <PS2+0x7>
     51b2:	0f 90       	pop	r0
     51b4:	0f 90       	pop	r0
     51b6:	0f 90       	pop	r0
     51b8:	0f 90       	pop	r0
 		if (PS2.up == true){linear_vel_x =float(map(68,0,255,1000,-1000))/1000;PS2.up = false;}
-    51ba:	80 91 03 0e 	lds	r24, 0x0E03	; 0x800e03 <PS2+0x4>
+    51ba:	80 91 ff 0d 	lds	r24, 0x0DFF	; 0x800dff <PS2+0x4>
     51be:	81 11       	cpse	r24, r1
     51c0:	0b c0       	rjmp	.+22     	; 0x51d8 <loop+0x5f6>
 		linear_vel_x = path.linear_vel_x;
@@ -11134,13 +11131,13 @@ void loop() {
     5212:	4a e7       	ldi	r20, 0x7A	; 122
     5214:	54 e4       	ldi	r21, 0x44	; 68
     5216:	c3 d6       	rcall	.+3462   	; 0x5f9e <__divsf3>
-    5218:	10 92 03 0e 	sts	0x0E03, r1	; 0x800e03 <PS2+0x4>
+    5218:	10 92 ff 0d 	sts	0x0DFF, r1	; 0x800dff <PS2+0x4>
     521c:	0f 90       	pop	r0
     521e:	0f 90       	pop	r0
     5220:	0f 90       	pop	r0
     5222:	0f 90       	pop	r0
 		if (PS2.down == true){linear_vel_x =float(map(188,0,255,1000,-1000))/1000;PS2.down = false;}
-    5224:	20 91 04 0e 	lds	r18, 0x0E04	; 0x800e04 <PS2+0x5>
+    5224:	20 91 00 0e 	lds	r18, 0x0E00	; 0x800e00 <PS2+0x5>
     5228:	22 23       	and	r18, r18
     522a:	31 f1       	breq	.+76     	; 0x5278 <loop+0x696>
     522c:	8f ef       	ldi	r24, 0xFF	; 255
@@ -11174,7 +11171,7 @@ void loop() {
     5266:	4a e7       	ldi	r20, 0x7A	; 122
     5268:	54 e4       	ldi	r21, 0x44	; 68
     526a:	99 d6       	rcall	.+3378   	; 0x5f9e <__divsf3>
-    526c:	10 92 04 0e 	sts	0x0E04, r1	; 0x800e04 <PS2+0x5>
+    526c:	10 92 00 0e 	sts	0x0E00, r1	; 0x800e00 <PS2+0x5>
     5270:	0f 90       	pop	r0
     5272:	0f 90       	pop	r0
     5274:	0f 90       	pop	r0
@@ -11189,7 +11186,7 @@ void loop() {
     5280:	98 01       	movw	r18, r16
     5282:	ab 01       	movw	r20, r22
     5284:	bc 01       	movw	r22, r24
-    5286:	86 eb       	ldi	r24, 0xB6	; 182
+    5286:	82 eb       	ldi	r24, 0xB2	; 178
     5288:	9d e0       	ldi	r25, 0x0D	; 13
     528a:	0e 94 e4 15 	call	0x2bc8	; 0x2bc8 <_ZN10Kinematics6getPWMEfff>
     528e:	29 83       	std	Y+1, r18	; 0x01
@@ -11228,7 +11225,7 @@ void loop() {
     52c4:	51 09       	sbc	r21, r1
     52c6:	92 01       	movw	r18, r4
     52c8:	b1 01       	movw	r22, r2
-    52ca:	85 e9       	ldi	r24, 0x95	; 149
+    52ca:	81 e9       	ldi	r24, 0x91	; 145
     52cc:	9d e0       	ldi	r25, 0x0D	; 13
     52ce:	0e 94 b0 10 	call	0x2160	; 0x2160 <_ZN12ComwithMotor10SendAtoALLEiiii>
 	
@@ -11247,7 +11244,7 @@ void loop() {
     52f6:	50 91 8b 0e 	lds	r21, 0x0E8B	; 0x800e8b <x+0x1>
     52fa:	60 91 8c 0e 	lds	r22, 0x0E8C	; 0x800e8c <x+0x2>
     52fe:	70 91 8d 0e 	lds	r23, 0x0E8D	; 0x800e8d <x+0x3>
-    5302:	85 e2       	ldi	r24, 0x25	; 37
+    5302:	81 e2       	ldi	r24, 0x21	; 33
     5304:	9e e0       	ldi	r25, 0x0E	; 14
     5306:	0e 94 2d 12 	call	0x245a	; 0x245a <_ZN9ComwithPC7tellXYPEddd>
 	//toPC.tellState(state);
@@ -11276,7 +11273,7 @@ void loop() {
     5348:	89 e0       	ldi	r24, 0x09	; 9
     534a:	68 0e       	add	r6, r24
     534c:	71 1c       	adc	r7, r1
-    534e:	62 e1       	ldi	r22, 0x12	; 18
+    534e:	6e e0       	ldi	r22, 0x0E	; 14
     5350:	7e e0       	ldi	r23, 0x0E	; 14
     5352:	c3 01       	movw	r24, r6
     5354:	2b 8f       	std	Y+27, r18	; 0x1b
@@ -11330,7 +11327,7 @@ void loop() {
     53ce:	4f 85       	ldd	r20, Y+15	; 0x0f
     53d0:	58 89       	ldd	r21, Y+16	; 0x10
     53d2:	b1 01       	movw	r22, r2
-    53d4:	86 e2       	ldi	r24, 0x26	; 38
+    53d4:	82 e2       	ldi	r24, 0x22	; 34
     53d6:	9e e0       	ldi	r25, 0x0E	; 14
     53d8:	0e 94 f4 12 	call	0x25e8	; 0x25e8 <_ZN7Display7refreshEiiiiddd6Stringddd>
     53dc:	c3 01       	movw	r24, r6
@@ -11338,7 +11335,7 @@ void loop() {
 	PS2.state = "";
     53e2:	62 eb       	ldi	r22, 0xB2	; 178
     53e4:	7b e0       	ldi	r23, 0x0B	; 11
-    53e6:	82 e1       	ldi	r24, 0x12	; 18
+    53e6:	8e e0       	ldi	r24, 0x0E	; 14
     53e8:	9e e0       	ldi	r25, 0x0E	; 14
     53ea:	0e 94 7a 3d 	call	0x7af4	; 0x7af4 <_ZN6StringaSEPKc>
     53ee:	0f b6       	in	r0, 0x3f	; 63

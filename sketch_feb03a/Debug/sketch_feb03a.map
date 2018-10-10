@@ -2702,41 +2702,41 @@ END GROUP
                 0x00800c80                display
  .bss.ps2x      0x00800cae       0x2e mPS2.o
                 0x00800cae                ps2x
- .bss._p2       0x00800cdc        0x4 Sketch.o
-                0x00800cdc                _p2
  .bss.present_task
-                0x00800ce0        0x1 Sketch.o
-                0x00800ce0                present_task
+                0x00800cdc        0x1 Sketch.o
+                0x00800cdc                present_task
  .bss.present_task_index
-                0x00800ce1        0x2 Sketch.o
-                0x00800ce1                present_task_index
+                0x00800cdd        0x2 Sketch.o
+                0x00800cdd                present_task_index
  .bss._ZL5index
-                0x00800ce3        0x2 Sketch.o
- .bss.state     0x00800ce5        0x6 Sketch.o
-                0x00800ce5                state
- .bss.Sensors   0x00800ceb       0x34 Sketch.o
-                0x00800ceb                Sensors
- .bss.path      0x00800d1f       0x76 Sketch.o
-                0x00800d1f                path
- .bss.cm        0x00800d95       0x21 Sketch.o
-                0x00800d95                cm
+                0x00800cdf        0x2 Sketch.o
+ .bss.state     0x00800ce1        0x6 Sketch.o
+                0x00800ce1                state
+ .bss.Sensors   0x00800ce7       0x34 Sketch.o
+                0x00800ce7                Sensors
+ .bss.path      0x00800d1b       0x76 Sketch.o
+                0x00800d1b                path
+ .bss.cm        0x00800d91       0x21 Sketch.o
+                0x00800d91                cm
  .bss.kinematics
-                0x00800db6       0x2e Sketch.o
-                0x00800db6                kinematics
- .bss.CS        0x00800de4        0x3 Sketch.o
-                0x00800de4                CS
- .bss.tc3       0x00800de7        0xc Sketch.o
-                0x00800de7                tc3
- .bss.tc1       0x00800df3        0xc Sketch.o
-                0x00800df3                tc1
- .bss.PS2       0x00800dff       0x1a Sketch.o
-                0x00800dff                PS2
- .bss.motor     0x00800e19        0xc Sketch.o
-                0x00800e19                motor
- .bss.toPC      0x00800e25        0x1 Sketch.o
-                0x00800e25                toPC
- .bss.dp        0x00800e26       0x38 Sketch.o
-                0x00800e26                dp
+                0x00800db2       0x2e Sketch.o
+                0x00800db2                kinematics
+ .bss.CS        0x00800de0        0x3 Sketch.o
+                0x00800de0                CS
+ .bss.tc3       0x00800de3        0xc Sketch.o
+                0x00800de3                tc3
+ .bss.tc1       0x00800def        0xc Sketch.o
+                0x00800def                tc1
+ .bss.PS2       0x00800dfb       0x1a Sketch.o
+                0x00800dfb                PS2
+ .bss.motor     0x00800e15        0xc Sketch.o
+                0x00800e15                motor
+ .bss.toPC      0x00800e21        0x1 Sketch.o
+                0x00800e21                toPC
+ .bss.dp        0x00800e22       0x38 Sketch.o
+                0x00800e22                dp
+ .bss._p2       0x00800e5a        0x4 Sketch.o
+                0x00800e5a                _p2
  .bss.p2        0x00800e5e        0x4 Sketch.o
                 0x00800e5e                p2
  .bss.y2        0x00800e62        0x4 Sketch.o
@@ -3029,7 +3029,7 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000    0x2ce09
+.debug_info     0x00000000    0x2ce01
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000     0x6216 Adafruit_GFX.o
  .debug_info    0x00006216     0x242b Adafruit_SSD1306.o
@@ -3045,26 +3045,26 @@ END GROUP
  .debug_info    0x0001257c      0xdd2 Path.o
  .debug_info    0x0001334e     0x18ac PS2X_lib.o
  .debug_info    0x00014bfa      0x5e9 SensorBoard.o
- .debug_info    0x000151e3     0x3c88 Sketch.o
- .debug_info    0x00018e6b      0x6f6 src/libraries/SPI/src/SPI.o
- .debug_info    0x00019561      0x667 src/libraries/Wire/src/utility/twi.o
- .debug_info    0x00019bc8     0x27c0 src/libraries/Wire/src/Wire.o
- .debug_info    0x0001c388     0x17fb Timer1.o
- .debug_info    0x0001db83       0x8e I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(abi.o)
- .debug_info    0x0001dc11     0x1f23 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
- .debug_info    0x0001fb34     0x1b25 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
- .debug_info    0x00021659     0x1b25 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial2.o)
- .debug_info    0x0002317e     0x1b2b I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial3.o)
- .debug_info    0x00024ca9      0x28f I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(main.o)
- .debug_info    0x00024f38     0x2ada I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(Print.o)
- .debug_info    0x00027a12      0x2fc I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(WInterrupts.o)
- .debug_info    0x00027d0e      0x326 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
- .debug_info    0x00028034      0x635 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
- .debug_info    0x00028669      0x240 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(WMath.o)
- .debug_info    0x000288a9     0x4522 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(WString.o)
- .debug_info    0x0002cdcb       0x3e I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(hooks.o)
+ .debug_info    0x000151e3     0x3c80 Sketch.o
+ .debug_info    0x00018e63      0x6f6 src/libraries/SPI/src/SPI.o
+ .debug_info    0x00019559      0x667 src/libraries/Wire/src/utility/twi.o
+ .debug_info    0x00019bc0     0x27c0 src/libraries/Wire/src/Wire.o
+ .debug_info    0x0001c380     0x17fb Timer1.o
+ .debug_info    0x0001db7b       0x8e I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(abi.o)
+ .debug_info    0x0001dc09     0x1f23 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
+ .debug_info    0x0001fb2c     0x1b25 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
+ .debug_info    0x00021651     0x1b25 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial2.o)
+ .debug_info    0x00023176     0x1b2b I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial3.o)
+ .debug_info    0x00024ca1      0x28f I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(main.o)
+ .debug_info    0x00024f30     0x2ada I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+ .debug_info    0x00027a0a      0x2fc I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(WInterrupts.o)
+ .debug_info    0x00027d06      0x326 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
+ .debug_info    0x0002802c      0x635 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
+ .debug_info    0x00028661      0x240 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(WMath.o)
+ .debug_info    0x000288a1     0x4522 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(WString.o)
+ .debug_info    0x0002cdc3       0x3e I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(hooks.o)
 
-.debug_abbrev   0x00000000     0x6331
+.debug_abbrev   0x00000000     0x6311
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x58f Adafruit_GFX.o
  .debug_abbrev  0x0000058f      0x5b8 Adafruit_SSD1306.o
@@ -3080,26 +3080,26 @@ END GROUP
  .debug_abbrev  0x000025a8      0x292 Path.o
  .debug_abbrev  0x0000283a      0x3fa PS2X_lib.o
  .debug_abbrev  0x00002c34      0x23f SensorBoard.o
- .debug_abbrev  0x00002e73      0x61b Sketch.o
- .debug_abbrev  0x0000348e      0x28c src/libraries/SPI/src/SPI.o
- .debug_abbrev  0x0000371a      0x25f src/libraries/Wire/src/utility/twi.o
- .debug_abbrev  0x00003979      0x5c4 src/libraries/Wire/src/Wire.o
- .debug_abbrev  0x00003f3d      0x3ed Timer1.o
- .debug_abbrev  0x0000432a       0x5e I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(abi.o)
- .debug_abbrev  0x00004388      0x478 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
- .debug_abbrev  0x00004800      0x3dd I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
- .debug_abbrev  0x00004bdd      0x3dd I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial2.o)
- .debug_abbrev  0x00004fba      0x3e6 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial3.o)
- .debug_abbrev  0x000053a0      0x109 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(main.o)
- .debug_abbrev  0x000054a9      0x498 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(Print.o)
- .debug_abbrev  0x00005941       0xed I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(WInterrupts.o)
- .debug_abbrev  0x00005a2e      0x145 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
- .debug_abbrev  0x00005b73      0x15a I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
- .debug_abbrev  0x00005ccd      0x14b I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(WMath.o)
- .debug_abbrev  0x00005e18      0x4ef I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(WString.o)
- .debug_abbrev  0x00006307       0x2a I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(hooks.o)
+ .debug_abbrev  0x00002e73      0x5fb Sketch.o
+ .debug_abbrev  0x0000346e      0x28c src/libraries/SPI/src/SPI.o
+ .debug_abbrev  0x000036fa      0x25f src/libraries/Wire/src/utility/twi.o
+ .debug_abbrev  0x00003959      0x5c4 src/libraries/Wire/src/Wire.o
+ .debug_abbrev  0x00003f1d      0x3ed Timer1.o
+ .debug_abbrev  0x0000430a       0x5e I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(abi.o)
+ .debug_abbrev  0x00004368      0x478 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
+ .debug_abbrev  0x000047e0      0x3dd I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
+ .debug_abbrev  0x00004bbd      0x3dd I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial2.o)
+ .debug_abbrev  0x00004f9a      0x3e6 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial3.o)
+ .debug_abbrev  0x00005380      0x109 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(main.o)
+ .debug_abbrev  0x00005489      0x498 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+ .debug_abbrev  0x00005921       0xed I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(WInterrupts.o)
+ .debug_abbrev  0x00005a0e      0x145 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
+ .debug_abbrev  0x00005b53      0x15a I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
+ .debug_abbrev  0x00005cad      0x14b I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(WMath.o)
+ .debug_abbrev  0x00005df8      0x4ef I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(WString.o)
+ .debug_abbrev  0x000062e7       0x2a I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(hooks.o)
 
-.debug_line     0x00000000     0xa002
+.debug_line     0x00000000     0xa00b
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000     0x1df9 Adafruit_GFX.o
  .debug_line    0x00001df9      0xbe6 Adafruit_SSD1306.o
@@ -3115,24 +3115,24 @@ END GROUP
  .debug_line    0x00004705      0x484 Path.o
  .debug_line    0x00004b89      0x726 PS2X_lib.o
  .debug_line    0x000052af      0x28e SensorBoard.o
- .debug_line    0x0000553d      0x812 Sketch.o
- .debug_line    0x00005d4f      0x313 src/libraries/SPI/src/SPI.o
- .debug_line    0x00006062      0x515 src/libraries/Wire/src/utility/twi.o
- .debug_line    0x00006577      0x5e6 src/libraries/Wire/src/Wire.o
- .debug_line    0x00006b5d      0x2ba Timer1.o
- .debug_line    0x00006e17       0xbf I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(abi.o)
- .debug_line    0x00006ed6      0x489 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
- .debug_line    0x0000735f      0x288 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
- .debug_line    0x000075e7      0x286 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial2.o)
- .debug_line    0x0000786d      0x286 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial3.o)
- .debug_line    0x00007af3      0x171 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(main.o)
- .debug_line    0x00007c64      0x697 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(Print.o)
- .debug_line    0x000082fb      0x2da I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(WInterrupts.o)
- .debug_line    0x000085d5      0x2cb I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
- .debug_line    0x000088a0      0x284 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
- .debug_line    0x00008b24      0x149 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(WMath.o)
- .debug_line    0x00008c6d     0x1354 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(WString.o)
- .debug_line    0x00009fc1       0x41 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(hooks.o)
+ .debug_line    0x0000553d      0x81b Sketch.o
+ .debug_line    0x00005d58      0x313 src/libraries/SPI/src/SPI.o
+ .debug_line    0x0000606b      0x515 src/libraries/Wire/src/utility/twi.o
+ .debug_line    0x00006580      0x5e6 src/libraries/Wire/src/Wire.o
+ .debug_line    0x00006b66      0x2ba Timer1.o
+ .debug_line    0x00006e20       0xbf I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(abi.o)
+ .debug_line    0x00006edf      0x489 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial.o)
+ .debug_line    0x00007368      0x288 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial0.o)
+ .debug_line    0x000075f0      0x286 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial2.o)
+ .debug_line    0x00007876      0x286 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(HardwareSerial3.o)
+ .debug_line    0x00007afc      0x171 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(main.o)
+ .debug_line    0x00007c6d      0x697 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(Print.o)
+ .debug_line    0x00008304      0x2da I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(WInterrupts.o)
+ .debug_line    0x000085de      0x2cb I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(wiring.o)
+ .debug_line    0x000088a9      0x284 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(wiring_digital.o)
+ .debug_line    0x00008b2d      0x149 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(WMath.o)
+ .debug_line    0x00008c76     0x1354 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(WString.o)
+ .debug_line    0x00009fca       0x41 I:\atmel studio\led2\ArduinoSketch42\ArduinoSketch42\ArduinoCore\Debug\libArduinoCore.a(hooks.o)
 
 .debug_frame    0x00000000     0x42c8
  *(.debug_frame)
