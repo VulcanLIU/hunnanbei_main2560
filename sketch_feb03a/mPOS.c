@@ -29,7 +29,7 @@ static const int INT2B = 6;
 
 //物理信息
 const double d = 200; //两轮间距160mm
-const double d2 = 80;
+const double d2 = 0;
 const double wheel_d = 38;//轮直径38mm
 const int x_line = 512;
 const int y_line = 512;
@@ -96,3 +96,4 @@ void POS_clear()
 	y = 0;
 	p = 0;
 }
+

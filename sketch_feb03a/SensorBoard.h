@@ -17,20 +17,27 @@ public:
 	SensorBoard();
 	
 	void refresh();
+	void getInfo();
 	
 	//光电对管屁股是否撞墙
 	bool back_hit_wall = false;
 	
+	uint8_t R_laser_h = 0;
+	uint8_t R_laser_l = 0;
+	
+	uint8_t L_laser_h = 0;
+	uint8_t L_laser_l = 0;
+	
+	uint8_t B_laser_h = 0;
+	uint8_t B_laser_l = 0;
+	
+	uint8_t value1 = 0;
+	uint8_t value2 = 0;
+	
 	//存放五个激光数据和由激光解算出来的角度和坐标
 	double R1_laser = 0;
-	double R2_laser = 0;
 	double L1_laser = 0;
-	double L2_laser = 0;
 	double B_laser = 0;
-	
-	double laser_X = 0;
-	double laser_Y = 0;
-	double laser_P = 0;
 	
 	//mpu6050 加速度
 	double ax = 0.0;

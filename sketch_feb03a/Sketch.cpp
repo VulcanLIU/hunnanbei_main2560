@@ -303,19 +303,25 @@ void serialEvent3() {
 	GY25.refresh();
 }
 
+double _p2;
+
 void POS_refresh()
 {
 	x1 = (double)x_step*1.16/x_line*PI*wheel_d;x_step = 0;//行走的距离 单位mm；
 	y1 = (double)y_step*1.16/y_line*PI*wheel_d;y_step = 0;//行走的距离 单位mm；
 	p1 = (double)p_step*1.16/p_line*PI*wheel_d;p_step = 0;//行走的距离 单位mm；
+	p2 = GY25.YPR[0]/180.00*PI;
 	
 	double dx = x1;
 	double dy = y1;
 	double dp = p1;
 	
 	double dy2 = (dy - dp)/2;
-	double dp2 = (dy + dp)/d;
+	double dp2 = p2 - _p2;
+	if (dp2 >  PI/2)  dp2 -= PI;
+	if (dp2 < -PI/2)  dp2 += PI;
 	double dx2 = (dx - dp2*d2);
+	_p2 = p2;
 	
 	/*//凯子算法
 	double dax = dy*(cos(PI/2-dp_rad/2));
@@ -326,8 +332,6 @@ void POS_refresh()
 	*/
 	
 	//刘展鹏的算法
-	//p2+= dp2;
-	p2 = GY25.YPR[0]/180.00*PI;
 	x2+= dx2*cos(p2)+dy2*sin(p2);
 	y2+= dy2*cos(p2)-dx2*sin(p2);
 	
