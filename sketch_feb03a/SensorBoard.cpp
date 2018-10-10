@@ -7,7 +7,7 @@
 
 
 #include "SensorBoard.h"
-
+#include "Wire.h"
 // default constructor
 SensorBoard::SensorBoard()
 {

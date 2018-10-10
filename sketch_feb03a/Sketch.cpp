@@ -49,7 +49,7 @@ Path path;
 //传感器板
 SensorBoard Sensors;
 //GY25
-ComwithGY25 GY25;
+//ComwithGY25 GY25;
 
 String state = "begin";
 // int point[41][2]={{0,0},{0,200},{0,400},{0,600},{0,800},{0,1000},{0,1210},{40,1360},{150,1470},{300,1510},{465,1510},

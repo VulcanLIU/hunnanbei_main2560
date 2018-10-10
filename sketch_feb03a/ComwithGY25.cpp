@@ -75,3 +75,5 @@ void ComwithGY25::refresh() {
 		sign = 0;
 	}
 }
+
+ComwithGY25 GY25 = ComwithGY25();

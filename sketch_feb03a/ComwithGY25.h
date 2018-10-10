@@ -27,5 +27,5 @@ public:
 	void correctYaw();
 	void refresh();
 }; //ComwithGY25
-
+extern ComwithGY25 GY25;
 #endif //__COMWITHGY25_H__
