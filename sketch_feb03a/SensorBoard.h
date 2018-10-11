@@ -45,11 +45,12 @@ public:
 	double axy = 0.0;
 	
 	//存放颜色传感器采集的颜色以及合成出来的颜色
-	uint8_t R = 0;
-	uint8_t G = 0;
-	uint8_t B = 0;
-	uint32_t RGB = 0;
-	
+	uint8_t area = 0;
+	//1---红色出发区
+	//2---蓝色出发区
+	//3---黄色放球区
+
+
 	//存放场地标准色
 	const uint8_t BLUE_Zone_R = 0;
 	const uint8_t BLUE_Zone_G = 0;

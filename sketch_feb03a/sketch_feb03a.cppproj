@@ -47,7 +47,8 @@
       <ToolOptions>
         <InterfaceProperties>
         </InterfaceProperties>
-        <InterfaceName>ISP</InterfaceName>
+        <InterfaceName>
+        </InterfaceName>
       </ToolOptions>
       <ToolType>com.atmel.avrdbg.tool.simulator</ToolType>
       <ToolNumber>
@@ -58,7 +59,7 @@
     <com_atmel_avrdbg_tool_atmelice>
       <ToolOptions>
         <InterfaceProperties>
-          <IspClock>125000</IspClock>
+          <IspClock>2097870</IspClock>
         </InterfaceProperties>
         <InterfaceName>ISP</InterfaceName>
       </ToolOptions>
@@ -66,7 +67,7 @@
       <ToolNumber>J41800099777</ToolNumber>
       <ToolName>Atmel-ICE</ToolName>
     </com_atmel_avrdbg_tool_atmelice>
-    <avrtoolinterfaceclock>125000</avrtoolinterfaceclock>
+    <avrtoolinterfaceclock>2097870</avrtoolinterfaceclock>
     <custom>
       <ToolOptions>
         <InterfaceProperties>
@@ -341,6 +342,9 @@
     <Compile Include="mPOS.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="tasks.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Timer3.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -392,9 +396,9 @@
     <Compile Include="src\libraries\Wire\src\Wire.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <None Include="tasks.cpp">
+    <Compile Include="tasks.cpp">
       <SubType>compile</SubType>
-    </None>
+    </Compile>
     <Compile Include="Timer1.cpp">
       <SubType>compile</SubType>
     </Compile>

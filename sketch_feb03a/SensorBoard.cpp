@@ -40,7 +40,7 @@ void SensorBoard::getInfo()
 		L1_laser = (L_laser_h<<8|L_laser_l);
 		B_laser =  (B_laser_h<<8|B_laser_l);
 		
-		if (value1==1&&value2==2){back_hit_wall = true;}
+		if (value1==0&&value2==0){back_hit_wall = true;}
 		else{back_hit_wall = false;}
 		}//µÈ´ýÊý¾Ý
 }

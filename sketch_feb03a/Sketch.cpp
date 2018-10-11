@@ -8,8 +8,9 @@
 //#define  PS2_DEBUG
 //#define Kinematics_DEBUG
 //#define GY25_DEBUG
-#define GO_DEBUG
+//#define GO_DEBUG
 //#define Sensorboard_DEBUG
+#define STA_BUTTON_DEBUG 
 
 #include "Display.h"
 #include "ComwithPC.h"
@@ -22,10 +23,9 @@
 #include "Kinematics.h"
 #include "ComwithMotor.h"
 #include "Path.h"
-#include "tasks.cpp"
 #include "SensorBoard.h"
 #include "ComwithGY25.h"
-
+#include "tasks.h"
 //Beginning of Auto generated function prototypes by Atmel Studio
 //End of Auto generated function prototypes by Atmel Studio
 Display dp;
@@ -59,13 +59,9 @@ bool has_time_out = false;
 //PID time
 int PID_pre_time = 0;
 
-//任务列表
-task task_list[3] = {SMALL_CIRCLE_WAKING,FIX_POSITION,DO_SHOT};
-int present_task_index = 0;
-task present_task = task_list[present_task_index];
-
 void receiveEvent(int howMany);
 void POS_refresh();
+void start();
 
 void setup() {
 	// put your setup code here, to run once:
@@ -88,18 +84,28 @@ void setup() {
 	PS2.begin();
 	PS2.refresh();
 	PS2.isRC = true;
-	
+	//手柄选择位
+	pinMode(9,INPUT_PULLUP);
+
 	//申明自身的地址
 	Wire.begin(8);
 	Wire.setClock(400000);
 	Wire.onReceive(receiveEvent);
+
+	//启动按钮
+	pinMode(18, INPUT_PULLUP);
+	attachInterrupt(digitalPinToInterrupt(18), start, FALLING);
 }
 
 void loop() {
 	// put your main code here, to run repeatedly:
 	
 	//#PS2手柄遥控底盘
-	PS2.refresh();
+	
+	if (digitalRead(9) == LOW)
+	{
+		PS2.refresh();
+	}
 	
 	//#传感器板更新
 	//Sensors.refresh();
@@ -170,13 +176,26 @@ void loop() {
 			Serial.print("	");
 			#endif
 			if (fix_pos_list == MOVE_BACK){
-				linear_vel_x = -1;
-				angular_vel_z = 0;
+				
+				#ifdef GO_DEBUG
+				Serial.print("MOVE_BACK");
+				Serial.print("	");
+				#endif
+				
+				path.linear_vel_x = -1;
+				path.angular_vel_z = 0;
+				
 				if (Sensors.back_hit_wall == true){
 					delay(1000);
 					if (Sensors.back_hit_wall == true){
-						linear_vel_y = 0;
-						angular_vel_z = 0;
+						
+						#ifdef GO_DEBUG
+						Serial.print("HIT_BACK");
+						Serial.print("	");
+						#endif
+						
+						path.linear_vel_x = 0;
+						path.angular_vel_z = 0;
 						fix_pos_list = USE_LASER_DATA;
 					}
 				}
@@ -207,14 +226,14 @@ void loop() {
 			Serial.print("STAY");
 			Serial.print("	");
 			#endif
-			if (millis() - CS.StartMillis>30000){present_task = LARGE_CIRCLE_WAKING;}
+			if (millis() - CS.StartMillis>30000){present_task = MIDDLE_CIRCLE_WAKING;}
 			else{}
 		}
-		//#大圆行走
-		if (present_task == LARGE_CIRCLE_WAKING)
+		//#中圆行走
+		if (present_task == MIDDLE_CIRCLE_WAKING)
 		{
 			#ifdef GO_DEBUG
-			Serial.print(" LARGE_CIRCLE_WAKING");
+			Serial.print(" MIDDLE_CIRCLE_WAKING");
 			Serial.print("	");
 			#endif
 			if (index == 0){if (path.rotatetoP(p,90)){index++;}}
@@ -229,9 +248,94 @@ void loop() {
 				//待改
 			if (index == 9){if (path.gotoPoint(x,y,p,0,1160)){index++;}}
 			if (index == 10){if (path.rotatetoP(p,90)){index++;}};
-			
-			
 		}
+		//#中圆定位
+		if (present_task == MIDDLE_CIRCLE_FIX_POSITION)
+		{
+			//后退动作
+			#ifdef GO_DEBUG
+			Serial.println("MIDDLE_CIRCLE_FIX_POSITION");
+			Serial.print("	");
+			#endif
+			if (fix_pos_list == MOVE_BACK){
+				
+				#ifdef GO_DEBUG
+				Serial.print("MOVE_BACK");
+				Serial.print("	");
+				#endif
+				
+				path.linear_vel_x = -1;
+				path.angular_vel_z = 0;
+				
+				if (Sensors.back_hit_wall == true){
+					delay(300);
+					if (Sensors.back_hit_wall == true){
+					
+						#ifdef GO_DEBUG
+						Serial.print("HIT_BACK");
+						Serial.print("	");
+						#endif
+						
+						path.linear_vel_x = 0;
+						path.angular_vel_z = 0;
+						fix_pos_list = USE_LASER_DATA;
+					}
+				}
+			}
+		}
+		//#去出发区
+		if (present_task == GO_TO_CHUFAQU)
+		{
+			path.linear_vel_x = 1;
+			path.angular_vel_z = -0.5;
+			if (Sensors.area != 0 && Sensors.B_laser >= 1500)
+			{
+				present_task = CHUFAQU_BACKHIT;
+				_p = path.CcltAngleSub(p,180);	
+			}
+		}
+		//#掉头
+		if (present_task == DIAO_TOU){if (path.rotatetoP(p,_p)){present_task = ;}}
+		//#屁股怼墙
+		if (present_task == CHUFAQU_BACKHIT){
+			path.linear_vel_x = -1;
+			path.angular_vel_z = 0;
+
+			if (Sensors.back_hit_wall == true){
+				delay(300);
+				if (Sensors.back_hit_wall == true){
+					
+					#ifdef GO_DEBUG
+					Serial.print("HIT_BACK");
+					Serial.print("	");
+					#endif
+					
+					path.linear_vel_x = 0;
+					path.angular_vel_z = 0;
+					present_task = _USE_LASER_DATA;
+				}
+			}
+		}
+		//#使用激光数据
+		if (present_task == _USE_LASER_DATA)
+		{
+			x2 = Sensors.L1_laser;
+			y2 = 2000;
+			present_task = DO_SHOT_TWO;
+		}
+		//#两边射球
+		if(present_task == DO_SHOT_TWO)
+		{
+			#ifdef GO_DEBUG
+			Serial.print("DO_SHOT");
+			Serial.print("	");
+			#endif
+			CS.begin();
+			CS.SendXYPandSHOT(x,y,p);
+			CS.StartMillis = millis();
+			present_task = STAY;
+		}
+		
 		linear_vel_x = path.linear_vel_x;
 		angular_vel_z = path.angular_vel_z;
 	}
@@ -249,6 +353,10 @@ void loop() {
 	pwm = kinematics.getPWM(linear_vel_x, linear_vel_y, angular_vel_z);
 	
 	#ifdef Kinematics_DEBUG
+	Serial.print("linear_vel_x");
+	Serial.print(linear_vel_x);
+	Serial.print("angular_vel_z");
+	Serial.print(angular_vel_z);
 	Serial.print("pwm_motor1:");
 	Serial.print(pwm.motor1);
 	Serial.print("pwm_motor2:");
@@ -317,4 +425,14 @@ void receiveEvent(int howMany) {
 
 void serialEvent3() {
 	GY25.refresh();
+}
+
+void start()
+{
+	PS2.isRC = !PS2.isRC;
+	#ifdef STA_BUTTON_DEBUG
+		Serial.println("Start!");
+	#endif //STA_BUTTON_DEBUG
+	GY25.correctYaw();
+	delay(200);
 }

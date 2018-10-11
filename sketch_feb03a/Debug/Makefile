@@ -72,6 +72,7 @@ C_SRCS +=  \
 ../src/libraries/SPI/src/SPI.cpp \
 ../src/libraries/Wire/src/utility/twi.c \
 ../src/libraries/Wire/src/Wire.cpp \
+../tasks.cpp \
 ../Timer1.cpp
 
 
@@ -103,6 +104,7 @@ Sketch.o \
 src/libraries/SPI/src/SPI.o \
 src/libraries/Wire/src/utility/twi.o \
 src/libraries/Wire/src/Wire.o \
+tasks.o \
 Timer1.o
 
 OBJS_AS_ARGS +=  \
@@ -127,6 +129,7 @@ Sketch.o \
 src/libraries/SPI/src/SPI.o \
 src/libraries/Wire/src/utility/twi.o \
 src/libraries/Wire/src/Wire.o \
+tasks.o \
 Timer1.o
 
 C_DEPS +=  \
@@ -151,6 +154,7 @@ Sketch.d \
 src/libraries/SPI/src/SPI.d \
 src/libraries/Wire/src/utility/twi.d \
 src/libraries/Wire/src/Wire.d \
+tasks.d \
 Timer1.d
 
 C_DEPS_AS_ARGS +=  \
@@ -175,6 +179,7 @@ Sketch.d \
 src/libraries/SPI/src/SPI.d \
 src/libraries/Wire/src/utility/twi.d \
 src/libraries/Wire/src/Wire.d \
+tasks.d \
 Timer1.d
 
 OUTPUT_FILE_PATH +=sketch_feb03a.elf
@@ -192,6 +197,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

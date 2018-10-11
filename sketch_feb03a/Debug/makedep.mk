@@ -44,5 +44,7 @@ src\libraries\Wire\src\utility\twi.c
 
 src\libraries\Wire\src\Wire.cpp
 
+tasks.cpp
+
 Timer1.cpp
 

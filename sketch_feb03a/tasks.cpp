@@ -5,29 +5,14 @@
  *  Author: Vulcan
  */ 
 
-//列举出机器人在场上所有执行出来的任务
-enum task{
-	SMALL_CIRCLE_WAKING,
-	SMALL_CIRCLE_FIX_POSITION,
-	FIX_POSITION,
-	DO_SHOT,
-	STAY,
-	LARGE_CIRCLE_WAKING,
-	LARGE_CIRCLE_FIX_POSITION
-	};
+#include "tasks.h"
 
-enum fix_pos{
-	DONOTHING,
-	MOVE_BACK,
-	CHECK_BACK_SENSOR,
-	USE_LASER_DATA
-	};
+fix_pos fix_pos_list = MOVE_BACK;
 
-extern fix_pos fix_pos_list = MOVE_BACK;
-//task present_task = SMALL_CIRCLE_WAKING;
+task present_task = SMALL_CIRCLE_FIX_POSITION;
 
-//task task_list[5];
-extern int value=-1;
+int value=-1;
+
 void read_DeFenBall()
 {
 	pinMode(7,INPUT_PULLUP);
