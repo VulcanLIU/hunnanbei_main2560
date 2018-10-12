@@ -20,6 +20,7 @@ public:
 	int prescaler = 1;
 	int MAX_time = 0;
 	int oc = 0;
+	int counter = 0;
 protected:
 	
 private:

@@ -9,7 +9,7 @@
 //#define GY25_DEBUG
 //#define GO_DEBUG
 //#define Sensorboard_DEBUG
-//#define STA_BUTTON_DEBUG 
+//#define STA_BUTTON_DEBUG
 #define PD_DEBUG
 
 #include "Display.h"
@@ -41,16 +41,20 @@ SensorBoard Sensors;
 
 String state = "begin";
 int point[34][2]={{0,0},{0,200},{0,400},{0,600},{0,800},{0,1000},
-	{0,1200},{0,1400},{0,1610},{200,1610},{400,1610},{600,1610},
-		{600,1810},{600,2010},{600,2210},{600,2410},{600,2610},
-			{600,2810},{400,2810},{200,2810},{0,2810},{-200,2810},
-				{-400,2810},{-600,2810},{-600,2610},{-600,2410},
-					{-600,2210},{-600,2010},{-600,1810},{-600,1610},
-						{-400,1610},{-200,1610},{0,1610},{0,1985}};
+{0,1200},{0,1400},{0,1610},{200,1610},{400,1610},{600,1610},
+{600,1810},{600,2010},{600,2210},{600,2410},{600,2610},
+{600,2810},{400,2810},{200,2810},{0,2810},{-200,2810},
+{-400,2810},{-600,2810},{-600,2610},{-600,2410},
+{-600,2210},{-600,2010},{-600,1810},{-600,1610},
+{-400,1610},{-200,1610},{0,1610},{0,1985}};
 
 int i,j;
 static int index=0;
 int step = 0;
+
+float linear_vel_x = 0;
+float linear_vel_y = 0;
+float angular_vel_z = 0;
 
 //time_out功能
 int previous_time = 0;
@@ -61,6 +65,7 @@ int PID_pre_time = 0;
 
 void receiveEvent(int howMany);
 void POS_refresh();
+void task_refresh();
 void start();
 
 void setup() {
@@ -74,7 +79,9 @@ void setup() {
 	
 	tc1.setMode("CTC",50);
 	tc1.attachInterrupt(POS_refresh);
-
+	tc3.setMode("CTC",100);
+	tc3.attachInterrupt(task_refresh);
+	
 	//GY25配置
 	GY25.begin();
 	GY25.singleMode();
@@ -136,221 +143,19 @@ void loop() {
 	
 	//#解算转速
 	Kinematics::output pwm;
-	float linear_vel_x = 0;
-	float linear_vel_y = 0;
-	float angular_vel_z = 0;
 	
 	if (!PS2.isRC)
 	{
-		//四个串联任务
-		//#小圆行走
-		if (present_task == SMALL_CIRCLE_WAKING)
-		{
-			/*这里写任务具体内容	*/
-			if (index == 0){if (path.gotoPoint(x,y,p,0,1560)){index++;}}
-			if (index == 1){if (path.rotatetoP(p,90)){index++;}}
-			if (index == 2){if (path.gotoPoint(x,y,p,600,1560)){index++;}}
-			if (index == 3){if (path.rotatetoP(p,0)){index++;}}
-			if (index == 4){if (path.gotoPoint(x,y,p,600,2740)){index++;}}
-			if (index == 5){if (path.rotatetoP(p,-90)){index++;}}
-			if (index == 6){if (path.gotoPoint(x,y,p,-600,2740)){index++;}}
-			if (index == 7){if (path.rotatetoP(p,-179)){index++;}}
-			if (index == 8){if (path.gotoPoint(x,y,p,-600,1560)){index++;}}
-			if (index == 9){if (path.rotatetoP(p,90)){index++;}}
-			if (index == 10){if (path.gotoPoint(x,y,p,0,1560)){index++;}}
-			if (index == 11){if (path.rotatetoP(p,179)){index++;}}
-			
-			#ifdef GO_DEBUG
-			Serial.print("SMALL_CIRCLE_WAKING");
-			Serial.print("	");
-			#endif
-			
-			/*这里负责正常任务跳转*/
-			if (index>=12){present_task = SMALL_CIRCLE_FIX_POSITION;index = 0;Serial.println("go to  SMALL_CIRCLE_FIX_POSITION!");}//此任务完成 开始走向
-			
-			/*这里负责异常任务跳转*/		
-		}
-		
-		//#小圆定位程序
-		if (present_task == SMALL_CIRCLE_FIX_POSITION){
-			//后退动作
-			#ifdef GO_DEBUG
-			Serial.println("SMALL_CIRCLE_FIX_POSITION");
-			Serial.print("	");
-			#endif
-			if (fix_pos_list == MOVE_BACK){
-				
-				#ifdef GO_DEBUG
-				Serial.print("MOVE_BACK");
-				Serial.print("	");
-				#endif
-				
-				path.linear_vel_x = -1;
-				path.angular_vel_z = 0;
-				
-				if (Sensors.back_hit_wall == true){
-					delay(1000);
-					if (Sensors.back_hit_wall == true){
-						
-						#ifdef GO_DEBUG
-						Serial.print("HIT_BACK");
-						Serial.print("	");
-						#endif
-						
-						path.linear_vel_x = 0;
-						path.angular_vel_z = 0;
-						fix_pos_list = USE_LASER_DATA;
-					}
-				}
-			}
-			if (fix_pos_list == USE_LASER_DATA){
-					x2 = Sensors.L1_laser;
-					y2 = 2000;
-					present_task = DO_SHOT;
-			}
-		}
-		
-		//#小圆射球程序
-		if (present_task == DO_SHOT)
-		{
-			#ifdef GO_DEBUG
-			Serial.print("DO_SHOT");
-			Serial.print("	");
-			#endif
-			CS.begin();
-			CS.SendXYPandSHOT(x,y,p);
-			CS.StartMillis = millis();
-			present_task = STAY;
-		}
-		//#小圆等待
-		if (present_task == STAY)
-		{
-			#ifdef GO_DEBUG
-			Serial.print("STAY");
-			Serial.print("	");
-			#endif
-			if (millis() - CS.StartMillis>30000){present_task = MIDDLE_CIRCLE_WAKING;}
-			else{}
-		}
-		//#中圆行走
-		if (present_task == MIDDLE_CIRCLE_WAKING)
-		{
-			#ifdef GO_DEBUG
-			Serial.print(" MIDDLE_CIRCLE_WAKING");
-			Serial.print("	");
-			#endif
-			if (index == 0){if (path.rotatetoP(p,90)){index++;}}
-			if (index == 1){if (path.gotoPoint(x,y,p,1000,1160)){index++;}}
-			if (index == 2){if (path.rotatetoP(p,0)){index++;}}
-			if (index == 3){if (path.gotoPoint(x,y,p,1000,3140)){index++;}}
-			if (index == 4){if (path.rotatetoP(p,-90)){index++;}}
-			if (index == 5){if (path.gotoPoint(x,y,p,-1000,3140)){index++;}}
-			if (index == 6){if (path.rotatetoP(p,-179)){index++;}}
-			if (index == 7){if (path.gotoPoint(x,y,p,-1000,1160)){index++;}}
-			if (index == 8){if (path.rotatetoP(p,90)){index++;}};
-				//待改
-			if (index == 9){if (path.gotoPoint(x,y,p,0,1160)){index++;}}
-			if (index == 10){if (path.rotatetoP(p,90)){index++;}};
-		}
-		//#中圆定位
-		if (present_task == MIDDLE_CIRCLE_FIX_POSITION)
-		{
-			//后退动作
-			#ifdef GO_DEBUG
-			Serial.println("MIDDLE_CIRCLE_FIX_POSITION");
-			Serial.print("	");
-			#endif
-			if (fix_pos_list == MOVE_BACK){
-				
-				#ifdef GO_DEBUG
-				Serial.print("MOVE_BACK");
-				Serial.print("	");
-				#endif
-				
-				path.linear_vel_x = -1;
-				path.angular_vel_z = 0;
-				
-				if (Sensors.back_hit_wall == true){
-					delay(300);
-					if (Sensors.back_hit_wall == true){
-					
-						#ifdef GO_DEBUG
-						Serial.print("HIT_BACK");
-						Serial.print("	");
-						#endif
-						
-						path.linear_vel_x = 0;
-						path.angular_vel_z = 0;
-						fix_pos_list = USE_LASER_DATA;
-					}
-				}
-			}
-		}
-		//#去出发区
-		if (present_task == GO_TO_CHUFAQU)
-		{
-			path.linear_vel_x = 1;
-			path.angular_vel_z = -0.5;
-			if (Sensors.area != 0 && Sensors.B_laser >= 1500)
-			{
-				present_task = CHUFAQU_BACKHIT;
-				_p = path.CcltAngleSub(p,180);	
-			}
-		}
-// 		//#掉头
-// 		if (present_task == DIAO_TOU){if (path.rotatetoP(p,_p)){present_task = ;}}
-		//#屁股怼墙
-		if (present_task == CHUFAQU_BACKHIT){
-			path.linear_vel_x = -1;
-			path.angular_vel_z = 0;
-
-			if (Sensors.back_hit_wall == true){
-				delay(300);
-				if (Sensors.back_hit_wall == true){
-					
-					#ifdef GO_DEBUG
-					Serial.print("HIT_BACK");
-					Serial.print("	");
-					#endif
-					
-					path.linear_vel_x = 0;
-					path.angular_vel_z = 0;
-					present_task = _USE_LASER_DATA;
-				}
-			}
-		}
-		//#使用激光数据
-		if (present_task == _USE_LASER_DATA)
-		{
-			x2 = Sensors.L1_laser;
-			y2 = 2000;
-			present_task = DO_SHOT_TWO;
-		}
-		//#两边射球
-		if(present_task == DO_SHOT_TWO)
-		{
-			#ifdef GO_DEBUG
-			Serial.print("DO_SHOT");
-			Serial.print("	");
-			#endif
-			CS.begin();
-			CS.SendXYPandSHOT(x,y,p);
-			CS.StartMillis = millis();
-			present_task = STAY;
-		}
-	
-		linear_vel_x = path.linear_vel_x;
-		angular_vel_z = path.angular_vel_z;
 	}
 	else
 	{
 		linear_vel_x = float(map(PS2.analog_RY,0,255,+1000,-1000))/1000;
 		linear_vel_y = 0;
 		angular_vel_z =float(map(PS2.analog_LX,0,255,-3140,+3140))/1500;
-		if (PS2.left == true){angular_vel_z =float(map(68,0,255,-3140,+3140))/1500;PS2.left = false;}
-		if (PS2.right == true){angular_vel_z =float(map(188,0,255,-3140,+3140))/1500;PS2.right = false;}
-		if (PS2.up == true){linear_vel_x =float(map(68,0,255,1000,-1000))/1000;PS2.up = false;}
-		if (PS2.down == true){linear_vel_x =float(map(188,0,255,1000,-1000))/1000;PS2.down = false;}
+// 		if (PS2.left == true){angular_vel_z =float(map(68,0,255,-3140,+3140))/1500;PS2.left = false;}
+// 		if (PS2.right == true){angular_vel_z =float(map(188,0,255,-3140,+3140))/1500;PS2.right = false;}
+// 		if (PS2.up == true){linear_vel_x =float(map(68,0,255,1000,-1000))/1000;PS2.up = false;}
+// 		if (PS2.down == true){linear_vel_x =float(map(188,0,255,1000,-1000))/1000;PS2.down = false;}
 	}
 
 	pwm = kinematics.getPWM(linear_vel_x, linear_vel_y, angular_vel_z);
@@ -382,7 +187,7 @@ void loop() {
 	PS2.state = "";
 	
 	#ifdef POS_DEBUG
-	Serial.print("X_step:");   
+	Serial.print("X_step:");
 	Serial.print(x_step);
 	Serial.print(" Y_step:");
 	Serial.print(y_step);
@@ -423,7 +228,7 @@ void loop() {
 	Serial.print("KP:");
 	Serial.print(path.kp);
 	Serial.print("KD");
-	Serial.print(path.kd);
+	Serial.print(path.kd*10);
 	Serial.println();  //串口显口
 	#endif
 }
@@ -442,8 +247,217 @@ void start()
 {
 	PS2.isRC = !PS2.isRC;
 	#ifdef STA_BUTTON_DEBUG
-		Serial.println("Start!");
+	Serial.println("Start!");
 	#endif //STA_BUTTON_DEBUG
 	GY25.correctYaw();
 	delay(200);
+}
+
+void task_refresh()
+{
+	if (!PS2.isRC)
+	{
+		//四个串联任务
+		//#小圆行走
+		if (present_task == SMALL_CIRCLE_WAKING)
+		{
+			/*这里写任务具体内容	*/
+			if (index == 0){if (path.gotoPoint(x,y,p,0,1400)){index++;}}
+			if (index == 1){if (path.rotatetoP(p,90)){index++;}}
+			if (index == 2){if (path.gotoPoint(x,y,p,600,1400)){index++;}}
+			if (index == 3){if (path.rotatetoP(p,0)){index++;}}
+			if (index == 4){if (path.gotoPoint(x,y,p,600,2850)){index++;}}
+			if (index == 5){if (path.rotatetoP(p,-90)){index++;}}
+			if (index == 6){if (path.gotoPoint(x,y,p,-600,2850)){index++;}}
+			if (index == 7){if (path.rotatetoP(p,-179)){index++;}}
+			if (index == 8){if (path.gotoPoint(x,y,p,-600,1400)){index++;}}
+			if (index == 9){if (path.rotatetoP(p,90)){index++;}}
+			if (index == 10){if (path.gotoPoint(x,y,p,-125,1400)){index++;}}
+			if (index == 11){if (path.rotatetoP(p,179)){index++;}}
+			
+			#ifdef GO_DEBUG
+			Serial.print("SMALL_CIRCLE_WAKING");
+			Serial.print("	");
+			#endif
+			
+			/*这里负责正常任务跳转*/
+			if (index>=12){present_task = SMALL_CIRCLE_FIX_POSITION;index = 0;Serial.println("go to  SMALL_CIRCLE_FIX_POSITION!");}//此任务完成 开始走向
+			
+			/*这里负责异常任务跳转*/
+		}
+		
+		//#小圆定位程序
+		if (present_task == SMALL_CIRCLE_FIX_POSITION){
+			//后退动作
+			#ifdef GO_DEBUG
+			Serial.println("SMALL_CIRCLE_FIX_POSITION");
+			Serial.print("	");
+			#endif
+			if (fix_pos_list == MOVE_BACK){
+				
+				#ifdef GO_DEBUG
+				Serial.print("MOVE_BACK");
+				Serial.print("	");
+				#endif
+				
+				path.linear_vel_x = -1;
+				path.angular_vel_z = 0;
+				
+				if (Sensors.back_hit_wall == true && y <= 2000){
+					tc3.counter++;
+					if (tc3.counter>=10&&Sensors.back_hit_wall == true){
+						
+						#ifdef GO_DEBUG
+						Serial.print("HIT_BACK");
+						Serial.print("	");
+						#endif
+						
+						path.linear_vel_x = 0;
+						path.angular_vel_z = 0;
+						fix_pos_list = USE_LASER_DATA;
+					}
+				}
+				else
+				{
+					tc3.counter = 0;
+				}
+			}
+			if (fix_pos_list == USE_LASER_DATA&&y<=2000){
+				x2 = Sensors.L1_laser;
+				y2 = 1700;
+				present_task = DO_SHOT;
+			}
+		}
+		
+		//#小圆射球程序
+		if (present_task == DO_SHOT)
+		{
+			#ifdef GO_DEBUG
+			Serial.print("DO_SHOT");
+			Serial.print("	");
+			#endif
+			CS.begin();
+			CS.SendXYPandSHOT(x,y,p);
+			CS.StartMillis = millis();
+			present_task = STAY;
+		}
+		//#小圆等待
+		if (present_task == STAY)
+		{
+			#ifdef GO_DEBUG
+			Serial.print("STAY");
+			Serial.print("	");
+			#endif
+			if (millis() - CS.StartMillis>30000){present_task = MIDDLE_CIRCLE_WAKING;}
+		}
+		//#中圆行走
+		if (present_task == MIDDLE_CIRCLE_WAKING)
+		{
+			#ifdef GO_DEBUG
+			Serial.print(" MIDDLE_CIRCLE_WAKING");
+			Serial.print("	");
+			#endif
+			if (index == 0){if (path.rotatetoP(p,90)){index++;}}
+			if (index == 1){if (path.gotoPoint(x,y,p,1000,1160)){index++;}}
+			if (index == 2){if (path.rotatetoP(p,0)){index++;}}
+			if (index == 3){if (path.gotoPoint(x,y,p,1000,3140)){index++;}}
+			if (index == 4){if (path.rotatetoP(p,-90)){index++;}}
+			if (index == 5){if (path.gotoPoint(x,y,p,-1000,3140)){index++;}}
+			if (index == 6){if (path.rotatetoP(p,-179)){index++;}}
+			if (index == 7){if (path.gotoPoint(x,y,p,-1000,1160)){index++;}}
+			if (index == 8){if (path.rotatetoP(p,90)){index++;}};
+			//待改
+			if (index == 9){if (path.gotoPoint(x,y,p,0,1160)){index++;}}
+			if (index == 10){if (path.rotatetoP(p,90)){index++;}};
+		}
+		//#中圆定位
+		if (present_task == MIDDLE_CIRCLE_FIX_POSITION)
+		{
+			//后退动作
+			#ifdef GO_DEBUG
+			Serial.println("MIDDLE_CIRCLE_FIX_POSITION");
+			Serial.print("	");
+			#endif
+			if (fix_pos_list == MOVE_BACK){
+				
+				#ifdef GO_DEBUG
+				Serial.print("MOVE_BACK");
+				Serial.print("	");
+				#endif
+				
+				path.linear_vel_x = -1;
+				path.angular_vel_z = 0;
+				
+				if (Sensors.back_hit_wall == true){
+					delay(300);
+					if (Sensors.back_hit_wall == true){
+						
+						#ifdef GO_DEBUG
+						Serial.print("HIT_BACK");
+						Serial.print("	");
+						#endif
+						
+						path.linear_vel_x = 0;
+						path.angular_vel_z = 0;
+						fix_pos_list = USE_LASER_DATA;
+					}
+				}
+			}
+		}
+		//#去出发区
+		if (present_task == GO_TO_CHUFAQU)
+		{
+			path.linear_vel_x = 1;
+			path.angular_vel_z = -0.5;
+			if (Sensors.area != 0 && Sensors.B_laser >= 1500)
+			{
+				present_task = CHUFAQU_BACKHIT;
+				_p = path.CcltAngleSub(p,180);
+			}
+		}
+		// 		//#掉头
+		// 		if (present_task == DIAO_TOU){if (path.rotatetoP(p,_p)){present_task = ;}}
+		//#屁股怼墙
+		if (present_task == CHUFAQU_BACKHIT){
+			path.linear_vel_x = -1;
+			path.angular_vel_z = 0;
+
+			if (Sensors.back_hit_wall == true){
+				delay(300);
+				if (Sensors.back_hit_wall == true){
+					
+					#ifdef GO_DEBUG
+					Serial.print("HIT_BACK");
+					Serial.print("	");
+					#endif
+					
+					path.linear_vel_x = 0;
+					path.angular_vel_z = 0;
+					present_task = _USE_LASER_DATA;
+				}
+			}
+		}
+		//#使用激光数据
+		if (present_task == _USE_LASER_DATA)
+		{
+			x2 = Sensors.L1_laser;
+			y2 = 2000;
+			present_task = DO_SHOT_TWO;
+		}
+		//#两边射球
+		if(present_task == DO_SHOT_TWO)
+		{
+			#ifdef GO_DEBUG
+			Serial.print("DO_SHOT");
+			Serial.print("	");
+			#endif
+			CS.begin();
+			CS.SendXYPandSHOT(x,y,p);
+			CS.StartMillis = millis();
+			present_task = STAY;
+		}
+		
+		linear_vel_x = path.linear_vel_x;
+		angular_vel_z = path.angular_vel_z;
+	}
 }

@@ -9,8 +9,9 @@
 
 fix_pos fix_pos_list = MOVE_BACK;
 
-task present_task = SMALL_CIRCLE_WAKING;
 
+//task present_task = SMALL_CIRCLE_WAKING;
+task present_task = SMALL_CIRCLE_FIX_POSITION;
 int value=-1;
 double _p = 0;
 

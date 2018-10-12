@@ -231,7 +231,7 @@ void Path::pd_save()
 void Path::pd_read()
 {
 	kp = EEPROM.read(kp_addr)/100.00;
-	kd = EEPROM.read(kd_addr)/1000.00;
+	kd = EEPROM.read(kd_addr)/1000.000;
 }
 
 double Path::CcltAngleSub(double minuend, double subtrahend)

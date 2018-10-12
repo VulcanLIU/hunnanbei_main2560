@@ -59,14 +59,15 @@ void ComwithShot::SendXYPandSHOT(double x,double y,double p)
 	Serial.println("Fire");
 	
 	Wire.beginTransmission(address);
-	Wire.print("XYP:");
-	Wire.print("X:");
-	Wire.print(x);
-	Wire.print("Y:");
-	Wire.print(y);
-	Wire.print("P:");
-	Wire.print(p);
-	Wire.println("SHOT");
+// 	Wire.print("XYP:");
+// 	Wire.print("X:");
+// 	Wire.print(x);
+// 	Wire.print("Y:");
+// 	Wire.print(y);
+// 	Wire.print("P:");
+// 	Wire.print(p);
+// 	Wire.println("SHOT");
+	Wire.write(1);
 	Wire.endTransmission();
 }
 

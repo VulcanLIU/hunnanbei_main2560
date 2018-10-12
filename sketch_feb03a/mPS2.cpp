@@ -119,6 +119,7 @@ void mPS2::refresh()
 			Serial.println(ps2x.Analog(PSAB_PAD_UP), DEC);
 			up = true;
 			state = "up is being held";
+			path.d_incre();
 		}
 		if(ps2x.Button(PSB_PAD_RIGHT)){
 			Serial.print("Right held this hard: ");
@@ -137,6 +138,7 @@ void mPS2::refresh()
 			Serial.println(ps2x.Analog(PSAB_PAD_DOWN), DEC);
 			down = true;
 			state = "DOWN is being held";
+			path.d_decre();
 		}
 
 		vibrate = ps2x.Analog(PSAB_CROSS);  //this will set the large motor vibrate speed based on how hard you press the blue (X) button
