@@ -3,14 +3,14 @@
 /*End of auto generated code by Atmel studio */
 
 //#debug开关
-#define POS_DEBUG
+//#define POS_DEBUG
 //#define PS2_DEBUG
 //#define Kinematics_DEBUG
 //#define GY25_DEBUG
 //#define GO_DEBUG
 //#define Sensorboard_DEBUG
 //#define STA_BUTTON_DEBUG 
-//#define PD_DEBUG
+#define PD_DEBUG
 
 #include "Display.h"
 #include "ComwithPC.h"

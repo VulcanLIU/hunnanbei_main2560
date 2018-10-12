@@ -65,10 +65,11 @@ bool Path::gotoPoint(double presentX,double presentY,double presentP,double targ
 	else if (distance < 100)
 	{
 		//#角度误差大用P
-		if (fabs(angletoCar)>20.00)
-		{
-			angular_vel_z = kp*angletoCar;
-		}
+ 		if (fabs(angletoCar)>30.00)
+ 		{
+	 		if (angletoCar>0){angletoCar = 4;}
+	 		if (angletoCar<0){angletoCar = -4;}
+ 		}
 		else//角度误差小用PD
 		{
 			angletoCarErr = angletoCar - pre_angletoCar;//计算两次偏角的差值
@@ -82,9 +83,10 @@ bool Path::gotoPoint(double presentX,double presentY,double presentP,double targ
 	else
 	{ 		
  		//#角度误差大用P
- 		if (fabs(angletoCar)>20.00)
+ 		if (fabs(angletoCar)>30.00)
  		{
- 			angular_vel_z = kp*angletoCar;
+			if (angletoCar>0){angular_vel_z = 4;}
+			if (angletoCar<0){angular_vel_z = -4;}
  		}
  		else//角度误差小用PD
  		{
@@ -141,9 +143,10 @@ bool Path::rotatetoP(double presentP,double targetP)
 		return true;
 	}
 	//#角度误差大用P
-	if (fabs(angletoCar)>15.00)
+	if (fabs(angletoCar)>30.00)
 	{
-		angular_vel_z = kp*angletoCar;
+		if (angletoCar>0){angular_vel_z = 2;}
+		if (angletoCar<0){angular_vel_z = -2;}
 	}
 	else//角度误差小用PD
 	{
