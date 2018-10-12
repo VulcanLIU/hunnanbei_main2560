@@ -9,7 +9,7 @@
 #include "Path.h"
 #include <math.h>
 #include "Arduino.h"
-
+#include "EEPROM.h"
 
 struct PID{
 	
@@ -67,13 +67,13 @@ bool Path::gotoPoint(double presentX,double presentY,double presentP,double targ
 		//#角度误差大用P
 		if (fabs(angletoCar)>20.00)
 		{
-			angular_vel_z = k*angletoCar;
+			angular_vel_z = kp*angletoCar;
 		}
 		else//角度误差小用PD
 		{
 			angletoCarErr = angletoCar - pre_angletoCar;//计算两次偏角的差值
-			if (angletoCar > 0){angular_vel_z = kp2*angletoCar - kd2*angletoCarErr;}
-			if (angletoCar < 0){angular_vel_z = kp2*angletoCar + kd2*angletoCarErr;}
+			if (angletoCar > 0){angular_vel_z = kp*angletoCar - kd*angletoCarErr;}
+			if (angletoCar < 0){angular_vel_z = kp*angletoCar + kd*angletoCarErr;}
 		}
 		pre_angletoCar = angletoCar; //保存偏角
 		
@@ -84,13 +84,13 @@ bool Path::gotoPoint(double presentX,double presentY,double presentP,double targ
  		//#角度误差大用P
  		if (fabs(angletoCar)>20.00)
  		{
- 			angular_vel_z = k*angletoCar;
+ 			angular_vel_z = kp*angletoCar;
  		}
  		else//角度误差小用PD
  		{
  			angletoCarErr = angletoCar - pre_angletoCar;//计算两次偏角的差值
-			if (angletoCar > 0){angular_vel_z = kp2*angletoCar - kd2*angletoCarErr;}
- 			if (angletoCar < 0){angular_vel_z = kp2*angletoCar + kd2*angletoCarErr;}
+			if (angletoCar > 0){angular_vel_z = kp*angletoCar - kd*angletoCarErr;}
+ 			if (angletoCar < 0){angular_vel_z = kp*angletoCar + kd*angletoCarErr;}
  		}
 		pre_angletoCar = angletoCar; //保存偏角
 		
@@ -143,13 +143,13 @@ bool Path::rotatetoP(double presentP,double targetP)
 	//#角度误差大用P
 	if (fabs(angletoCar)>15.00)
 	{
-		angular_vel_z = k*angletoCar;
+		angular_vel_z = kp*angletoCar;
 	}
 	else//角度误差小用PD
 	{
 		angletoCarErr = angletoCar - pre_angletoCar;//计算两次偏角的差值
-		if (angletoCar > 0){angular_vel_z = kp2*angletoCar - kd2*angletoCarErr;}
-		if (angletoCar < 0){angular_vel_z = kp2*angletoCar + kd2*angletoCarErr;}
+		if (angletoCar > 0){angular_vel_z = kp*angletoCar - kd*angletoCarErr;}
+		if (angletoCar < 0){angular_vel_z = kp*angletoCar + kd*angletoCarErr;}
 	}
 	pre_angletoCar = angletoCar; //保存偏角
 	
@@ -199,6 +199,38 @@ bool Path::rotatetoP(double presentX,double presentY,double presentP,double targ
 	return rotatetoP(presentP,angletoWorld);
 }
 
+void Path::p_incre()
+{
+	kp+=0.01;
+}
+
+void Path::p_decre()
+{
+	kp-=0.01;
+}
+
+void Path::d_incre()
+{
+	kd+=0.001;
+}
+
+void Path::d_decre()
+{
+	kd-=0.001;
+}
+
+void Path::pd_save()
+{
+	EEPROM.write(kp_addr,kp*100);
+	EEPROM.write(kd_addr,kd*1000);
+}
+
+void Path::pd_read()
+{
+	kp = EEPROM.read(kp_addr)/100.00;
+	kd = EEPROM.read(kd_addr)/1000.00;
+}
+
 double Path::CcltAngleSub(double minuend, double subtrahend)
 {
 	double result = 0.0f;
@@ -207,3 +239,5 @@ double Path::CcltAngleSub(double minuend, double subtrahend)
 	if (result < -180.0f)  result += 360.0f;
 	return result;
 }
+
+Path path = Path();

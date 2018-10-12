@@ -45,6 +45,6 @@ void read_DeFenBall();
 void toFenQiu();
 void askforFenQiu();
 
-double _p = 0;
+extern double _p;
 
 #endif /* TASKS_H_ */

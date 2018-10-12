@@ -79,7 +79,7 @@ void POS_refresh()
 	if (dp2 < -PI/2)  dp2 += PI;
 	double dx2 = (dx - dp2*d2);
 	_p2 = p2;
-	
+	dx2 = 0;
 	/*//¿­×ÓËã·¨
 	double dax = dy*(cos(PI/2-dp_rad/2));
 	double day = dy*(sin(PI/2-dp_rad/2));

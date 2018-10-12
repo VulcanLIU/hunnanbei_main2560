@@ -8,7 +8,7 @@
 
 #include "mPS2.h"
 #include "PS2X_lib.h" //for v1.6
-
+#include "Path.h"
 /******************************************************************
 * set pins connected to PS2 controller:
 *   - 1e column: original
@@ -145,17 +145,17 @@ void mPS2::refresh()
 			
 			if(ps2x.Button(PSB_R3)){Serial.println("R3 pressed");state = "R3 is being held";}
 
-			if(ps2x.Button(PSB_L2)){Serial.println("L2 pressed");state = "L2 is being held";}
+			if(ps2x.Button(PSB_L2)){Serial.println("L2 pressed");state = "L2 is being held";path.p_decre();}
 			
-			if(ps2x.Button(PSB_R2)){Serial.println("R2 pressed");state = "R2 is being held";}
+			if(ps2x.Button(PSB_R2)){Serial.println("R2 pressed");state = "R2 is being held";path.p_incre();}
 
-			if(ps2x.Button(PSB_TRIANGLE)){Serial.println("Triangle pressed");state = "Triangle is being held";}
+			if(ps2x.Button(PSB_TRIANGLE)){Serial.println("Triangle pressed");state = "Triangle is being held";path.pd_save();}
 
 		}
 
 		if(ps2x.ButtonPressed(PSB_CIRCLE)){Serial.println("Circle just pressed");shot_left = true;state = "Circle is being held";isRC = true;}//增加自动
 		
-		if(ps2x.NewButtonState(PSB_CROSS)){Serial.println("X just changed");shot = true;state = "X is being held";}
+		if(ps2x.NewButtonState(PSB_CROSS)){Serial.println("X just changed");shot = true;state = "X is being held";path.pd_read();}
 		
 		if(ps2x.ButtonReleased(PSB_SQUARE)){Serial.println("Square just released");shot_left = true;state = "Square is being held";isRC = false;}              //will be TRUE if button was JUST released
 		

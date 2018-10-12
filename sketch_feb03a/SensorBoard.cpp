@@ -24,7 +24,7 @@ void SensorBoard::refresh()
 void SensorBoard::getInfo()
 {
 	Wire.begin();
-	Wire.requestFrom(8,8);
+	Wire.requestFrom(8,9);
 	
 	while(Wire.available()){
 		R_laser_h = Wire.read();
@@ -35,7 +35,8 @@ void SensorBoard::getInfo()
 		B_laser_l = Wire.read();
 		value1 = Wire.read();
 		value2 = Wire.read();
-		
+		area = Wire.read();
+
 		R1_laser = (R_laser_h<<8|R_laser_l);
 		L1_laser = (L_laser_h<<8|L_laser_l);
 		B_laser =  (B_laser_h<<8|B_laser_l);

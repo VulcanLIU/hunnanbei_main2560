@@ -1,16 +1,16 @@
 ﻿/*Begining of Auto generated code by Atmel studio */
 #include <Arduino.h>
-
 /*End of auto generated code by Atmel studio */
 
 //#debug开关
-//#define POS_DEBUG
-//#define  PS2_DEBUG
+#define POS_DEBUG
+//#define PS2_DEBUG
 //#define Kinematics_DEBUG
 //#define GY25_DEBUG
 //#define GO_DEBUG
 //#define Sensorboard_DEBUG
-#define STA_BUTTON_DEBUG 
+//#define STA_BUTTON_DEBUG 
+//#define PD_DEBUG
 
 #include "Display.h"
 #include "ComwithPC.h"
@@ -34,9 +34,9 @@ mMotor motor;
 mPS2 PS2;
 Timer1 tc1;
 Timer3 tc3;
-Kinematics kinematics(300,0.068, 0.5,8);
+Kinematics kinematics(280,0.068, 0.5,8);
 ComwithMotor cm;
-Path path;
+//Path path;
 SensorBoard Sensors;
 
 String state = "begin";
@@ -95,6 +95,9 @@ void setup() {
 	//启动按钮
 	pinMode(18, INPUT_PULLUP);
 	attachInterrupt(digitalPinToInterrupt(18), start, FALLING);
+	
+	//
+	path.pd_read();
 }
 
 void loop() {
@@ -294,8 +297,8 @@ void loop() {
 				_p = path.CcltAngleSub(p,180);	
 			}
 		}
-		//#掉头
-		if (present_task == DIAO_TOU){if (path.rotatetoP(p,_p)){present_task = ;}}
+// 		//#掉头
+// 		if (present_task == DIAO_TOU){if (path.rotatetoP(p,_p)){present_task = ;}}
 		//#屁股怼墙
 		if (present_task == CHUFAQU_BACKHIT){
 			path.linear_vel_x = -1;
@@ -335,7 +338,7 @@ void loop() {
 			CS.StartMillis = millis();
 			present_task = STAY;
 		}
-		
+	
 		linear_vel_x = path.linear_vel_x;
 		angular_vel_z = path.angular_vel_z;
 	}
@@ -415,6 +418,14 @@ void loop() {
 	Serial.print("Yaw:");
 	Serial.println(GY25.YPR[0]);
 	#endif // GY25_DEBUG
+	
+	#ifdef PD_DEBUG
+	Serial.print("KP:");
+	Serial.print(path.kp);
+	Serial.print("KD");
+	Serial.print(path.kd);
+	Serial.println();  //串口显口
+	#endif
 }
 
 void receiveEvent(int howMany) {

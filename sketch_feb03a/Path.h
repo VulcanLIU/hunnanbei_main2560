@@ -27,9 +27,21 @@ public:
 	bool rotatetoP(double presentP,double targetP);
 	bool rotatetoP(double presentX,double presentY,double presentP,double targetX,double targetY);
 	//P&PD 环节的K值
-	float k = 0.015;
-	float kp2 = 0.02;
-	float kd2 = 0.005;
+	
+	int kp_addr = 0;
+	int kd_addr = 1;
+	
+	void p_incre();
+	void p_decre();
+	
+	void d_incre();
+	void d_decre();
+	
+	void pd_save();
+	void pd_read();
+	
+	float kp = 0.5;
+	float kd = 0.005;
 	
 	//
 	double CcltAngleSub(double minuend, double subtrahend);	//计算偏角专用函数
@@ -45,5 +57,5 @@ public:
 	
 	int next_index = 1;
 }; //Path
-
+extern Path path;
 #endif //__PATH_H__
