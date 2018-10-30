@@ -35,7 +35,7 @@ const double d2 = 0;
 const double wheel_d = 38;//轮直径38mm
 const int x_line = 512;
 const int y_line = 512;
-const int p_line = 512;
+const int p_line = 256;
 
 //用于串口输出
 double x1 = 0;

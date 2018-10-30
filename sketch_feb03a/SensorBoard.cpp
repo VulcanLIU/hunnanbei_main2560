@@ -8,6 +8,7 @@
 
 #include "SensorBoard.h"
 #include "Wire.h"
+#include "HardwareSerial.h"
 // default constructor
 SensorBoard::SensorBoard()
 {
@@ -41,7 +42,14 @@ void SensorBoard::getInfo()
 		L1_laser = (L_laser_h<<8|L_laser_l);
 		B_laser =  (B_laser_h<<8|B_laser_l);
 		
-		if (value1==0&&value2==0){back_hit_wall = true;}
+		if (value2==0){back_hit_wall = true;}
 		else{back_hit_wall = false;}
 		}//µÈ´ýÊý¾Ý
+		
+		Serial.print("value1:");
+		Serial.print(value1);
+		Serial.print("value2:");
+		Serial.print(value2);
+		Serial.print("back_hit_wall:");
+		Serial.println(back_hit_wall);
 }

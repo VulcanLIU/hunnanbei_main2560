@@ -26,6 +26,7 @@ public:
 	bool gotoPoint(double presentX,double presentY,double presentP,double targetX,double targetY);
 	bool rotatetoP(double presentP,double targetP);
 	bool rotatetoP(double presentX,double presentY,double presentP,double targetX,double targetY);
+	bool slowrotatetoP(double presentP,double targetP);
 	//P&PD 环节的K值
 	
 	int kp_addr = 0;

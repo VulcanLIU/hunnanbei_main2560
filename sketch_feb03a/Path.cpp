@@ -62,10 +62,10 @@ bool Path::gotoPoint(double presentX,double presentY,double presentP,double targ
 		angular_vel_z = 0;
 		return true;
 	}
-	else if (distance < 100)
+	else if (distance < 200)
 	{
 		//#角度误差大用P
- 		if (fabs(angletoCar)>30.00)
+ 		if (fabs(angletoCar)>50.00)
  		{
 	 		if (angletoCar>0){angletoCar = 4;}
 	 		if (angletoCar<0){angletoCar = -4;}
@@ -83,7 +83,7 @@ bool Path::gotoPoint(double presentX,double presentY,double presentP,double targ
 	else
 	{ 		
  		//#角度误差大用P
- 		if (fabs(angletoCar)>30.00)
+ 		if (fabs(angletoCar)>50.00)
  		{
 			if (angletoCar>0){angular_vel_z = 4;}
 			if (angletoCar<0){angular_vel_z = -4;}
@@ -143,7 +143,7 @@ bool Path::rotatetoP(double presentP,double targetP)
 		return true;
 	}
 	//#角度误差大用P
-	if (fabs(angletoCar)>30.00)
+	if (fabs(angletoCar)>50.00)
 	{
 		if (angletoCar>0){angular_vel_z = 2;}
 		if (angletoCar<0){angular_vel_z = -2;}
@@ -200,6 +200,42 @@ bool Path::rotatetoP(double presentX,double presentY,double presentP,double targ
 
 	
 	return rotatetoP(presentP,angletoWorld);
+}
+
+bool Path::slowrotatetoP(double presentP,double targetP)
+{
+	//计算相对车的偏角
+	angletoCar = CcltAngleSub(targetP, presentP);
+	if (fabs(angletoCar)<1.00)
+	{
+		return true;
+	}
+	else//角度误差小用PD
+	{
+		if (angletoCar > 0){angular_vel_z = 1;}
+		if (angletoCar < 0){angular_vel_z = -1;}
+	}	
+	linear_vel_x = 0;
+	
+	#ifdef Path_DEBUG
+	//显示距离差
+	Serial.print(presentP);
+	Serial.print("	");
+	
+	Serial.print("TP:");
+	Serial.print(targetP);
+	Serial.print("	");
+
+	Serial.print("angletoWorld:");
+	Serial.print(angletoWorld);
+	Serial.print("angletoCar:");
+	Serial.print(angletoCar);
+	Serial.print("angular_vel_z:");
+	Serial.print(angular_vel_z);
+	Serial.println();
+	#endif // Path_DEBUG
+	
+	return false;
 }
 
 void Path::p_incre()

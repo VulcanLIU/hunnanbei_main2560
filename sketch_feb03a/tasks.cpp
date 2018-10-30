@@ -7,11 +7,13 @@
 
 #include "tasks.h"
 
-fix_pos fix_pos_list = MOVE_BACK;
+fix_pos fix_pos_list = SLOW_ROTATE;
 
 
-//task present_task = SMALL_CIRCLE_WAKING;
-task present_task = SMALL_CIRCLE_FIX_POSITION;
+task present_task = SMALL_CIRCLE_WAKING;
+//task present_task = SMALL_CIRCLE_FIX_POSITION;
+//task present_task = DO_SHOT;
+
 int value=-1;
 double _p = 0;
 
@@ -27,7 +29,7 @@ void toFenQiu()
 	
 	//告诉分球部分分黑球还是白球
 	Wire.beginTransmission(5);
-	Wire.write(value);
+	Wire.print(value);
 	Wire.endTransmission();
 	//Serial.print(value);
 }

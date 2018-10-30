@@ -13,9 +13,9 @@
 class ComwithShot
 {
 public:
-	const int address = 5;//射球模块的地址
+	const int address = 9;//射球模块的地址
 	
-	int StartMillis = 0;
+	long int StartMillis = 0;
 	
 	bool connected = false;
 	

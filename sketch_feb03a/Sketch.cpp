@@ -7,10 +7,11 @@
 //#define PS2_DEBUG
 //#define Kinematics_DEBUG
 //#define GY25_DEBUG
-//#define GO_DEBUG
+#define GO_DEBUG
 //#define Sensorboard_DEBUG
 //#define STA_BUTTON_DEBUG
-#define PD_DEBUG
+//#define PD_DEBUG
+#define CIRCLE_PATH
 
 #include "Display.h"
 #include "ComwithPC.h"
@@ -146,16 +147,55 @@ void loop() {
 	
 	if (!PS2.isRC)
 	{
+		//#小圆射球程序
+		if (present_task == DO_SHOT)
+		{
+			int dx = x;
+			int dy = y - 1600;
+			int dis = sqrt(dx*dx+dy*dy);
+						
+			#ifdef GO_DEBUG
+			Serial.print("DO_SHOT");
+			Serial.print("	");
+			Serial.print("x:");
+			Serial.print(x);
+			Serial.print("y:");
+			Serial.print(y);
+			Serial.print("dis:");
+			Serial.println(dis);
+			#endif
+
+			if (dis<1000)
+			{
+				CS.SendXYPandSHOT(x,y,p);
+				CS.StartMillis = millis();
+				present_task = STAY;
+			}
+			else
+			{
+				present_task = MIDDLE_CIRCLE_WAKING;
+			}
+			CS.SendXYPandSHOT(x,y,p);
+		}
+		//#小圆等待
+		if (present_task == STAY)
+		{
+			#ifdef GO_DEBUG
+			Serial.print("STAY!!!");
+			Serial.print("	");
+			Serial.print("CS.StartMillis:");
+			Serial.println(CS.StartMillis);
+			Serial.print("Millis:");
+			Serial.println(millis());
+			#endif
+			if (millis() - CS.StartMillis>25000){present_task = MIDDLE_CIRCLE_WAKING;}
+		}
 	}
 	else
 	{
 		linear_vel_x = float(map(PS2.analog_RY,0,255,+1000,-1000))/1000;
 		linear_vel_y = 0;
 		angular_vel_z =float(map(PS2.analog_LX,0,255,-3140,+3140))/1500;
-// 		if (PS2.left == true){angular_vel_z =float(map(68,0,255,-3140,+3140))/1500;PS2.left = false;}
-// 		if (PS2.right == true){angular_vel_z =float(map(188,0,255,-3140,+3140))/1500;PS2.right = false;}
-// 		if (PS2.up == true){linear_vel_x =float(map(68,0,255,1000,-1000))/1000;PS2.up = false;}
-// 		if (PS2.down == true){linear_vel_x =float(map(188,0,255,1000,-1000))/1000;PS2.down = false;}
 	}
 
 	pwm = kinematics.getPWM(linear_vel_x, linear_vel_y, angular_vel_z);
@@ -262,18 +302,33 @@ void task_refresh()
 		if (present_task == SMALL_CIRCLE_WAKING)
 		{
 			/*这里写任务具体内容	*/
-			if (index == 0){if (path.gotoPoint(x,y,p,0,1400)){index++;}}
-			if (index == 1){if (path.rotatetoP(p,90)){index++;}}
-			if (index == 2){if (path.gotoPoint(x,y,p,600,1400)){index++;}}
-			if (index == 3){if (path.rotatetoP(p,0)){index++;}}
-			if (index == 4){if (path.gotoPoint(x,y,p,600,2850)){index++;}}
-			if (index == 5){if (path.rotatetoP(p,-90)){index++;}}
-			if (index == 6){if (path.gotoPoint(x,y,p,-600,2850)){index++;}}
-			if (index == 7){if (path.rotatetoP(p,-179)){index++;}}
-			if (index == 8){if (path.gotoPoint(x,y,p,-600,1400)){index++;}}
-			if (index == 9){if (path.rotatetoP(p,90)){index++;}}
-			if (index == 10){if (path.gotoPoint(x,y,p,-125,1400)){index++;}}
-			if (index == 11){if (path.rotatetoP(p,179)){index++;}}
+			#ifdef CIRCLE_PATH
+				if (index == 0){if (path.gotoPoint(x,y,p,0,1400)){index++;}}
+				if (index == 1){if (path.rotatetoP(p,90)){index++;}}
+				if (index == 2){if (path.gotoPoint(x,y,p,573,1637)){index++;}}
+				if (index == 3){if (path.gotoPoint(x,y,p,810,2210)){index++;}}
+				if (index == 4){if (path.gotoPoint(x,y,p,573,2782)){index++;}}
+				if (index == 5){if (path.gotoPoint(x,y,p,0,3020)){index++;}}
+				if (index == 6){if (path.gotoPoint(x,y,p,-573,2782)){index++;}}		
+				if (index == 7){if (path.gotoPoint(x,y,p,-810,2210)){index++;}}	
+				if (index == 8){if (path.gotoPoint(x,y,p,-573,1637)){index++;}}
+				if (index == 9){if (path.gotoPoint(x,y,p,-100,1350)){index++;}}	
+				if (index == 10){if (path.rotatetoP(p,-179)){index++;};}
+				if (index == 11){index++;}
+			#else
+				if (index == 0){if (path.gotoPoint(x,y,p,0,1400)){index++;}}
+				if (index == 1){if (path.rotatetoP(p,90)){index++;}}
+				if (index == 2){if (path.gotoPoint(x,y,p,600,1400)){index++;}}
+				if (index == 3){if (path.rotatetoP(p,0)){index++;}}
+				if (index == 4){if (path.gotoPoint(x,y,p,600,2850)){index++;}}
+				if (index == 5){if (path.rotatetoP(p,-90)){index++;}}
+				if (index == 6){if (path.gotoPoint(x,y,p,-600,2850)){index++;}}
+				if (index == 7){if (path.rotatetoP(p,-179)){index++;}}
+				if (index == 8){if (path.gotoPoint(x,y,p,-600,1400)){index++;}}
+				if (index == 9){if (path.rotatetoP(p,90)){index++;}}
+				if (index == 10){if (path.gotoPoint(x,y,p,-125,1400)){index++;}}
+				if (index == 11){if (path.rotatetoP(p,179)){index++;}}
+			#endif
 			
 			#ifdef GO_DEBUG
 			Serial.print("SMALL_CIRCLE_WAKING");
@@ -281,7 +336,7 @@ void task_refresh()
 			#endif
 			
 			/*这里负责正常任务跳转*/
-			if (index>=12){present_task = SMALL_CIRCLE_FIX_POSITION;index = 0;Serial.println("go to  SMALL_CIRCLE_FIX_POSITION!");}//此任务完成 开始走向
+			if (index>=12){present_task = SMALL_CIRCLE_FIX_POSITION;index = 0;Serial.println("go to  SMALL_CIRCLE_FIX_POSITION!");tc3.counter = 0;}//此任务完成 开始走向
 			
 			/*这里负责异常任务跳转*/
 		}
@@ -293,6 +348,23 @@ void task_refresh()
 			Serial.println("SMALL_CIRCLE_FIX_POSITION");
 			Serial.print("	");
 			#endif
+			if(fix_pos_list == SLOW_ROTATE)
+			{
+				#ifdef GO_DEBUG
+				Serial.print("SLOW_ROTATE");
+				Serial.print("	");
+				#endif		
+				
+				if (path.slowrotatetoP(p,179))
+				{
+					tc3.counter++;
+					if (tc3.counter >= 4 )
+					{
+						fix_pos_list = MOVE_BACK;
+					}
+				}
+					
+			}
 			if (fix_pos_list == MOVE_BACK){
 				
 				#ifdef GO_DEBUG
@@ -303,52 +375,21 @@ void task_refresh()
 				path.linear_vel_x = -1;
 				path.angular_vel_z = 0;
 				
-				if (Sensors.back_hit_wall == true && y <= 2000){
-					tc3.counter++;
-					if (tc3.counter>=10&&Sensors.back_hit_wall == true){
-						
-						#ifdef GO_DEBUG
-						Serial.print("HIT_BACK");
-						Serial.print("	");
-						#endif
-						
-						path.linear_vel_x = 0;
-						path.angular_vel_z = 0;
-						fix_pos_list = USE_LASER_DATA;
-					}
-				}
-				else
+				if (Sensors.back_hit_wall == true)
 				{
-					tc3.counter = 0;
+					Serial.print("HIT_BACK!");
+					Serial.print("	");
+					path.linear_vel_x =  0;
+					path.angular_vel_z = 0;
+					
+					fix_pos_list = USE_LASER_DATA;
 				}
 			}
 			if (fix_pos_list == USE_LASER_DATA&&y<=2000){
-				x2 = Sensors.L1_laser;
-				y2 = 1700;
+// 				x2 = Sensors.L1_laser;
+// 				y2 = 1700;
 				present_task = DO_SHOT;
 			}
-		}
-		
-		//#小圆射球程序
-		if (present_task == DO_SHOT)
-		{
-			#ifdef GO_DEBUG
-			Serial.print("DO_SHOT");
-			Serial.print("	");
-			#endif
-			CS.begin();
-			CS.SendXYPandSHOT(x,y,p);
-			CS.StartMillis = millis();
-			present_task = STAY;
-		}
-		//#小圆等待
-		if (present_task == STAY)
-		{
-			#ifdef GO_DEBUG
-			Serial.print("STAY");
-			Serial.print("	");
-			#endif
-			if (millis() - CS.StartMillis>30000){present_task = MIDDLE_CIRCLE_WAKING;}
 		}
 		//#中圆行走
 		if (present_task == MIDDLE_CIRCLE_WAKING)
@@ -357,18 +398,20 @@ void task_refresh()
 			Serial.print(" MIDDLE_CIRCLE_WAKING");
 			Serial.print("	");
 			#endif
-			if (index == 0){if (path.rotatetoP(p,90)){index++;}}
-			if (index == 1){if (path.gotoPoint(x,y,p,1000,1160)){index++;}}
-			if (index == 2){if (path.rotatetoP(p,0)){index++;}}
-			if (index == 3){if (path.gotoPoint(x,y,p,1000,3140)){index++;}}
-			if (index == 4){if (path.rotatetoP(p,-90)){index++;}}
-			if (index == 5){if (path.gotoPoint(x,y,p,-1000,3140)){index++;}}
-			if (index == 6){if (path.rotatetoP(p,-179)){index++;}}
-			if (index == 7){if (path.gotoPoint(x,y,p,-1000,1160)){index++;}}
-			if (index == 8){if (path.rotatetoP(p,90)){index++;}};
+			if (index == 0){if (path.gotoPoint(x,y,p,0,1200)){index++;}}
+			if (index == 1){if (path.rotatetoP(p,90)){index++;}}
+			if (index == 2){if (path.gotoPoint(x,y,p,714,1496)){index++;}}
+			if (index == 3){if (path.gotoPoint(x,y,p,1010,2210)){index++;}}
+			if (index == 4){if (path.gotoPoint(x,y,p,714,2924)){index++;}}
+			if (index == 5){if (path.gotoPoint(x,y,p,0,3220)){index++;}}
+			if (index == 6){if (path.gotoPoint(x,y,p,-714,2924)){index++;}}
+            if (index == 7){if (path.gotoPoint(x,y,p,-1010,2210)){index++;}}
+			if (index == 8){if (path.gotoPoint(x,y,p,-714,1496)){index++;}}
+			if (index == 9){if (path.gotoPoint(x,y,p,-75,1250)){index++;}}
+			if (index == 10){if (path.rotatetoP(p,-179)){index++;};}
+			if (index == 11){index++;}
 			//待改
-			if (index == 9){if (path.gotoPoint(x,y,p,0,1160)){index++;}}
-			if (index == 10){if (path.rotatetoP(p,90)){index++;}};
+			if (index >= 12){present_task = SMALL_CIRCLE_WAKING;index = 0;Serial.println("go to  SMALL_CIRCLE_FIX_POSITION!");tc3.counter = 0;}
 		}
 		//#中圆定位
 		if (present_task == MIDDLE_CIRCLE_FIX_POSITION)
@@ -423,9 +466,6 @@ void task_refresh()
 			path.angular_vel_z = 0;
 
 			if (Sensors.back_hit_wall == true){
-				delay(300);
-				if (Sensors.back_hit_wall == true){
-					
 					#ifdef GO_DEBUG
 					Serial.print("HIT_BACK");
 					Serial.print("	");
@@ -434,14 +474,13 @@ void task_refresh()
 					path.linear_vel_x = 0;
 					path.angular_vel_z = 0;
 					present_task = _USE_LASER_DATA;
-				}
 			}
 		}
 		//#使用激光数据
 		if (present_task == _USE_LASER_DATA)
 		{
-			x2 = Sensors.L1_laser;
-			y2 = 2000;
+// 			x2 = Sensors.L1_laser;
+// 			y2 = 2000;
 			present_task = DO_SHOT_TWO;
 		}
 		//#两边射球
